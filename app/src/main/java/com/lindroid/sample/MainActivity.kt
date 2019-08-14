@@ -15,18 +15,20 @@ class MainActivity : AppCompatActivity() {
 
         btnAlert.setOnClickListener {
             AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage("这是一个提示对话框")
-                .setPositiveButton("OK",null)
-                .setNegativeButton("Cancel",null)
-                .show()
+                    .setTitle("提示")
+                    .setMessage("这是一个提示对话框")
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("Cancel", null)
+                    .show()
         }
 
         btnMaterial.setOnClickListener {
             MaterialDialog.build(this)
-                .setTitle("提示")
-                .setMessage("这是一个提示对话框")
-                .show()
+                    .setTitle("提示")
+                    .setMessage("这是一个提示对话框")
+                    .setPositiveText("Ok")
+                    .setNegativeText("Cancel")
+                    .show()
         }
     }
 }

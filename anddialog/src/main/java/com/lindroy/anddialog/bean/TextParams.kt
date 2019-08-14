@@ -13,7 +13,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class TextParams(
-    var textSize: Float = 0F,
+    var textSize: Float = 0F, //单位为sp
     @ColorInt var textColor: Int = 0,
     var gravity: Int = Gravity.CENTER,
     var text: String = "",

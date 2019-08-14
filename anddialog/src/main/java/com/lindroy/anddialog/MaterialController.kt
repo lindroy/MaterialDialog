@@ -2,7 +2,6 @@ package com.lindroy.anddialog
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Outline
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.ShapeDrawable
@@ -12,10 +11,18 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
-import android.view.*
+import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.lindroid.anddialog.R
+import com.lindroy.anddialog.bean.TextParams
+import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.screenWidth
 import kotlinx.android.synthetic.main.dialog_material.*
+import kotlinx.android.synthetic.main.layout_md_button_panel.*
+import kotlinx.android.synthetic.main.layout_md_title_message_panel.*
 
 /**
  * @author Lin
@@ -27,17 +34,86 @@ class MaterialController : DialogFragment() {
 
     private lateinit var mContext: Context
     private lateinit var params: MaterialDialog.Builder
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.dialog_material, container, false)
+            inflater.inflate(R.layout.dialog_material, container, false)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rootView.background = initBackgroundDrawable()
-//        rootView.elevation = 30F
-//        rootView.outlineProvider = LayoutOutlineProvider()
-//        rootView.clipToOutline = true
+        setupTitle(params.titleParams)
+        setupMessage(params.msgParams)
+        setupButton()
+    }
+
+    /**
+     * 设置标题
+     */
+    private fun setupTitle(titleP: TextParams) {
+        Log.e("Tag","titleP.text="+titleP.text)
+        tvTitle.apply {
+            visibility = when (titleP.text.isNotEmpty()) {
+                true -> {
+                    text = titleP.text
+                    setTextColor(getResColor(R.color.md_dialog_title_text_color))
+                    textSize = titleP.textSize
+                    View.VISIBLE
+                }
+                false -> View.GONE
+            }
+        }
+    }
+
+    /**
+     * 设置信息文字
+     */
+    private fun setupMessage(msgP: TextParams) {
+        tvMessage.apply {
+            visibility = when (msgP.text.isNotEmpty()) {
+                true -> {
+                    text = msgP.text
+                    setTextColor(msgP.textColor)
+                    textSize = msgP.textSize
+                    View.VISIBLE
+                }
+                false -> View.GONE
+            }
+        }
+    }
+
+    /**
+     * 设置按钮
+     */
+    private fun setupButton() {
+        //Positive Button
+        params.posButtonParams.also {
+            btnPos.apply {
+                visibility = when (it.text.isNotEmpty()) {
+                    true -> {
+                        text = it.text
+                        setTextColor(it.textColor)
+                        textSize = it.textSize
+                        View.VISIBLE
+                    }
+                    false -> View.GONE
+                }
+            }
+        }
+        //Negative Button
+        params.negButtonParams.also {
+            btnNeg.apply {
+                visibility = when (it.text.isNotEmpty()) {
+                    true -> {
+                        text = it.text
+                        setTextColor(it.textColor)
+                        textSize = it.textSize
+                        View.VISIBLE
+                    }
+                    false -> View.GONE
+                }
+            }
+        }
+
     }
 
     override fun onAttach(context: Context?) {
@@ -65,44 +141,37 @@ class MaterialController : DialogFragment() {
         }
     }
 
-    companion object {
-        fun showDialog(fm: FragmentManager, tag: String, params: MaterialDialog.Builder) = MaterialController().apply {
-            this.params = params
-            show(fm, tag)
-        }
-    }
-
     /**
      * 设置对话框背景
      */
     private fun initBackgroundDrawable(): ShapeDrawable {
         val radius = params.radius
         val roundRectShape = RoundRectShape(
-            floatArrayOf(
-                radius,
-                radius,
-                radius,
-                radius,
-                radius,
-                radius,
-                radius,
-                radius
-            ), null, null
+                floatArrayOf(
+                        radius,
+                        radius,
+                        radius,
+                        radius,
+                        radius,
+                        radius,
+                        radius,
+                        radius
+                ), null, null
         )
         return with(ShapeDrawable(roundRectShape)) {
             paint.color = params.backgroundColor
             paint.style = Paint.Style.FILL
-//            paint.alpha = (255 * tipParams.bgAlpha).toInt()
+            paint.alpha = (255 * params.backgroundAlpha).toInt()
             this
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    class LayoutOutlineProvider : ViewOutlineProvider() {
-        override fun getOutline(view: View?, outline: Outline?) {
-            outline?.setRoundRect(0, 0, view?.width ?: 0, view?.height ?: 0, 30F)
-        }
-
+    companion object {
+        fun showDialog(fm: FragmentManager, tag: String, params: MaterialDialog.Builder) =
+                MaterialController().apply {
+                    this.params = params
+                    show(fm, tag)
+                }
     }
 
 

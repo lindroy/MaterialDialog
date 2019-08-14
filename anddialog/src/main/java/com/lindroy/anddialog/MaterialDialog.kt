@@ -67,7 +67,7 @@ class MaterialDialog private constructor() {
     /**
      * 单次配置
      */
-    class Builder : ComParams<Builder>() {
+    class Builder private constructor(): ComParams<Builder>() {
 
         init {
             globalParams.also {
