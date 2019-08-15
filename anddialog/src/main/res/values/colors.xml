@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="md_dialog_theme_color">#6200ee</color>
     <color name="md_dialog_bg_color">#ffffff</color>
     <color name="md_dialog_title_text_color">#de000000</color>
     <color name="md_dialog_message_text_color">#99000000</color>
     <color name="md_dialog_button_text_color">#6200ee</color>
+    <color name="md_single_choice_radio_button_color">@color/md_dialog_theme_color</color>
     <color name="md_single_choice_item_text_color">#de000000</color>
 </resources>

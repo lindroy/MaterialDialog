@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager
 import com.lindroy.anddialog.bean.ComParams
 import com.lindroy.anddialog.bean.ListItemParams
 import com.lindroy.anddialog.listener.OnDialogClickListener
+import com.lindroy.anddialog.listener.OnSingleChoiceListener
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.getResPx
 import com.lindroy.iosdialog.util.getResString
@@ -69,8 +70,9 @@ class MaterialDialog private constructor() {
      * 单次配置
      */
     class Builder private constructor(
-            val itemList:MutableList<ListItemParams> = mutableListOf()
-    ): ComParams<Builder>() {
+            internal val itemList: MutableList<ListItemParams> = mutableListOf(),
+            internal var singleChoiceListener: OnSingleChoiceListener? = null
+    ) : ComParams<Builder>() {
 
         init {
             globalParams.also {
@@ -98,7 +100,7 @@ class MaterialDialog private constructor() {
          * 设置对话框背景色
          */
         fun setBackgroundColor(@ColorInt color: Int) =
-            this.apply { backgroundColor = color }
+                this.apply { backgroundColor = color }
 
         /**
          * 设置对话框背景色
@@ -111,7 +113,7 @@ class MaterialDialog private constructor() {
          * 范围为0.0~1.0，0为全透明，1为不透明
          */
         fun setBackgroundAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) =
-            this.apply { backgroundAlpha = alpha }
+                this.apply { backgroundAlpha = alpha }
 
         /**
          * 设置对话框标题
@@ -170,7 +172,7 @@ class MaterialDialog private constructor() {
          * @param colorId:颜色资源Id
          */
         fun setMessageColorRes(@ColorRes colorId: Int) =
-            this.apply { setMessageColor(getResColor(colorId)) }
+                this.apply { setMessageColor(getResColor(colorId)) }
 
         /**
          * 设置信息文字大小
@@ -226,7 +228,7 @@ class MaterialDialog private constructor() {
          * @see setPosTextColor(Int)
          */
         fun setPosTextColorRes(@ColorRes colorId: Int) =
-            this.apply { setPosTextColor(getResColor(colorId)) }
+                this.apply { setPosTextColor(getResColor(colorId)) }
 
         /**
          * 设置Negative按钮的文字颜色
@@ -241,7 +243,7 @@ class MaterialDialog private constructor() {
          * @see setNegTextColor
          */
         fun setNegTextColorRes(@ColorRes colorId: Int) =
-            this.apply { setNegTextColor(getResColor(colorId)) }
+                this.apply { setNegTextColor(getResColor(colorId)) }
 
         /**
          * 是否显示Negative按钮，默认为true，显示
@@ -259,7 +261,7 @@ class MaterialDialog private constructor() {
          * @param colorId:颜色资源Id
          */
         fun setNeuTextColorRes(@ColorRes colorId: Int) =
-            this.apply { setNeuTextColor(getResColor(colorId)) }
+                this.apply { setNeuTextColor(getResColor(colorId)) }
 
         /**
          * 是否显示Negative按钮，默认为true，显示
@@ -271,51 +273,60 @@ class MaterialDialog private constructor() {
          * 用于屏幕旋转保存状态和Java调用
          */
         fun setOnPositiveClickListener(listener: OnDialogClickListener) =
-            this.apply { this.posButtonParams.clickListener = listener }
+                this.apply { this.posButtonParams.clickListener = listener }
 
         /**
          * Positive按钮的点击监听
          */
         fun setOnPositiveClickListener(listener: (dialog: DialogInterface) -> Unit) =
-            setOnPositiveClickListener(object : OnDialogClickListener() {
-                override fun onClick(dialog: DialogInterface) {
-                    listener.invoke(dialog)
-                }
-            })
+                setOnPositiveClickListener(object : OnDialogClickListener() {
+                    override fun onClick(dialog: DialogInterface) {
+                        listener.invoke(dialog)
+                    }
+                })
 
         /**
          * Negative按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
         fun setOnNegativeClickListener(listener: OnDialogClickListener) =
-            this.apply { this.negButtonParams.clickListener = listener }
+                this.apply { this.negButtonParams.clickListener = listener }
 
         /**
          * Negative按钮的点击监听
          */
         fun setOnNegativeClickListener(listener: (dialog: DialogInterface) -> Unit) =
-            setOnNegativeClickListener(object : OnDialogClickListener() {
-                override fun onClick(dialog: DialogInterface) {
-                    listener.invoke(dialog)
-                }
-            })
+                setOnNegativeClickListener(object : OnDialogClickListener() {
+                    override fun onClick(dialog: DialogInterface) {
+                        listener.invoke(dialog)
+                    }
+                })
 
         /**
          * Neutral按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
         fun setOnNeutralClickListener(listener: OnDialogClickListener) =
-            this.apply { this.neuButtonParams.clickListener = listener }
+                this.apply { this.neuButtonParams.clickListener = listener }
 
         /**
          * Neutral按钮的点击监听
          */
         fun setOnNeutralClickListener(listener: (dialog: DialogInterface) -> Unit) =
-            setOnNeutralClickListener(object : OnDialogClickListener() {
-                override fun onClick(dialog: DialogInterface) {
-                    listener.invoke(dialog)
-                }
-            })
+                setOnNeutralClickListener(object : OnDialogClickListener() {
+                    override fun onClick(dialog: DialogInterface) {
+                        listener.invoke(dialog)
+                    }
+                })
+
+        fun setSingleChoiceItems(items: Array<String>, checkedItem: Int = -1, listener: OnSingleChoiceListener) = this.apply {
+            itemList.addAll(items.map { ListItemParams(text = it) })
+            if (checkedItem >= 0){
+                itemList[checkedItem].isChecked = true
+            }
+            this.singleChoiceListener = listener
+        }
+
 
         /**
          * 显示对话框

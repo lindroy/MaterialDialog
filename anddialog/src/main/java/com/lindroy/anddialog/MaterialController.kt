@@ -17,7 +17,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.adapter.SingleChoiceAdapter
-import com.lindroy.anddialog.bean.ListItemParams
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.synthetic.main.dialog_material.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
@@ -161,14 +160,20 @@ class MaterialController : DialogFragment() {
         }
     }
 
+    /**
+     * 设置列表
+     */
     private fun setupList(){
-        for (i in (1..5)) {
+       /* for (i in (1..5)) {
             params.itemList.add(ListItemParams(text = "选项$i",textSize = getResSp(R.dimen.md_single_choice_text_size)))
-        }
-
+        }*/
         if(params.itemList.isNotEmpty()){
             viewStubList.setVisible()
-            listView.adapter = SingleChoiceAdapter(mContext,params.itemList)
+            val adapter = SingleChoiceAdapter(mContext,params.itemList)
+            listView.adapter = adapter
+            adapter.setOnCheckedListener { checked, oldChecked ->
+                params.singleChoiceListener?.onChecked(dialog,checked,oldChecked)
+            }
         }
     }
 
