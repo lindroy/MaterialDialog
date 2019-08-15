@@ -99,6 +99,17 @@ class MaterialController : DialogFragment() {
      * 设置按钮
      */
     private fun setupButtons() {
+        /*fun Button.setRippleDrawable(){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val rd =  RippleDrawable(
+                    ColorStateList.valueOf(getResColor(R.color.md_dialog_button_text_color)),
+                    //背景不能为透明
+                    getResDrawable(R.drawable.shape_button_click_ripple),
+                    null
+                    )
+                background = rd
+            }
+        }*/
         //Positive Button
         params.posButtonParams.also {
             btnPos.apply {
