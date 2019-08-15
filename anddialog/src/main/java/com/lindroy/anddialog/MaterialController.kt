@@ -11,15 +11,14 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.bean.TextParams
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.screenWidth
+import com.lindroy.iosdialog.util.setBold
 import kotlinx.android.synthetic.main.dialog_material.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
 import kotlinx.android.synthetic.main.layout_md_title_message_panel.*
@@ -41,50 +40,57 @@ class MaterialController : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rootView.background = initBackgroundDrawable()
-        setupTitle(params.titleParams)
-        setupMessage(params.msgParams)
-        setupButton()
+        setupTitle()
+        setupMessage()
+        setupButtons()
     }
 
     /**
      * 设置标题
      */
-    private fun setupTitle(titleP: TextParams) {
-        Log.e("Tag","titleP.text="+titleP.text)
-        tvTitle.apply {
-            visibility = when (titleP.text.isNotEmpty()) {
-                true -> {
-                    text = titleP.text
-                    setTextColor(getResColor(R.color.md_dialog_title_text_color))
-                    textSize = titleP.textSize
-                    View.VISIBLE
+    private fun setupTitle() {
+        params.titleParams.also {
+            tvTitle.apply {
+                visibility = when (it.text.isNotEmpty()) {
+                    true -> {
+                        text = it.text
+                        setBold(it.isBold)
+                        setTextColor(getResColor(R.color.md_dialog_title_text_color))
+                        textSize = it.textSize
+                        View.VISIBLE
+                    }
+                    false -> View.GONE
                 }
-                false -> View.GONE
             }
         }
+
     }
 
     /**
      * 设置信息文字
      */
-    private fun setupMessage(msgP: TextParams) {
-        tvMessage.apply {
-            visibility = when (msgP.text.isNotEmpty()) {
-                true -> {
-                    text = msgP.text
-                    setTextColor(msgP.textColor)
-                    textSize = msgP.textSize
-                    View.VISIBLE
+    private fun setupMessage() {
+        params.msgParams.also {
+            tvMessage.apply {
+                visibility = when (it.text.isNotEmpty()) {
+                    true -> {
+                        text = it.text
+                        setBold(it.isBold)
+                        setTextColor(it.textColor)
+                        textSize = it.textSize
+                        View.VISIBLE
+                    }
+                    false -> View.GONE
                 }
-                false -> View.GONE
             }
         }
+
     }
 
     /**
      * 设置按钮
      */
-    private fun setupButton() {
+    private fun setupButtons() {
         //Positive Button
         params.posButtonParams.also {
             btnPos.apply {
@@ -113,13 +119,27 @@ class MaterialController : DialogFragment() {
                 }
             }
         }
-
+        //Neutral Button
+        params.neuButtonParams.also {
+            btnNeu.apply {
+                visibility = when (it.text.isNotEmpty()) {
+                    true -> {
+                        text = it.text
+                        setTextColor(it.textColor)
+                        textSize = it.textSize
+                        View.VISIBLE
+                    }
+                    false -> View.GONE
+                }
+            }
+        }
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         mContext = context!!
     }
+
 
     override fun onStart() {
         super.onStart()

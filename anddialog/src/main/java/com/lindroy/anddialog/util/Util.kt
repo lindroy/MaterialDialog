@@ -3,6 +3,7 @@ package com.lindroy.iosdialog.util
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Point
+import android.graphics.Typeface
 import android.os.Build
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
@@ -10,6 +11,7 @@ import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import com.lindroy.anddialog.MaterialDialog
 
 /**
@@ -98,6 +100,14 @@ internal fun View.setGone() {
 internal fun View.setVisible() {
     if (!isVisible) {
         visibility = View.VISIBLE
+    }
+}
+
+internal fun TextView.setBold(isBold:Boolean){
+    if (isBold){
+        typeface = Typeface.create("sans-serif-light",Typeface.BOLD)
+//        setTypeface(Typeface.SANS_SERIF,Typeface.BOLD)
+//        typeface = Typeface.defaultFromStyle(Typeface.BOLD)
     }
 }
 

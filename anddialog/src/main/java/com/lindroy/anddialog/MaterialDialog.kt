@@ -204,7 +204,7 @@ class MaterialDialog private constructor() {
         /**
          * 设置Neutral按钮（即最左侧的按钮）文字
          */
-        fun setNeutralText(text: String) = this.apply { this.negButtonParams.text = text }
+        fun setNeutralText(text: String) = this.apply { this.neuButtonParams.text = text }
 
         /**
          * @see setNeutralText(String)

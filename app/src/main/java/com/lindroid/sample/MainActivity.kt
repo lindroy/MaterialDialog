@@ -30,5 +30,14 @@ class MainActivity : AppCompatActivity() {
                     .setNegativeText("Cancel")
                     .show()
         }
+        btnAllButton.setOnClickListener {
+            MaterialDialog.build(this)
+                    .setTitle(R.string.location_services_title)
+                    .setMessage(R.string.location_services_msg)
+                    .setPositiveText(R.string.agree)
+                    .setNegativeText(R.string.disagree)
+                    .setNeutralText(R.string.learn_more)
+                    .show()
+        }
     }
 }

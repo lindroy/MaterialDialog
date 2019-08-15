@@ -4,33 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="36dp"
     android:layout_marginTop="36dp"
-    android:gravity="end"
+    android:gravity="center_vertical"
     android:measureWithLargestChild="true"
     android:orientation="horizontal">
 
     <Button
+        android:id="@+id/btnNeu"
+        style="@style/MaterialDialogButtonStyle"
+        android:layout_marginStart="@dimen/md_dialog_button_margin" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <!--android:background="@null"-->
+    <!--android:foreground="?android:attr/selectableItemBackground"-->
+
+    <Button
         android:id="@+id/btnNeg"
-        style="?android:buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        style="@style/MaterialDialogButtonStyle"
         android:layout_marginEnd="8dp"
-        android:background="@null"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:minWidth="50dp"
         android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:textColor="@color/md_dialog_button_text_color" />
+        android:paddingEnd="10dp" />
 
     <Button
         android:id="@+id/btnPos"
-        style="?android:buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="8dp"
-        android:background="@null"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:minWidth="50dp"
-        android:textColor="@color/md_dialog_button_text_color" />
+        style="@style/MaterialDialogButtonStyle"
+        android:layout_marginEnd="@dimen/md_dialog_button_margin" />
 
 
 </LinearLayout>
