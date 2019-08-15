@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import com.lindroy.anddialog.bean.ComParams
+import com.lindroy.anddialog.bean.ListItemParams
 import com.lindroy.anddialog.listener.OnDialogClickListener
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.getResPx
@@ -67,7 +68,9 @@ class MaterialDialog private constructor() {
     /**
      * 单次配置
      */
-    class Builder private constructor(): ComParams<Builder>() {
+    class Builder private constructor(
+            val itemList:MutableList<ListItemParams> = mutableListOf()
+    ): ComParams<Builder>() {
 
         init {
             globalParams.also {

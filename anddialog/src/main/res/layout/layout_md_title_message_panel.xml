@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/md_dialog_padding_start"
-        android:layout_marginEnd="@dimen/md_dialog_padding_start"
-        android:paddingBottom="20dp" />
+            tools:text="Dialog Title"
+            tools:textSize="@dimen/md_dialog_title_size"
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/md_dialog_padding_start"
+            android:layout_marginEnd="@dimen/md_dialog_padding_start"
+            android:paddingBottom="20dp"/>
 
     <TextView
-        android:id="@+id/tvMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/md_dialog_padding_start"
-        android:layout_marginEnd="@dimen/md_dialog_padding_start"
-        />
+            tools:text="Dialog Message"
+            tools:textSize="@dimen/md_dialog_message_size"
+            android:id="@+id/tvMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/md_dialog_padding_start"
+            android:layout_marginEnd="@dimen/md_dialog_padding_start"
+    />
 </merge>

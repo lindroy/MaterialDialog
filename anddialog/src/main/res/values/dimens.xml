@@ -7,4 +7,5 @@
     <dimen name="md_dialog_padding_start">24dp</dimen>
     <dimen name="md_dialog_button_margin">8dp</dimen>
     <dimen name="md_dialog_button_panel_height">52dp</dimen>
+    <dimen name="md_single_choice_text_size">16sp</dimen>
 </resources>

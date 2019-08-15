@@ -4,4 +4,5 @@
     <color name="md_dialog_title_text_color">#de000000</color>
     <color name="md_dialog_message_text_color">#99000000</color>
     <color name="md_dialog_button_text_color">#6200ee</color>
+    <color name="md_single_choice_item_text_color">#de000000</color>
 </resources>
