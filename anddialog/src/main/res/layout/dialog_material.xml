@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/rootView"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/md_dialog_bg_color"
-              android:orientation="vertical"
-              android:paddingTop="24dp"
-              android:paddingBottom="8dp">
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_dialog_bg_color"
+    android:orientation="vertical"
+    android:paddingTop="24dp"
+    >
 
-    <include
-            layout="@layout/layout_md_title_message_panel"/>
+    <include layout="@layout/layout_md_title_message_panel" />
+    
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="28dp" />
 
-    <include layout="@layout/layout_md_button_panel"/>
+    <include layout="@layout/layout_md_button_panel" />
 
 
 </LinearLayout>

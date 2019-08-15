@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="?android:buttonBarStyle"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
-    android:layout_marginTop="36dp"
+    android:layout_height="@dimen/md_dialog_button_panel_height"
     android:gravity="center_vertical"
     android:measureWithLargestChild="true"
+    android:id="@+id/buttonPanel"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
     android:orientation="horizontal">
 
     <Button

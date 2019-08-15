@@ -16,9 +16,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lindroid.anddialog.R
-import com.lindroy.iosdialog.util.getResColor
-import com.lindroy.iosdialog.util.screenWidth
-import com.lindroy.iosdialog.util.setBold
+import com.lindroy.iosdialog.util.*
 import kotlinx.android.synthetic.main.dialog_material.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
 import kotlinx.android.synthetic.main.layout_md_title_message_panel.*
@@ -33,6 +31,16 @@ class MaterialController : DialogFragment() {
 
     private lateinit var mContext: Context
     private lateinit var params: MaterialDialog.Builder
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //TODO(暂未实现屏幕旋转保存参数功能)
+        savedInstanceState?.apply {
+            params = MaterialDialog.buildParams
+        }
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.dialog_material, container, false)
 
@@ -132,6 +140,9 @@ class MaterialController : DialogFragment() {
                     false -> View.GONE
                 }
             }
+        }
+        if (btnPos.isGone && btnNeg.isGone && btnNeu.isGone){
+            buttonPanel.setGone()
         }
     }
 

@@ -6,4 +6,5 @@
     <dimen name="md_dialog_bg_corner_radius">4dp</dimen>
     <dimen name="md_dialog_padding_start">24dp</dimen>
     <dimen name="md_dialog_button_margin">8dp</dimen>
+    <dimen name="md_dialog_button_panel_height">52dp</dimen>
 </resources>

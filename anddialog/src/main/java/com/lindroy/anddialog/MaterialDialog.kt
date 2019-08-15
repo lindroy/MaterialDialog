@@ -267,14 +267,14 @@ class MaterialDialog private constructor() {
          * Positive按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
-        fun setOnPosClickListener(listener: OnDialogClickListener) =
+        fun setOnPositiveClickListener(listener: OnDialogClickListener) =
             this.apply { this.posButtonParams.clickListener = listener }
 
         /**
          * Positive按钮的点击监听
          */
-        fun setOnPosClickListener(listener: (dialog: DialogInterface) -> Unit) =
-            setOnPosClickListener(object : OnDialogClickListener() {
+        fun setOnPositiveClickListener(listener: (dialog: DialogInterface) -> Unit) =
+            setOnPositiveClickListener(object : OnDialogClickListener() {
                 override fun onClick(dialog: DialogInterface) {
                     listener.invoke(dialog)
                 }
@@ -284,14 +284,14 @@ class MaterialDialog private constructor() {
          * Negative按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
-        fun setOnNegClickListener(listener: OnDialogClickListener) =
+        fun setOnNegativeClickListener(listener: OnDialogClickListener) =
             this.apply { this.negButtonParams.clickListener = listener }
 
         /**
          * Negative按钮的点击监听
          */
-        fun setOnNegClickListener(listener: (dialog: DialogInterface) -> Unit) =
-            setOnNegClickListener(object : OnDialogClickListener() {
+        fun setOnNegativeClickListener(listener: (dialog: DialogInterface) -> Unit) =
+            setOnNegativeClickListener(object : OnDialogClickListener() {
                 override fun onClick(dialog: DialogInterface) {
                     listener.invoke(dialog)
                 }
@@ -301,14 +301,14 @@ class MaterialDialog private constructor() {
          * Neutral按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
-        fun setOnNeuClickListener(listener: OnDialogClickListener) =
+        fun setOnNeutralClickListener(listener: OnDialogClickListener) =
             this.apply { this.neuButtonParams.clickListener = listener }
 
         /**
          * Neutral按钮的点击监听
          */
-        fun setOnNeuClickListener(listener: (dialog: DialogInterface) -> Unit) =
-            setOnNeuClickListener(object : OnDialogClickListener() {
+        fun setOnNeutralClickListener(listener: (dialog: DialogInterface) -> Unit) =
+            setOnNeutralClickListener(object : OnDialogClickListener() {
                 override fun onClick(dialog: DialogInterface) {
                     listener.invoke(dialog)
                 }

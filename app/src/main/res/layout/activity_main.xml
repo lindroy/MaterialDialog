@@ -15,8 +15,14 @@
             android:layout_height="wrap_content" />
 
     <Button
+        android:text="只显示信息文字"
+        android:id="@+id/btnInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/btnMaterial"
-        android:text="MaterialDialog"
+        android:text="标准对话框"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
