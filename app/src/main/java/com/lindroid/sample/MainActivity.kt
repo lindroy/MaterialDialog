@@ -69,6 +69,8 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(mContext,"你选择了${cities[checked]}",Toast.LENGTH_LONG).show()
                         }
                     })
+                    .setPositiveText(R.string.ok)
+                    .setNegativeText(R.string.cancel)
                     .show()
         }
     }

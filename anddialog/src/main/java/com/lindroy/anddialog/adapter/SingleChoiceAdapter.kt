@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -58,7 +57,6 @@ class SingleChoiceAdapter(private val mContext: Context, private val items: List
         }
         val item = items[position]
         vh.tvSingle.apply {
-            Log.e("Tag", "item.text=${item.text}")
             text = item.text
             textSize = item.textSize
             setTextColor(item.textColor)

@@ -5,18 +5,20 @@
     android:layout_height="wrap_content"
     android:background="@color/md_dialog_bg_color"
     android:orientation="vertical"
-    android:paddingTop="24dp"
-    >
+    android:paddingTop="24dp">
 
     <include layout="@layout/layout_md_title_message_panel" />
 
     <ViewStub
         android:id="@+id/viewStubList"
-        android:layout="@layout/layout_md_list_panel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout="@layout/layout_md_list_panel" />
+
+
     <Space
+        android:id="@+id/spaceButton"
         android:layout_width="0dp"
         android:layout_height="28dp" />
 

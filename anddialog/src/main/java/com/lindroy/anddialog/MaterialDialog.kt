@@ -25,6 +25,10 @@ import com.lindroy.iosdialog.util.px2sp
 class MaterialDialog private constructor() {
 
     companion object {
+        const val ALERT = 0x001
+        const val SINGLE_CHOICE = 0x002
+        const val MULTI_CHOICE = 0x003
+        const val BOTTOM = 0x004
         private lateinit var application: Application
         internal lateinit var globalParams: Configs
         internal lateinit var buildParams: Builder

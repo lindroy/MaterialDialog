@@ -5,6 +5,8 @@ import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 import android.support.annotation.StyleRes
 import com.lindroid.anddialog.R
+import com.lindroy.anddialog.MaterialDialog
+import com.lindroy.anddialog.constants.DialogType
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.getResPx
 import com.lindroy.iosdialog.util.getResSp
@@ -19,8 +21,10 @@ import kotlinx.android.parcel.Parcelize
 @Suppress("UNCHECKED_CAST")
 @Parcelize
 open class ComParams<T : ComParams<T>>(
+        @DialogType internal var type: Int = MaterialDialog.ALERT,
         internal var tag: String = "MaterialDialog",
         internal var dimAmount: Float = 0.32F,
+        internal var heightScale: Float = 0.0F,
         internal var titleParams: TextParams = TextParams(
                 textSize = getResSp(R.dimen.md_dialog_title_size),
                 isBold = true,

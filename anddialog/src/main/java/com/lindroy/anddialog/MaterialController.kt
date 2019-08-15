@@ -11,10 +11,8 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.AbsListView
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.adapter.SingleChoiceAdapter
 import com.lindroy.iosdialog.util.*
@@ -155,7 +153,7 @@ class MaterialController : DialogFragment() {
                 }
             }
         }
-        if (btnPos.isGone && btnNeg.isGone && btnNeu.isGone){
+        if (btnPos.isGone && btnNeg.isGone && btnNeu.isGone) {
             buttonPanel.setGone()
         }
     }
@@ -163,16 +161,39 @@ class MaterialController : DialogFragment() {
     /**
      * 设置列表
      */
-    private fun setupList(){
-       /* for (i in (1..5)) {
-            params.itemList.add(ListItemParams(text = "选项$i",textSize = getResSp(R.dimen.md_single_choice_text_size)))
-        }*/
-        if(params.itemList.isNotEmpty()){
+    private fun setupList() {
+        if (params.itemList.isNotEmpty()) {
+            spaceButton.setGone()
             viewStubList.setVisible()
-            val adapter = SingleChoiceAdapter(mContext,params.itemList)
+            val adapter = SingleChoiceAdapter(mContext, params.itemList)
             listView.adapter = adapter
+            listView.setOnScrollListener(object : AbsListView.OnScrollListener {
+                override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                    if (firstVisibleItem == 0) {
+                        if (listView.getChildAt(0) != null && listView.getChildAt(0).top == 0) {
+                            //最顶部
+                            viewDividerTop.setGone()
+                        } else {
+                            viewDividerTop.setVisible()
+                        }
+                    } else if (firstVisibleItem + visibleItemCount == totalItemCount) {
+                        val lastVisibleItem = listView.getChildAt(listView.childCount - 1)
+                        if (lastVisibleItem != null && lastVisibleItem.bottom == listView.height) {
+                            //最底部
+                            viewDividerBottom.setGone()
+                        }else{
+                            viewDividerBottom.setVisible()
+                        }
+                    }
+                }
+
+                override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+
+                }
+
+            })
             adapter.setOnCheckedListener { checked, oldChecked ->
-                params.singleChoiceListener?.onChecked(dialog,checked,oldChecked)
+                params.singleChoiceListener?.onChecked(dialog, checked, oldChecked)
             }
         }
     }
@@ -198,7 +219,17 @@ class MaterialController : DialogFragment() {
             } else if (baseParams.widthScale > 0) {
                 params.width = (screenWidth * baseParams.widthScale).toInt()
             }*/
-            attributes = params
+            val maxHeight = 0.65 * screenHeight
+            decorView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (decorView.height > maxHeight) {
+                        params.height = maxHeight.toInt()
+                    }
+                    attributes = params
+                    decorView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+//            attributes = params
         }
     }
 
