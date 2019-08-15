@@ -324,6 +324,7 @@ class MaterialDialog private constructor() {
                 })
 
         fun setSingleChoiceItems(items: Array<String>, checkedItem: Int = -1, listener: OnSingleChoiceListener) = this.apply {
+            type = SINGLE_CHOICE
             itemList.addAll(items.map { ListItemParams(text = it) })
             if (checkedItem >= 0){
                 itemList[checkedItem].isChecked = true

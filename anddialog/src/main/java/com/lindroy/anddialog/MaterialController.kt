@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager
 import android.view.*
 import android.widget.AbsListView
 import com.lindroid.anddialog.R
+import com.lindroy.anddialog.adapter.MultipleChoiceAdapter
 import com.lindroy.anddialog.adapter.SingleChoiceAdapter
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.synthetic.main.dialog_material.*
@@ -93,7 +94,6 @@ class MaterialController : DialogFragment() {
                 }
             }
         }
-
     }
 
     /**
@@ -165,7 +165,14 @@ class MaterialController : DialogFragment() {
         if (params.itemList.isNotEmpty()) {
             spaceButton.setGone()
             viewStubList.setVisible()
-            val adapter = SingleChoiceAdapter(mContext, params.itemList)
+            val adapter = when (params.type) {
+                MaterialDialog.MULTI_CHOICE -> MultipleChoiceAdapter(mContext, params.itemList)
+                else -> SingleChoiceAdapter(mContext, params.itemList).apply {
+                    setOnCheckedListener { checked, oldChecked ->
+                        params.singleChoiceListener?.onChecked(dialog, checked, oldChecked)
+                    }
+                }
+            }
             listView.adapter = adapter
             listView.setOnScrollListener(object : AbsListView.OnScrollListener {
                 override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
@@ -181,7 +188,7 @@ class MaterialController : DialogFragment() {
                         if (lastVisibleItem != null && lastVisibleItem.bottom == listView.height) {
                             //最底部
                             viewDividerBottom.setGone()
-                        }else{
+                        } else {
                             viewDividerBottom.setVisible()
                         }
                     }
@@ -192,9 +199,7 @@ class MaterialController : DialogFragment() {
                 }
 
             })
-            adapter.setOnCheckedListener { checked, oldChecked ->
-                params.singleChoiceListener?.onChecked(dialog, checked, oldChecked)
-            }
+
         }
     }
 

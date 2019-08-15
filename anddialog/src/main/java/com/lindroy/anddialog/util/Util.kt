@@ -106,8 +106,6 @@ internal fun View.setVisible() {
 internal fun TextView.setBold(isBold:Boolean){
     if (isBold){
         typeface = Typeface.create("sans-serif-light",Typeface.BOLD)
-//        setTypeface(Typeface.SANS_SERIF,Typeface.BOLD)
-//        typeface = Typeface.defaultFromStyle(Typeface.BOLD)
     }
 }
 
