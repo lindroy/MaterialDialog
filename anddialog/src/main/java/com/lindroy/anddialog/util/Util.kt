@@ -21,7 +21,6 @@ import com.lindroy.anddialog.MaterialDialog
  * @Description
  */
 
-
 internal val screenHeight: Int
     get() {
         val wm = MaterialDialog.appContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager

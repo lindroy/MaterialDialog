@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager
 import com.lindroy.anddialog.bean.ComParams
 import com.lindroy.anddialog.bean.ListItemParams
 import com.lindroy.anddialog.listener.OnDialogClickListener
+import com.lindroy.anddialog.listener.OnMultiChoiceListener
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.getResPx
@@ -75,7 +76,8 @@ class MaterialDialog private constructor() {
      */
     class Builder private constructor(
             internal val itemList: MutableList<ListItemParams> = mutableListOf(),
-            internal var singleChoiceListener: OnSingleChoiceListener? = null
+            internal var singleChoiceListener: OnSingleChoiceListener? = null,
+            internal var multiChoiceListener: OnMultiChoiceListener? = null
     ) : ComParams<Builder>() {
 
         init {
@@ -323,15 +325,58 @@ class MaterialDialog private constructor() {
                     }
                 })
 
+        /**
+         * 设置单选列表
+         * @param items:选项数组
+         * @param checkedItem:默认选中的item，小于0时表示没有默认选中
+         * @param listener:点击监听
+         */
         fun setSingleChoiceItems(items: Array<String>, checkedItem: Int = -1, listener: OnSingleChoiceListener) = this.apply {
             type = SINGLE_CHOICE
             itemList.addAll(items.map { ListItemParams(text = it) })
-            if (checkedItem >= 0){
+            if (checkedItem >= 0) {
                 itemList[checkedItem].isChecked = true
             }
             this.singleChoiceListener = listener
         }
 
+        /**
+         * @see setSingleChoiceItems
+         */
+        fun setSingleChoiceItems(items: Array<String>, checkedItem: Int = -1,
+                                 listener: (dialog: DialogInterface, checked: Int, oldChecked: Int) -> Unit) =
+                setSingleChoiceItems(items, checkedItem, object : OnSingleChoiceListener() {
+                    /**
+                     * @param checked:当前选中的item
+                     * @param oldChecked:先前选中的item
+                     */
+                    override fun onChecked(dialog: DialogInterface, checked: Int, oldChecked: Int) {
+                        listener.invoke(dialog, checked, oldChecked)
+                    }
+
+                })
+
+        @JvmOverloads
+        fun setMultiChoiceItems(items: Array<String>, checkedArray: IntArray? = null, listener: OnMultiChoiceListener) = this.apply {
+            type = MULTI_CHOICE
+            itemList.addAll(items.map { ListItemParams(text = it) })
+            checkedArray?.forEach {
+                itemList[it].isChecked = true
+            }
+            multiChoiceListener = listener
+        }
+
+        @JvmOverloads
+        fun setMultiChoiceItems(items: Array<String>, checkedArray: IntArray? = null, listener: (dialog: DialogInterface, position: Int, isChecked: Boolean) -> Unit) = setMultiChoiceItems(items, checkedArray, object : OnMultiChoiceListener() {
+            /**
+             * @param position:当前点击的item位置
+             * @param isChecked:点击后是否选中
+             */
+            override fun onChecked(dialog: DialogInterface, position: Int, isChecked: Boolean) {
+                listener.invoke(dialog, position, isChecked)
+            }
+
+        })
 
         /**
          * 显示对话框

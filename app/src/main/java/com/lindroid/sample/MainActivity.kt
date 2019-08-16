@@ -13,13 +13,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mContext: Context
-    private lateinit var cities :Array<String>
+    private lateinit var cities: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mContext = this
-        cities =  resources.getStringArray(R.array.cities)
+        cities = resources.getStringArray(R.array.cities)
         MaterialDialog.init(this.application)
 
         btnAlert.setOnClickListener {
@@ -44,11 +44,11 @@ class MainActivity : AppCompatActivity() {
                     .setMessage(R.string.location_services_msg)
                     .setPositiveText(R.string.agree)
                     .setOnPositiveClickListener {
-                        Toast.makeText(mContext,R.string.agree,Toast.LENGTH_LONG).show()
+                        Toast.makeText(mContext, R.string.agree, Toast.LENGTH_LONG).show()
                     }
                     .setNegativeText(R.string.disagree)
                     .setOnNegativeClickListener {
-                        Toast.makeText(mContext,R.string.disagree,Toast.LENGTH_LONG).show()
+                        Toast.makeText(mContext, R.string.disagree, Toast.LENGTH_LONG).show()
                     }
                     .show()
         }
@@ -64,11 +64,21 @@ class MainActivity : AppCompatActivity() {
         btnSingle.setOnClickListener {
             MaterialDialog.build(this)
                     .setTitle("请选择一个城市")
-                    .setSingleChoiceItems(cities,listener = object :OnSingleChoiceListener(){
+                    .setSingleChoiceItems(cities, listener = object : OnSingleChoiceListener() {
                         override fun onChecked(dialog: DialogInterface, checked: Int, oldChecked: Int) {
-                            Toast.makeText(mContext,"你选择了${cities[checked]}",Toast.LENGTH_LONG).show()
+                            Toast.makeText(mContext, "你选择了${cities[checked]}", Toast.LENGTH_LONG).show()
                         }
                     })
+                    .setPositiveText(R.string.ok)
+                    .setNegativeText(R.string.cancel)
+                    .show()
+        }
+        btnMultiple.setOnClickListener {
+            MaterialDialog.build(this)
+                    .setTitle("请选择你喜欢的城市")
+                    .setMultiChoiceItems(cities, null) { dialog, position, isChecked ->
+                        Toast.makeText(mContext, "你点击了${cities[position]}，选中：$isChecked", Toast.LENGTH_LONG).show()
+                    }
                     .setPositiveText(R.string.ok)
                     .setNegativeText(R.string.cancel)
                     .show()

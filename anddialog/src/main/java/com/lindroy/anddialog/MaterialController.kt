@@ -166,7 +166,11 @@ class MaterialController : DialogFragment() {
             spaceButton.setGone()
             viewStubList.setVisible()
             val adapter = when (params.type) {
-                MaterialDialog.MULTI_CHOICE -> MultipleChoiceAdapter(mContext, params.itemList)
+                MaterialDialog.MULTI_CHOICE -> MultipleChoiceAdapter(mContext, params.itemList).apply {
+                    setOnCheckedListener{which, isChecked ->
+                        params.multiChoiceListener?.onChecked(dialog,which,isChecked)
+                    }
+                }
                 else -> SingleChoiceAdapter(mContext, params.itemList).apply {
                     setOnCheckedListener { checked, oldChecked ->
                         params.singleChoiceListener?.onChecked(dialog, checked, oldChecked)

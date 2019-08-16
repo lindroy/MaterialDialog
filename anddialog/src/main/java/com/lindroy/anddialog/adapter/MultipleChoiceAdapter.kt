@@ -22,18 +22,7 @@ import com.lindroy.iosdialog.util.getResColor
  */
 class MultipleChoiceAdapter(private val mContext: Context, private val items: List<ListItemParams>) : BaseAdapter() {
 
-    private var checkedListener: ((checked: Int, oldChecked: Int) -> Unit)? = null
-
-    private var oldCheckedPos = -1
-
-    init {
-        for ((index, item) in items.withIndex()) {
-            if (item.isChecked) {
-                oldCheckedPos = index
-                break
-            }
-        }
-    }
+    private var checkedListener: ((which: Int, isChecked: Boolean) -> Unit)? = null
 
     override fun getCount() = items.size
 
@@ -72,7 +61,7 @@ class MultipleChoiceAdapter(private val mContext: Context, private val items: Li
         }
         vh.llMultiple.setOnClickListener {
             item.isChecked = !item.isChecked
-            checkedListener?.invoke(position, oldCheckedPos)
+            checkedListener?.invoke(position, item.isChecked)
             notifyDataSetChanged()
         }
         return itemView
@@ -81,7 +70,7 @@ class MultipleChoiceAdapter(private val mContext: Context, private val items: Li
     /**
      * 选中监听
      */
-    fun setOnCheckedListener(listener: (checked: Int, oldChecked: Int) -> Unit) {
+    fun setOnCheckedListener(listener:(which: Int, isChecked: Boolean) -> Unit){
         checkedListener = listener
     }
 
