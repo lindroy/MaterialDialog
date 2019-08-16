@@ -42,4 +42,10 @@
         android:text="复选列表对话框"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnMDCus1"
+        android:text="自定义Material Design风格对话框1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

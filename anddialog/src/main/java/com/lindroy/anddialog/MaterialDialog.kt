@@ -75,9 +75,9 @@ class MaterialDialog private constructor() {
      * 单次配置
      */
     class Builder private constructor(
-            internal val itemList: MutableList<ListItemParams> = mutableListOf(),
-            internal var singleChoiceListener: OnSingleChoiceListener? = null,
-            internal var multiChoiceListener: OnMultiChoiceListener? = null
+        internal val itemList: MutableList<ListItemParams> = mutableListOf(),
+        internal var singleChoiceListener: OnSingleChoiceListener? = null,
+        internal var multiChoiceListener: OnMultiChoiceListener? = null
     ) : ComParams<Builder>() {
 
         init {
@@ -106,7 +106,7 @@ class MaterialDialog private constructor() {
          * 设置对话框背景色
          */
         fun setBackgroundColor(@ColorInt color: Int) =
-                this.apply { backgroundColor = color }
+            this.apply { backgroundColor = color }
 
         /**
          * 设置对话框背景色
@@ -119,7 +119,7 @@ class MaterialDialog private constructor() {
          * 范围为0.0~1.0，0为全透明，1为不透明
          */
         fun setBackgroundAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) =
-                this.apply { backgroundAlpha = alpha }
+            this.apply { backgroundAlpha = alpha }
 
         /**
          * 设置对话框标题
@@ -178,13 +178,14 @@ class MaterialDialog private constructor() {
          * @param colorId:颜色资源Id
          */
         fun setMessageColorRes(@ColorRes colorId: Int) =
-                this.apply { setMessageColor(getResColor(colorId)) }
+            this.apply { setMessageColor(getResColor(colorId)) }
 
         /**
          * 设置信息文字大小
          * @param messageSize:单位为sp
          */
-        fun setMessageSize(messageSize: Float) = this.apply { msgParams.textSize = px2sp(messageSize) }
+        fun setMessageSize(messageSize: Float) =
+            this.apply { msgParams.textSize = px2sp(messageSize) }
 
         /**
          * 设置信息文字大小
@@ -226,7 +227,8 @@ class MaterialDialog private constructor() {
          * 设置Positive按钮的文字颜色
          * @param color:颜色值
          */
-        fun setPosTextColor(@ColorInt color: Int) = this.apply { this.posButtonParams.textColor = color }
+        fun setPosTextColor(@ColorInt color: Int) =
+            this.apply { this.posButtonParams.textColor = color }
 
         /**
          * 设置Positive按钮的文字颜色
@@ -234,13 +236,14 @@ class MaterialDialog private constructor() {
          * @see setPosTextColor(Int)
          */
         fun setPosTextColorRes(@ColorRes colorId: Int) =
-                this.apply { setPosTextColor(getResColor(colorId)) }
+            this.apply { setPosTextColor(getResColor(colorId)) }
 
         /**
          * 设置Negative按钮的文字颜色
          * @param color:颜色值
          */
-        fun setNegTextColor(@ColorInt color: Int) = this.apply { this.negButtonParams.textColor = color }
+        fun setNegTextColor(@ColorInt color: Int) =
+            this.apply { this.negButtonParams.textColor = color }
 
         /**
          *
@@ -249,81 +252,177 @@ class MaterialDialog private constructor() {
          * @see setNegTextColor
          */
         fun setNegTextColorRes(@ColorRes colorId: Int) =
-                this.apply { setNegTextColor(getResColor(colorId)) }
+            this.apply { setNegTextColor(getResColor(colorId)) }
 
         /**
          * 是否显示Negative按钮，默认为true，显示
          */
-        fun setNegButtonVisible(isVisible: Boolean) = this.apply { this.negButtonParams.isVisible = isVisible }
+        fun setNegButtonVisible(isVisible: Boolean) =
+            this.apply { this.negButtonParams.isVisible = isVisible }
 
         /**
          * 设置Neutral按钮的文字颜色
          * @param color : 颜色值
          */
-        fun setNeuTextColor(@ColorInt color: Int) = this.apply { this.negButtonParams.textColor = color }
+        fun setNeuTextColor(@ColorInt color: Int) =
+            this.apply { this.negButtonParams.textColor = color }
 
         /**
          * 设置Neutral按钮的文字颜色
          * @param colorId:颜色资源Id
          */
         fun setNeuTextColorRes(@ColorRes colorId: Int) =
-                this.apply { setNeuTextColor(getResColor(colorId)) }
+            this.apply { setNeuTextColor(getResColor(colorId)) }
 
         /**
          * 是否显示Negative按钮，默认为true，显示
          */
-        fun setNeuButtonVisible(isVisible: Boolean) = this.apply { this.negButtonParams.isVisible = isVisible }
+        fun setNeuButtonVisible(isVisible: Boolean) =
+            this.apply { this.negButtonParams.isVisible = isVisible }
 
         /**
          * Positive按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
         fun setOnPositiveClickListener(listener: OnDialogClickListener) =
-                this.apply { this.posButtonParams.clickListener = listener }
+            this.apply { this.posButtonParams.clickListener = listener }
 
         /**
          * Positive按钮的点击监听
          */
         fun setOnPositiveClickListener(listener: (dialog: DialogInterface) -> Unit) =
-                setOnPositiveClickListener(object : OnDialogClickListener() {
-                    override fun onClick(dialog: DialogInterface) {
-                        listener.invoke(dialog)
-                    }
-                })
+            setOnPositiveClickListener(object : OnDialogClickListener() {
+                override fun onClick(dialog: DialogInterface) {
+                    listener.invoke(dialog)
+                }
+            })
 
         /**
          * Negative按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
         fun setOnNegativeClickListener(listener: OnDialogClickListener) =
-                this.apply { this.negButtonParams.clickListener = listener }
+            this.apply { negButtonParams.clickListener = listener }
 
         /**
          * Negative按钮的点击监听
          */
         fun setOnNegativeClickListener(listener: (dialog: DialogInterface) -> Unit) =
-                setOnNegativeClickListener(object : OnDialogClickListener() {
-                    override fun onClick(dialog: DialogInterface) {
-                        listener.invoke(dialog)
-                    }
-                })
+            setOnNegativeClickListener(object : OnDialogClickListener() {
+                override fun onClick(dialog: DialogInterface) {
+                    listener.invoke(dialog)
+                }
+            })
 
         /**
          * Neutral按钮的点击监听
          * 用于屏幕旋转保存状态和Java调用
          */
         fun setOnNeutralClickListener(listener: OnDialogClickListener) =
-                this.apply { this.neuButtonParams.clickListener = listener }
+            this.apply { neuButtonParams.clickListener = listener }
 
         /**
          * Neutral按钮的点击监听
          */
         fun setOnNeutralClickListener(listener: (dialog: DialogInterface) -> Unit) =
-                setOnNeutralClickListener(object : OnDialogClickListener() {
-                    override fun onClick(dialog: DialogInterface) {
-                        listener.invoke(dialog)
-                    }
-                })
+            setOnNeutralClickListener(object : OnDialogClickListener() {
+                override fun onClick(dialog: DialogInterface) {
+                    listener.invoke(dialog)
+                }
+            })
+
+        /**
+         * 设置Positive按钮信息和点击事件
+         */
+        fun setPositiveButton(
+            text: String = posButtonParams.text,
+            @ColorInt textColor: Int = posButtonParams.textColor,
+            textSize: Float = posButtonParams.textSize,
+            listener: OnDialogClickListener? = null
+        ) = this.apply {
+            posButtonParams.also {
+                it.text = text
+                it.textColor = textColor
+                it.textSize = textSize
+                it.clickListener = listener
+            }
+        }
+
+        /**
+         * @see setPositiveButton
+         */
+        fun setPositiveButton(
+            text: String = posButtonParams.text,
+            @ColorInt textColor: Int = posButtonParams.textColor,
+            textSize: Float = posButtonParams.textSize,
+            listener: ((dialog: DialogInterface) -> Unit)? = null
+        ) = setPositiveButton(text, textColor, textSize, object : OnDialogClickListener() {
+            override fun onClick(dialog: DialogInterface) {
+                listener?.invoke(dialog)
+            }
+        })
+
+        /**
+         * 设置Negative按钮信息和点击事件
+         */
+        fun setNegativeButton(
+            text: String = negButtonParams.text,
+            @ColorInt textColor: Int = negButtonParams.textColor,
+            textSize: Float = negButtonParams.textSize,
+            listener: OnDialogClickListener? = null
+        ) = this.apply {
+            negButtonParams.also {
+                it.text = text
+                it.textColor = textColor
+                it.textSize = textSize
+                it.clickListener = listener
+            }
+        }
+
+        /**
+         * @see setNegativeButton
+         */
+        fun setNegativeButton(
+            text: String = posButtonParams.text,
+            @ColorInt textColor: Int = posButtonParams.textColor,
+            textSize: Float = posButtonParams.textSize,
+            listener: ((dialog: DialogInterface) -> Unit)? = null
+        ) = setNegativeButton(text,textColor,textSize,object :OnDialogClickListener(){
+            override fun onClick(dialog: DialogInterface) {
+                listener?.invoke(dialog)
+            }
+        })
+
+        /**
+         * 设置Neutral按钮
+         */
+        fun setNeutralButton(
+            text: String = neuButtonParams.text,
+            @ColorInt textColor: Int = neuButtonParams.textColor,
+            textSize: Float = neuButtonParams.textSize,
+            listener: OnDialogClickListener? = null
+        ) = this.apply {
+            neuButtonParams.also {
+                it.text = text
+                it.textColor = textColor
+                it.textSize = textSize
+                it.clickListener = listener
+            }
+        }
+
+        /**
+         * @see setNeutralButton
+         */
+        fun setNeutralButton(
+            text: String = neuButtonParams.text,
+            @ColorInt textColor: Int = neuButtonParams.textColor,
+            textSize: Float = neuButtonParams.textSize,
+            listener: ((dialog: DialogInterface) -> Unit)? = null
+        ) = setNeutralButton(text,textColor,textSize,object :OnDialogClickListener(){
+            override fun onClick(dialog: DialogInterface) {
+                listener?.invoke(dialog)
+            }
+        })
 
         /**
          * 设置单选列表
@@ -331,7 +430,11 @@ class MaterialDialog private constructor() {
          * @param checkedItem:默认选中的item，小于0时表示没有默认选中
          * @param listener:点击监听
          */
-        fun setSingleChoiceItems(items: Array<String>, checkedItem: Int = -1, listener: OnSingleChoiceListener) = this.apply {
+        fun setSingleChoiceItems(
+            items: Array<String>,
+            checkedItem: Int = -1,
+            listener: OnSingleChoiceListener
+        ) = this.apply {
             type = SINGLE_CHOICE
             itemList.addAll(items.map { ListItemParams(text = it) })
             if (checkedItem >= 0) {
@@ -343,21 +446,33 @@ class MaterialDialog private constructor() {
         /**
          * @see setSingleChoiceItems
          */
-        fun setSingleChoiceItems(items: Array<String>, checkedItem: Int = -1,
-                                 listener: (dialog: DialogInterface, checked: Int, oldChecked: Int) -> Unit) =
-                setSingleChoiceItems(items, checkedItem, object : OnSingleChoiceListener() {
-                    /**
-                     * @param checked:当前选中的item
-                     * @param oldChecked:先前选中的item
-                     */
-                    override fun onChecked(dialog: DialogInterface, checked: Int, oldChecked: Int) {
-                        listener.invoke(dialog, checked, oldChecked)
-                    }
+        fun setSingleChoiceItems(
+            items: Array<String>, checkedItem: Int = -1,
+            listener: (dialog: DialogInterface, checked: Int, oldChecked: Int) -> Unit
+        ) =
+            setSingleChoiceItems(items, checkedItem, object : OnSingleChoiceListener() {
+                /**
+                 * @param checked:当前选中的item
+                 * @param oldChecked:先前选中的item
+                 */
+                override fun onChecked(dialog: DialogInterface, checked: Int, oldChecked: Int) {
+                    listener.invoke(dialog, checked, oldChecked)
+                }
 
-                })
+            })
 
+        /**
+         * 设置单选列表
+         * @param items:选项数组
+         * @param checkedArray:默认选中的item的位置数组，为null时全不选中
+         * @param listener:点击监听
+         */
         @JvmOverloads
-        fun setMultiChoiceItems(items: Array<String>, checkedArray: IntArray? = null, listener: OnMultiChoiceListener) = this.apply {
+        fun setMultiChoiceItems(
+            items: Array<String>,
+            checkedArray: IntArray? = null,
+            listener: OnMultiChoiceListener
+        ) = this.apply {
             type = MULTI_CHOICE
             itemList.addAll(items.map { ListItemParams(text = it) })
             checkedArray?.forEach {
@@ -366,8 +481,15 @@ class MaterialDialog private constructor() {
             multiChoiceListener = listener
         }
 
+        /**
+         * @see setMultiChoiceItems
+         */
         @JvmOverloads
-        fun setMultiChoiceItems(items: Array<String>, checkedArray: IntArray? = null, listener: (dialog: DialogInterface, position: Int, isChecked: Boolean) -> Unit) = setMultiChoiceItems(items, checkedArray, object : OnMultiChoiceListener() {
+        fun setMultiChoiceItems(
+            items: Array<String>,
+            checkedArray: IntArray? = null,
+            listener: (dialog: DialogInterface, position: Int, isChecked: Boolean) -> Unit
+        ) = setMultiChoiceItems(items, checkedArray, object : OnMultiChoiceListener() {
             /**
              * @param position:当前点击的item位置
              * @param isChecked:点击后是否选中

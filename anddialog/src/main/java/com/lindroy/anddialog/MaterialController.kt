@@ -28,22 +28,27 @@ import kotlinx.android.synthetic.main.layout_md_title_message_panel.*
  * @function
  * @Description
  */
+private const val KEY_MATERIAL_PARAMS = "material_params"
+
 class MaterialController : DialogFragment() {
 
     private lateinit var mContext: Context
-    private lateinit var params: MaterialDialog.Builder
+    private lateinit var mdParams: MaterialDialog.Builder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //TODO(暂未实现屏幕旋转保存参数功能)
         savedInstanceState?.apply {
-            params = MaterialDialog.buildParams
+            mdParams = getParcelable(KEY_MATERIAL_PARAMS) ?: MaterialDialog.buildParams
         }
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.dialog_material, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
+        inflater.inflate(R.layout.dialog_material, container, false)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,7 +64,7 @@ class MaterialController : DialogFragment() {
      * 设置标题
      */
     private fun setupTitle() {
-        params.titleParams.also {
+        mdParams.titleParams.also {
             tvTitle.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -80,7 +85,7 @@ class MaterialController : DialogFragment() {
      * 设置信息文字
      */
     private fun setupMessage() {
-        params.msgParams.also {
+        mdParams.msgParams.also {
             tvMessage.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -112,13 +117,22 @@ class MaterialController : DialogFragment() {
             }
         }*/
         //Positive Button
-        params.posButtonParams.also {
+        fun dismissDialog() {
+            if (mdParams.dismissible) {
+                dismiss()
+            }
+        }
+        mdParams.posButtonParams.also {
             btnPos.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
                         text = it.text
                         setTextColor(it.textColor)
                         textSize = it.textSize
+                        setOnClickListener { _ ->
+                            it.clickListener?.onClick(dialog)
+                            dismissDialog()
+                        }
                         View.VISIBLE
                     }
                     false -> View.GONE
@@ -126,13 +140,17 @@ class MaterialController : DialogFragment() {
             }
         }
         //Negative Button
-        params.negButtonParams.also {
+        mdParams.negButtonParams.also {
             btnNeg.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
                         text = it.text
                         setTextColor(it.textColor)
                         textSize = it.textSize
+                        setOnClickListener { _ ->
+                            it.clickListener?.onClick(dialog)
+                            dismissDialog()
+                        }
                         View.VISIBLE
                     }
                     false -> View.GONE
@@ -140,13 +158,17 @@ class MaterialController : DialogFragment() {
             }
         }
         //Neutral Button
-        params.neuButtonParams.also {
+        mdParams.neuButtonParams.also {
             btnNeu.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
                         text = it.text
                         setTextColor(it.textColor)
                         textSize = it.textSize
+                        setOnClickListener { _ ->
+                            it.clickListener?.onClick(dialog)
+                            dismissDialog()
+                        }
                         View.VISIBLE
                     }
                     false -> View.GONE
@@ -162,24 +184,32 @@ class MaterialController : DialogFragment() {
      * 设置列表
      */
     private fun setupList() {
-        if (params.itemList.isNotEmpty()) {
+        if (mdParams.itemList.isNotEmpty()) {
             spaceButton.setGone()
             viewStubList.setVisible()
-            val adapter = when (params.type) {
-                MaterialDialog.MULTI_CHOICE -> MultipleChoiceAdapter(mContext, params.itemList).apply {
-                    setOnCheckedListener{which, isChecked ->
-                        params.multiChoiceListener?.onChecked(dialog,which,isChecked)
+            val adapter = when (mdParams.type) {
+                MaterialDialog.MULTI_CHOICE -> MultipleChoiceAdapter(
+                    mContext,
+                    mdParams.itemList
+                ).apply {
+                    setOnCheckedListener { which, isChecked ->
+                        mdParams.multiChoiceListener?.onChecked(dialog, which, isChecked)
                     }
                 }
-                else -> SingleChoiceAdapter(mContext, params.itemList).apply {
+                else -> SingleChoiceAdapter(mContext, mdParams.itemList).apply {
                     setOnCheckedListener { checked, oldChecked ->
-                        params.singleChoiceListener?.onChecked(dialog, checked, oldChecked)
+                        mdParams.singleChoiceListener?.onChecked(dialog, checked, oldChecked)
                     }
                 }
             }
             listView.adapter = adapter
             listView.setOnScrollListener(object : AbsListView.OnScrollListener {
-                override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                override fun onScroll(
+                    view: AbsListView?,
+                    firstVisibleItem: Int,
+                    visibleItemCount: Int,
+                    totalItemCount: Int
+                ) {
                     if (firstVisibleItem == 0) {
                         if (listView.getChildAt(0) != null && listView.getChildAt(0).top == 0) {
                             //最顶部
@@ -221,15 +251,11 @@ class MaterialController : DialogFragment() {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             //设置窗体动画
             setWindowAnimations(android.R.style.Animation_Dialog)
-            params.width = (screenWidth * 0.85).toInt()
+            params.width = mdParams.finalWidth
             params.dimAmount = 0.32F
-            /*if (baseParams.widthPx > 0) {
-                params.width = baseParams.widthPx
-            } else if (baseParams.widthScale > 0) {
-                params.width = (screenWidth * baseParams.widthScale).toInt()
-            }*/
             val maxHeight = 0.65 * screenHeight
-            decorView.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            decorView.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     if (decorView.height > maxHeight) {
                         params.height = maxHeight.toInt()
@@ -246,33 +272,38 @@ class MaterialController : DialogFragment() {
      * 设置对话框背景
      */
     private fun initBackgroundDrawable(): ShapeDrawable {
-        val radius = params.radius
+        val radius = mdParams.radius
         val roundRectShape = RoundRectShape(
-                floatArrayOf(
-                        radius,
-                        radius,
-                        radius,
-                        radius,
-                        radius,
-                        radius,
-                        radius,
-                        radius
-                ), null, null
+            floatArrayOf(
+                radius,
+                radius,
+                radius,
+                radius,
+                radius,
+                radius,
+                radius,
+                radius
+            ), null, null
         )
         return with(ShapeDrawable(roundRectShape)) {
-            paint.color = params.backgroundColor
+            paint.color = mdParams.backgroundColor
             paint.style = Paint.Style.FILL
-            paint.alpha = (255 * params.backgroundAlpha).toInt()
+            paint.alpha = (255 * mdParams.backgroundAlpha).toInt()
             this
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(KEY_MATERIAL_PARAMS, mdParams)
+    }
+
     companion object {
         fun showDialog(fm: FragmentManager, tag: String, params: MaterialDialog.Builder) =
-                MaterialController().apply {
-                    this.params = params
-                    show(fm, tag)
-                }
+            MaterialController().apply {
+                this.mdParams = params
+                show(fm, tag)
+            }
     }
 
 
