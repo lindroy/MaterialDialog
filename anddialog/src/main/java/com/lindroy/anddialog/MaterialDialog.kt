@@ -55,6 +55,13 @@ class MaterialDialog private constructor() {
             buildParams = Builder.build(fragment.childFragmentManager)
             return buildParams
         }
+        @JvmStatic
+        fun buildBottom(activity: FragmentActivity) =
+            BottomController.BottomParams.build(activity.supportFragmentManager)
+
+        @JvmStatic
+        fun buildBottom(fragment: Fragment) =
+            BottomController.BottomParams.build(fragment.childFragmentManager)
     }
 
     /**
@@ -387,7 +394,7 @@ class MaterialDialog private constructor() {
             @ColorInt textColor: Int = posButtonParams.textColor,
             textSize: Float = posButtonParams.textSize,
             listener: ((dialog: DialogInterface) -> Unit)? = null
-        ) = setNegativeButton(text,textColor,textSize,object :OnDialogClickListener(){
+        ) = setNegativeButton(text, textColor, textSize, object : OnDialogClickListener() {
             override fun onClick(dialog: DialogInterface) {
                 listener?.invoke(dialog)
             }
@@ -418,7 +425,7 @@ class MaterialDialog private constructor() {
             @ColorInt textColor: Int = neuButtonParams.textColor,
             textSize: Float = neuButtonParams.textSize,
             listener: ((dialog: DialogInterface) -> Unit)? = null
-        ) = setNeutralButton(text,textColor,textSize,object :OnDialogClickListener(){
+        ) = setNeutralButton(text, textColor, textSize, object : OnDialogClickListener() {
             override fun onClick(dialog: DialogInterface) {
                 listener?.invoke(dialog)
             }

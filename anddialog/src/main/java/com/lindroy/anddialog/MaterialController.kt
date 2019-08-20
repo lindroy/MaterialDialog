@@ -40,7 +40,6 @@ class MaterialController : DialogFragment() {
         savedInstanceState?.apply {
             mdParams = getParcelable(KEY_MATERIAL_PARAMS) ?: MaterialDialog.buildParams
         }
-
     }
 
     override fun onCreateView(

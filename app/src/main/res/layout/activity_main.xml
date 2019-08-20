@@ -1,51 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+        android:orientation="vertical">
 
-    <Button
+        <Button
             android:id="@+id/btnAlert"
-            android:text="原生AlertDialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="原生AlertDialog" />
+
+        <Button
+            android:id="@+id/btnInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="只显示信息文字" />
+
+        <Button
+            android:id="@+id/btnMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="标准对话框" />
+
+        <Button
+            android:id="@+id/btnAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="显示多个按钮" />
+
+        <Button
+            android:id="@+id/btnSingle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="单项选择列表对话框" />
+
+        <Button
+            android:id="@+id/btnMultiple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="复选列表对话框" />
+
+        <Button
+            android:id="@+id/btnMDCus1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自定义Material Design风格对话框1" />
+
+        <Button
+            android:id="@+id/btnBottom"
+            android:text="底部对话框"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <Button
-        android:text="只显示信息文字"
-        android:id="@+id/btnInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnMaterial"
-        android:text="标准对话框"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnAllButton"
-        android:text="显示多个按钮"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnSingle"
-        android:text="单项选择列表对话框"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/btnMultiple"
-        android:text="复选列表对话框"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnMDCus1"
-        android:text="自定义Material Design风格对话框1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

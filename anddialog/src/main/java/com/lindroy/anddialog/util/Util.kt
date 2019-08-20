@@ -48,6 +48,11 @@ internal fun dp2px(dpValue: Float): Float {
     return (dpValue * scale + 0.5F)
 }
 
+internal fun px2dp(pxValue: Float):Float{
+    val scale = MaterialDialog.appContext.resources.displayMetrics.density
+    return (pxValue / scale + 0.5F)
+}
+
 internal fun px2sp(pxValue: Float): Float {
     val fontScale = MaterialDialog.appContext.resources.displayMetrics.scaledDensity
     return (pxValue / fontScale + 0.5F)

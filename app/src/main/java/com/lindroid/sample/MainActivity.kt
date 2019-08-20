@@ -102,5 +102,13 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeText(R.string.cancel)
                 .show()
         }
+
+        btnBottom.setOnClickListener {
+            MaterialDialog.buildBottom(this)
+                .setView(R.layout.layout_custon_bottom)
+                .show()
+
+
+        }
     }
 }
