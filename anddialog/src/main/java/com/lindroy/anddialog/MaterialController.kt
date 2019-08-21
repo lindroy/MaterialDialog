@@ -16,6 +16,7 @@ import android.widget.AbsListView
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.adapter.MultipleChoiceAdapter
 import com.lindroy.anddialog.adapter.SingleChoiceAdapter
+import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.synthetic.main.dialog_material.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
@@ -187,7 +188,7 @@ class MaterialController : DialogFragment() {
             spaceButton.setGone()
             viewStubList.setVisible()
             val adapter = when (mdParams.type) {
-                MaterialDialog.MULTI_CHOICE -> MultipleChoiceAdapter(
+                MD_MULTI_CHOICE -> MultipleChoiceAdapter(
                     mContext,
                     mdParams.itemList
                 ).apply {

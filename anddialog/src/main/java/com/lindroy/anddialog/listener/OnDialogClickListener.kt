@@ -22,8 +22,6 @@ abstract class OnDialogClickListener : Parcelable {
 
     override fun writeToParcel(dest: Parcel, flags: Int) {}
 
-
-
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<OnDialogClickListener> =

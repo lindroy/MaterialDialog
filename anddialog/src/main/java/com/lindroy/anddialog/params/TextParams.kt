@@ -1,4 +1,4 @@
-package com.lindroy.anddialog.bean
+package com.lindroy.anddialog.params
 
 import android.os.Parcelable
 import android.support.annotation.ColorInt

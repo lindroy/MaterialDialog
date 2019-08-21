@@ -1,4 +1,4 @@
-package com.lindroy.anddialog.bean
+package com.lindroy.anddialog.params
 
 import android.os.Parcelable
 import android.support.annotation.ColorInt
@@ -7,8 +7,8 @@ import android.support.annotation.FloatRange
 import android.support.annotation.StyleRes
 import android.view.Gravity
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.constants.DialogType
+import com.lindroy.anddialog.constants.MD_ALERT
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.parcel.Parcelize
 
@@ -21,7 +21,7 @@ import kotlinx.android.parcel.Parcelize
 @Suppress("UNCHECKED_CAST")
 @Parcelize
 open class ComParams<T : ComParams<T>>(
-    @DialogType internal var type: Int = MaterialDialog.ALERT,
+    @DialogType internal var type: Int = MD_ALERT,
     internal var tag: String = "MaterialDialog",
     internal var dimAmount: Float = 0.32F,
     internal var widthScale: Float = 0.85F,

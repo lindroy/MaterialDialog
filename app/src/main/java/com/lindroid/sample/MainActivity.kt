@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.lindroid.androidutilskt.app.AndUtil
 import com.lindroid.androidutilskt.extension.dp2px
+import com.lindroid.androidutilskt.extension.shortToast
 import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AndUtil.init(this.application)
         mContext = this
         cities = resources.getStringArray(R.array.cities)
         MaterialDialog.init(this.application)
@@ -106,9 +109,21 @@ class MainActivity : AppCompatActivity() {
         btnBottom.setOnClickListener {
             MaterialDialog.buildBottom(this)
                 .setView(R.layout.layout_custon_bottom)
+                .setOnViewHandler { holder, dialog ->
+                    holder.setOnClickListener(R.id.tvCancel) {
+                        shortToast("关闭底部对话框")
+                        dialog.dismiss()
+                    }
+                }
                 .show()
-
-
+        }
+        btnBottomList.setOnClickListener {
+            MaterialDialog.bottomList(this)
+                .addItems(cities.toList())
+                .setOnItemClickListener{position, text, itemView, dialog ->
+                    shortToast("你选择了$text")
+                }
+                .show()
         }
     }
 }

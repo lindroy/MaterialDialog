@@ -1,7 +1,6 @@
 package com.lindroy.anddialog.constants
 
 import android.support.annotation.IntDef
-import com.lindroy.anddialog.MaterialDialog
 
 /**
  * @author Lin
@@ -9,10 +8,19 @@ import com.lindroy.anddialog.MaterialDialog
  * @function
  * @Description
  */
+const val MD_ALERT = 0x001
+const val MD_SINGLE_CHOICE = 0x002
+const val MD_MULTI_CHOICE = 0x003
+const val MD_BOTTOM = 0x004
+const val MD_BOTTOM_LIST = 0x005
 @Target(
         AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
         AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION
 )
 @Retention(AnnotationRetention.SOURCE)
-@IntDef(MaterialDialog.ALERT,MaterialDialog.SINGLE_CHOICE,MaterialDialog.MULTI_CHOICE,MaterialDialog.BOTTOM)
+@IntDef(MD_ALERT,
+        MD_SINGLE_CHOICE,
+        MD_MULTI_CHOICE,
+        MD_BOTTOM
+)
 annotation class DialogType

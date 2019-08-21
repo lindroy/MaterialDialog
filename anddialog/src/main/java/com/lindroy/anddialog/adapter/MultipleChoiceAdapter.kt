@@ -11,7 +11,7 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.bean.ListItemParams
+import com.lindroy.anddialog.params.ListItemParams
 import com.lindroy.iosdialog.util.getResColor
 
 /**

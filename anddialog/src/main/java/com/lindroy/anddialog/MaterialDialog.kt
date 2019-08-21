@@ -7,11 +7,16 @@ import android.support.annotation.*
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
-import com.lindroy.anddialog.bean.ComParams
-import com.lindroy.anddialog.bean.ListItemParams
+import com.lindroy.anddialog.constants.MD_BOTTOM
+import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
+import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
+import com.lindroy.anddialog.constants.MD_SINGLE_CHOICE
 import com.lindroy.anddialog.listener.OnDialogClickListener
 import com.lindroy.anddialog.listener.OnMultiChoiceListener
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
+import com.lindroy.anddialog.params.BottomParams
+import com.lindroy.anddialog.params.ComParams
+import com.lindroy.anddialog.params.ListItemParams
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.getResPx
 import com.lindroy.iosdialog.util.getResString
@@ -26,10 +31,7 @@ import com.lindroy.iosdialog.util.px2sp
 class MaterialDialog private constructor() {
 
     companion object {
-        const val ALERT = 0x001
-        const val SINGLE_CHOICE = 0x002
-        const val MULTI_CHOICE = 0x003
-        const val BOTTOM = 0x004
+
         private lateinit var application: Application
         internal lateinit var globalParams: Configs
         internal lateinit var buildParams: Builder
@@ -57,11 +59,19 @@ class MaterialDialog private constructor() {
         }
         @JvmStatic
         fun buildBottom(activity: FragmentActivity) =
-            BottomController.BottomParams.build(activity.supportFragmentManager)
+            BottomParams.build(MD_BOTTOM,activity.supportFragmentManager)
 
         @JvmStatic
         fun buildBottom(fragment: Fragment) =
-            BottomController.BottomParams.build(fragment.childFragmentManager)
+            BottomParams.build(MD_BOTTOM ,fragment.childFragmentManager)
+
+        @JvmStatic
+        fun bottomList(activity: FragmentActivity) =
+            BottomParams.build(MD_BOTTOM_LIST,activity.supportFragmentManager)
+
+        @JvmStatic
+        fun bottomList(fragment: Fragment) =
+            BottomParams.build(MD_BOTTOM_LIST,fragment.childFragmentManager)
     }
 
     /**
@@ -442,7 +452,7 @@ class MaterialDialog private constructor() {
             checkedItem: Int = -1,
             listener: OnSingleChoiceListener
         ) = this.apply {
-            type = SINGLE_CHOICE
+            type = MD_SINGLE_CHOICE
             itemList.addAll(items.map { ListItemParams(text = it) })
             if (checkedItem >= 0) {
                 itemList[checkedItem].isChecked = true
@@ -480,7 +490,7 @@ class MaterialDialog private constructor() {
             checkedArray: IntArray? = null,
             listener: OnMultiChoiceListener
         ) = this.apply {
-            type = MULTI_CHOICE
+            type = MD_MULTI_CHOICE
             itemList.addAll(items.map { ListItemParams(text = it) })
             checkedArray?.forEach {
                 itemList[it].isChecked = true

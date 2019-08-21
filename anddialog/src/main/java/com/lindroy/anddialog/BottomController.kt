@@ -1,12 +1,9 @@
 package com.lindroy.anddialog
 
 import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Parcelable
-import android.support.annotation.LayoutRes
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.design.widget.CoordinatorLayout
@@ -15,10 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import com.lindroy.anddialog.listener.OnViewHandlerListener
+import android.widget.TextView
+import com.lindroid.anddialog.R
+import com.lindroy.anddialog.adapter.MDListAdapter
+import com.lindroy.anddialog.params.BottomParams
+import com.lindroy.anddialog.params.ListItemBean
 import com.lindroy.anddialog.viewholder.ViewHolder
+import com.lindroy.iosdialog.util.dp2px
 import com.lindroy.iosdialog.util.screenHeight
-import kotlinx.android.parcel.Parcelize
+import kotlinx.android.synthetic.main.dialog_md_bottom_list.*
 
 
 /**
@@ -30,8 +32,7 @@ import kotlinx.android.parcel.Parcelize
 class BottomController : BottomSheetDialogFragment() {
 
     private lateinit var mContext: Context
-    private val mParams = BottomParams()
-    private lateinit var fm: FragmentManager
+    private lateinit var mParams: BottomParams
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +43,41 @@ class BottomController : BottomSheetDialogFragment() {
         //去除Android4.4的标题栏
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         return inflater.inflate(mParams.layoutId, container)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (mParams.isBottom) {
+            mParams.viewHandler?.onConvert(ViewHolder(view), dialog)
+        }
+        listView.apply {
+            adapter = object :
+                MDListAdapter<ListItemBean>(mContext, R.layout.item_md_bottom_list, mParams.items) {
+                override fun onConvert(holder: ViewHolder, position: Int, item: ListItemBean) {
+                    holder.getTextView(R.id.tvItem).also {
+                        it.minHeight = dp2px(50F).toInt()
+                        it.text = item.text
+                        it.textSize = item.textSize
+                        it.gravity = item.gravity
+                        it.setPadding(
+                            item.paddingLeft,
+                            item.paddingTop,
+                            item.paddingRight,
+                            item.paddingBottom
+                        )
+                        it.setTextColor(item.textColor)
+                    }
+                }
+            }
+            setOnItemClickListener { parent, view, position, id ->
+                mParams.itemClickListener?.onClick(
+                    position,
+                    mParams.items[position].text,
+                    view as TextView,
+                    dialog
+                )
+            }
+        }
     }
 
     override fun onAttach(context: Context?) {
@@ -68,6 +104,10 @@ class BottomController : BottomSheetDialogFragment() {
                         }
 
                         override fun onStateChanged(bottomSheet: View, newState: Int) {
+                            //完全收起时自动关闭对话框
+                            if ((BottomSheetBehavior.STATE_HIDDEN == newState)) {
+                                dismiss()
+                            }
                         }
 
                     })
@@ -75,58 +115,15 @@ class BottomController : BottomSheetDialogFragment() {
                 parent.setBackgroundColor(Color.WHITE)
             }
         }
-    }
 
-
-
-    /**
-     * 处理对话框中的View
-     * 用于屏幕旋转保存状态和Java调用
-     */
-    fun setOnViewHandler(listener: OnViewHandlerListener) =
-        this.apply { mParams.viewHandler = listener }
-
-    /**
-     * 处理对话框中的View
-     */
-    fun setOnViewHandler(viewHandler: (holder: ViewHolder, dialog: DialogInterface) -> Unit) =
-        setOnViewHandler(object : OnViewHandlerListener() {
-            override fun onConvert(holder: ViewHolder, dialog: DialogInterface) {
-                viewHandler.invoke(holder, dialog)
-            }
-        })
-
-    @Parcelize
-    data class BottomParams(
-        @LayoutRes var layoutId: Int = 0,
-        var tag: String = "BottomDialog",
-        var isCancelable: Boolean = true,
-//        var peekHeight:Int = 0, //
-        var fullExpanded: Boolean = false, //是否完全展开
-        var items: List<String> = listOf(),
-        var viewHandler: OnViewHandlerListener? = null
-    ) : Parcelable {
-        private lateinit var fm: FragmentManager
-
-        /**
-         * 设置对话框布局
-         * @param layoutId:对话框布局Id
-         */
-        fun setView(@LayoutRes layoutId: Int) = this.apply { this.layoutId = layoutId }
-
-        companion object {
-            fun build(fm: FragmentManager) = BottomParams().apply { this.fm = fm }
-        }
-
-        @JvmOverloads
-        fun show(tag: String = this.tag) {
-            BottomController.showDialog(fm, tag)
-        }
     }
 
     companion object {
-
-        fun showDialog(fm: FragmentManager, tag: String) = BottomController().show(fm, tag)
+        internal fun showDialog(params: BottomParams, fm: FragmentManager, tag: String) =
+            BottomController().apply {
+                mParams = params
+                show(fm, tag)
+            }
     }
 
 }
