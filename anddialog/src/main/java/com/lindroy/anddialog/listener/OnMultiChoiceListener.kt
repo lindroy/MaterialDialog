@@ -11,6 +11,9 @@ import android.os.Parcelable
  * @Description
  */
 abstract class OnMultiChoiceListener :Parcelable{
+    constructor()
+
+    private constructor(source: Parcel)
     /**
      * @param position:当前点击的item位置
      * @param isChecked:点击后是否选中
@@ -26,11 +29,7 @@ abstract class OnMultiChoiceListener :Parcelable{
         val CREATOR: Parcelable.Creator<OnMultiChoiceListener> =
                 object : Parcelable.Creator<OnMultiChoiceListener> {
                     override fun createFromParcel(source: Parcel): OnMultiChoiceListener =
-                            object : OnMultiChoiceListener() {
-                                /**
-                                 * @param position:当前点击的item位置
-                                 * @param isChecked:点击后是否选中
-                                 */
+                            object : OnMultiChoiceListener(source) {
                                 override fun onChecked(dialog: DialogInterface, position: Int, isChecked: Boolean) {
                                 }
                             }

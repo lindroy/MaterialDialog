@@ -11,6 +11,9 @@ import android.os.Parcelable
  * @Description
  */
 abstract class OnSingleChoiceListener : Parcelable {
+    constructor()
+
+    private constructor(source: Parcel)
     /**
      * @param checked:当前选中的item
      * @param oldChecked:先前选中的item
@@ -26,7 +29,7 @@ abstract class OnSingleChoiceListener : Parcelable {
         val CREATOR: Parcelable.Creator<OnSingleChoiceListener> =
                 object : Parcelable.Creator<OnSingleChoiceListener> {
                     override fun createFromParcel(source: Parcel): OnSingleChoiceListener =
-                            object : OnSingleChoiceListener() {
+                            object : OnSingleChoiceListener(source) {
                                 override fun onChecked(dialog: DialogInterface, checked: Int, oldChecked: Int) {}
                             }
 

@@ -12,6 +12,10 @@ import com.lindroy.anddialog.viewholder.ViewHolder
  * @Description
  */
 abstract class OnViewHandlerListener: Parcelable {
+    constructor()
+
+    private constructor(source: Parcel)
+
     abstract fun onConvert(holder: ViewHolder, dialog:DialogInterface)
 
     override fun describeContents() = 0
@@ -23,7 +27,7 @@ abstract class OnViewHandlerListener: Parcelable {
         val CREATOR: Parcelable.Creator<OnViewHandlerListener> =
             object : Parcelable.Creator<OnViewHandlerListener> {
                 override fun createFromParcel(source: Parcel): OnViewHandlerListener =
-                    object : OnViewHandlerListener() {
+                    object : OnViewHandlerListener(source) {
                         override fun onConvert(holder: ViewHolder, dialog: DialogInterface) {}
                     }
 
