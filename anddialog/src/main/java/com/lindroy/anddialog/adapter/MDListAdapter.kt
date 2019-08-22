@@ -32,7 +32,7 @@ abstract class MDListAdapter<T : Any> private constructor() : BaseAdapter(), Par
     private constructor(source: Parcel) : this()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val vh: ViewHolder = ViewHolder.getInstance(mContext, convertView, layoutId)
+        val vh: ViewHolder = ViewHolder.getListInstance(mContext, convertView, layoutId)
         onConvert(vh, position, items[position])
         return vh.convertView
     }

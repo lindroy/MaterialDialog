@@ -24,7 +24,7 @@ class ViewHolder constructor(val convertView: View) {
 
 
     companion object {
-        fun getInstance(
+        fun getListInstance(
             context: Context,
             convertView: View?, @LayoutRes layoutId: Int,
             parent: ViewGroup? = null

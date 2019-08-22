@@ -1,4 +1,4 @@
-package com.lindroy.anddialog
+package com.lindroy.anddialog.dialog
 
 import android.content.Context
 import android.graphics.Color
@@ -14,9 +14,11 @@ import android.support.v4.app.FragmentManager
 import android.view.*
 import android.widget.AbsListView
 import com.lindroid.anddialog.R
+import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.adapter.MultipleChoiceAdapter
 import com.lindroy.anddialog.adapter.SingleChoiceAdapter
 import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
+import com.lindroy.anddialog.params.AlertParams
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.synthetic.main.dialog_material.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
@@ -34,7 +36,7 @@ private const val KEY_MATERIAL_PARAMS = "material_params"
 class MaterialController : DialogFragment() {
 
     private lateinit var mContext: Context
-    private lateinit var mdParams: MaterialDialog.Builder
+    private lateinit var mdParams: AlertParams
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -299,7 +301,7 @@ class MaterialController : DialogFragment() {
     }
 
     companion object {
-        fun showDialog(fm: FragmentManager, tag: String, params: MaterialDialog.Builder) =
+        fun showDialog(fm: FragmentManager, tag: String, params: AlertParams) =
             MaterialController().apply {
                 this.mdParams = params
                 show(fm, tag)

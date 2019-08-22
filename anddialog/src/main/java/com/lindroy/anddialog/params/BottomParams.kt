@@ -1,20 +1,13 @@
 package com.lindroy.anddialog.params
 
 import android.content.DialogInterface
-import android.os.Parcelable
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
-import android.widget.TextView
-import com.lindroid.anddialog.R
-import com.lindroy.anddialog.BottomController
-import com.lindroy.anddialog.adapter.MDListAdapter
-import com.lindroy.anddialog.constants.DialogType
 import com.lindroy.anddialog.constants.MD_BOTTOM
+import com.lindroy.anddialog.dialog.BottomController
 import com.lindroy.anddialog.listener.OnDismissListener
-import com.lindroy.anddialog.listener.OnItemClickListener
 import com.lindroy.anddialog.listener.OnViewHandlerListener
 import com.lindroy.anddialog.viewholder.ViewHolder
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -25,28 +18,12 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class BottomParams(
-    @DialogType internal var type: Int = MD_BOTTOM,
-    @LayoutRes internal var layoutId: Int = 0,
-    internal var tag: String = "BottomDialog",
-    internal var isCancelable: Boolean = true,
+
 //        var peekHeight:Int = 0, //
-    internal var fullExpanded: Boolean = false, //是否完全展开
-    internal var items: MutableList<ListItemBean> = mutableListOf(),
-    internal var dismissListener: OnDismissListener? = null,
-    internal var viewHandler: OnViewHandlerListener? = null,
-    internal var itemClickListener: OnItemClickListener? = null,
-    internal var adapter: MDListAdapter<*>? = null
-) : Parcelable, BottomInterface<BottomParams> {
+    internal var viewHandler: OnViewHandlerListener? = null
+) : BaseBottomParams<BottomParams>(type = MD_BOTTOM) {
 
-    init {
-        layoutId = if (isBottom) layoutId else R.layout.dialog_md_bottom_list
-    }
 
-    val isBottom
-        get() = type == MD_BOTTOM
-
-    @IgnoredOnParcel
-    private lateinit var fm: FragmentManager
 
     /**
      * 设置对话框布局
@@ -59,13 +36,7 @@ data class BottomParams(
      */
     fun setFullExpanded(fullExpanded: Boolean) = this.also { it.fullExpanded = fullExpanded }
 
-    fun addItem(text: String) = this.apply { items.add(ListItemBean(text)) }
 
-    fun addItems(items: List<String>) = this.also {
-        items.forEach {
-            addItem(it)
-        }
-    }
 
     fun setOnViewHandler(viewHandler: OnViewHandlerListener) =
         this.also { it.viewHandler = viewHandler }
@@ -77,24 +48,9 @@ data class BottomParams(
             }
         })
 
-    fun setOnItemClickListener(listener: OnItemClickListener) =
-        this.apply { itemClickListener = listener }
-
-    fun setOnItemClickListener(listener: (position: Int, text: String, itemView: TextView, dialog: DialogInterface) -> Unit) =
-        setOnItemClickListener(object :OnItemClickListener(){
-            override fun onClick(
-                position: Int,
-                text: String,
-                itemView: TextView,
-                dialog: DialogInterface
-            ) {
-                listener.invoke(position,text,itemView,dialog)
-            }
-
-        })
 
 
-    fun <T : Any> setListAdapter(adapter: MDListAdapter<T>) = this.also { it.adapter = adapter }
+
 
     /**
      * 对话框消失监听
@@ -114,8 +70,10 @@ data class BottomParams(
         })
 
     companion object {
-        fun build(@DialogType type: Int, fm: FragmentManager) =
-            BottomParams(type = type).apply { this.fm = fm }
+        fun build(fm: FragmentManager) =
+            BottomParams().apply {
+                this.fm = fm
+            }
     }
 
     @JvmOverloads
@@ -124,7 +82,4 @@ data class BottomParams(
     }
 }
 
-interface BottomInterface<T : BottomInterface<T>> {
-
-}
 
