@@ -38,13 +38,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnInfo.setOnClickListener {
-            MaterialDialog.build(this)
+            MaterialDialog.alert(this)
                 .setMessage(R.string.location_services_msg)
                 .show()
         }
 
         btnMaterial.setOnClickListener {
-            MaterialDialog.build(this)
+            MaterialDialog.alert(this)
                 .setTitle(R.string.location_services_title)
                 .setMessage(R.string.location_services_msg)
                 .setPositiveText(R.string.agree)
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
         btnAllButton.setOnClickListener {
-            MaterialDialog.build(this)
+            MaterialDialog.alert(this)
                 .setTitle(R.string.location_services_title)
                 .setMessage(R.string.location_services_msg)
                 .setPositiveText(R.string.agree)
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
         btnSingle.setOnClickListener {
-            MaterialDialog.build(this)
+            MaterialDialog.alert(this)
                 .setTitle("请选择一个城市")
                 .setSingleChoiceItems(cities, listener = object : OnSingleChoiceListener() {
                     override fun onChecked(dialog: DialogInterface, checked: Int, oldChecked: Int) {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
         btnMultiple.setOnClickListener {
-            MaterialDialog.build(this)
+            MaterialDialog.alert(this)
                 .setTitle("请选择你喜欢的城市")
                 .setMultiChoiceItems(cities, null) { dialog, position, isChecked ->
                     Toast.makeText(
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
         btnMDCus1.setOnClickListener {
-            MaterialDialog.build(this)
+            MaterialDialog.alert(this)
                 .setCornerRadius(dp2px(16).toFloat())
                 .setTitle("Back to Listings?")
                 .setMessage("if you leave the checkout your passenger information will not be saved.")
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnBottom.setOnClickListener {
-            MaterialDialog.buildBottom(this)
+            MaterialDialog.bottom(this)
                 .setView(R.layout.layout_custon_bottom)
                 .setOnViewHandler { holder, dialog ->
                     holder.setOnClickListener(R.id.tvCancel) {

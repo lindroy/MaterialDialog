@@ -15,8 +15,8 @@ import com.lindroy.anddialog.listener.OnDialogClickListener
 import com.lindroy.anddialog.listener.OnMultiChoiceListener
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
 import com.lindroy.anddialog.params.BottomParams
+import com.lindroy.anddialog.params.CheckItemParams
 import com.lindroy.anddialog.params.ComParams
-import com.lindroy.anddialog.params.ListItemParams
 import com.lindroy.iosdialog.util.getResColor
 import com.lindroy.iosdialog.util.getResPx
 import com.lindroy.iosdialog.util.getResString
@@ -47,22 +47,22 @@ class MaterialDialog private constructor() {
         }
 
         @JvmStatic
-        fun build(activity: FragmentActivity): Builder {
+        fun alert(activity: FragmentActivity): Builder {
             buildParams = Builder.build(activity.supportFragmentManager)
             return buildParams
         }
 
         @JvmStatic
-        fun build(fragment: Fragment): Builder {
+        fun alert(fragment: Fragment): Builder {
             buildParams = Builder.build(fragment.childFragmentManager)
             return buildParams
         }
         @JvmStatic
-        fun buildBottom(activity: FragmentActivity) =
+        fun bottom(activity: FragmentActivity) =
             BottomParams.build(MD_BOTTOM,activity.supportFragmentManager)
 
         @JvmStatic
-        fun buildBottom(fragment: Fragment) =
+        fun bottom(fragment: Fragment) =
             BottomParams.build(MD_BOTTOM ,fragment.childFragmentManager)
 
         @JvmStatic
@@ -92,7 +92,7 @@ class MaterialDialog private constructor() {
      * 单次配置
      */
     class Builder private constructor(
-        internal val itemList: MutableList<ListItemParams> = mutableListOf(),
+        internal val itemList: MutableList<CheckItemParams> = mutableListOf(),
         internal var singleChoiceListener: OnSingleChoiceListener? = null,
         internal var multiChoiceListener: OnMultiChoiceListener? = null
     ) : ComParams<Builder>() {
@@ -453,7 +453,7 @@ class MaterialDialog private constructor() {
             listener: OnSingleChoiceListener
         ) = this.apply {
             type = MD_SINGLE_CHOICE
-            itemList.addAll(items.map { ListItemParams(text = it) })
+            itemList.addAll(items.map { CheckItemParams(text = it) })
             if (checkedItem >= 0) {
                 itemList[checkedItem].isChecked = true
             }
@@ -491,7 +491,7 @@ class MaterialDialog private constructor() {
             listener: OnMultiChoiceListener
         ) = this.apply {
             type = MD_MULTI_CHOICE
-            itemList.addAll(items.map { ListItemParams(text = it) })
+            itemList.addAll(items.map { CheckItemParams(text = it) })
             checkedArray?.forEach {
                 itemList[it].isChecked = true
             }

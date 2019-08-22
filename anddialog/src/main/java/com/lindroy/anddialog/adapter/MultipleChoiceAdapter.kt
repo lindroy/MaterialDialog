@@ -11,7 +11,7 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.params.ListItemParams
+import com.lindroy.anddialog.params.CheckItemParams
 import com.lindroy.iosdialog.util.getResColor
 
 /**
@@ -20,7 +20,7 @@ import com.lindroy.iosdialog.util.getResColor
  * @function 多选列表适配器
  * @Description
  */
-class MultipleChoiceAdapter(private val mContext: Context, private val items: List<ListItemParams>) : BaseAdapter() {
+class MultipleChoiceAdapter(private val mContext: Context, private val items: List<CheckItemParams>) : BaseAdapter() {
 
     private var checkedListener: ((which: Int, isChecked: Boolean) -> Unit)? = null
 
