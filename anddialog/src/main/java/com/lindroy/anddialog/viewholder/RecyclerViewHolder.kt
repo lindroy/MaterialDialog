@@ -12,7 +12,6 @@ import android.widget.Checkable
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
-import com.lindroid.anddialog.R
 
 /**
  * @author Lin
@@ -20,6 +19,7 @@ import com.lindroid.anddialog.R
  * @function
  * @Description
  */
+@Suppress("UNCHECKED_CAST")
 class RecyclerViewHolder(private val mContext: Context, private val convertView: View) :
     RecyclerView.ViewHolder(convertView) {
     private val views: SparseArray<View> = SparseArray()
@@ -27,7 +27,7 @@ class RecyclerViewHolder(private val mContext: Context, private val convertView:
     companion object {
         fun getInstance(
             context: Context,
-            @LayoutRes layoutId: Int = R.layout.item_md_bottom_list,
+            @LayoutRes layoutId: Int,
             parent: ViewGroup? = null
         ): RecyclerViewHolder {
             val itemView = LayoutInflater.from(context).inflate(

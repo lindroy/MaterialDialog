@@ -3,7 +3,6 @@ package com.lindroy.anddialog.params
 import android.os.Parcelable
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
-import com.lindroid.anddialog.R
 import com.lindroy.anddialog.constants.DialogType
 import com.lindroy.anddialog.constants.MD_BOTTOM
 import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
@@ -27,10 +26,6 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
     internal var dimAmount:Float = 0.32F,
     internal var dismissListener: OnDismissListener? = null
 ) : Parcelable{
-
-    init {
-        layoutId = if (isBottom) layoutId else R.layout.dialog_md_bottom_list
-    }
 
     @IgnoredOnParcel
     protected lateinit var fm: FragmentManager

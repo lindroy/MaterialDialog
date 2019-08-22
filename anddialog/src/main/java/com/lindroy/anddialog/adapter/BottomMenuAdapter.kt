@@ -31,7 +31,7 @@ abstract class BottomMenuAdapter<T : Any>() : RecyclerView.Adapter<RecyclerViewH
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int)
-            =RecyclerViewHolder.getInstance(mContext)
+            =RecyclerViewHolder.getInstance(mContext,layoutId,viewGroup)
 
     override fun getItemCount() = items.size
 

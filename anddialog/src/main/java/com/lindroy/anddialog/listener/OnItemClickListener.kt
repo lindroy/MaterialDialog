@@ -16,7 +16,7 @@ abstract class OnItemClickListener : Parcelable {
 
     private constructor(source: Parcel)
 
-    abstract fun onClick(position: Int, text: String, itemView: TextView, dialog: DialogInterface)
+    abstract fun onClick(position: Int,  dialog: DialogInterface)
 
     override fun describeContents() = 0
 
@@ -30,8 +30,6 @@ abstract class OnItemClickListener : Parcelable {
                     object : OnItemClickListener(source) {
                         override fun onClick(
                             position: Int,
-                            text: String,
-                            textView: TextView,
                             dialog: DialogInterface
                         ) {
                         }
