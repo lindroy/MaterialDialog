@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.adapter.BottomMenuAdapter
+import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
 import com.lindroy.anddialog.base.BaseBottomDialog
 import com.lindroy.anddialog.params.BaseBottomParams
 import com.lindroy.anddialog.params.BottomMenuParams
@@ -66,7 +66,7 @@ class BottomMenuDialog : BaseBottomDialog() {
         }*/
         rvMenu.apply {
             layoutManager = LinearLayoutManager(mContext)
-            adapter = object : BottomMenuAdapter<ItemBean>(
+            adapter = object : MDRecyclerViewAdapter<ItemBean>(
                 mContext,
                 R.layout.item_md_bottom_list,
                 mParams.items

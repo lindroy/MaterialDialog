@@ -14,7 +14,7 @@ import com.lindroy.anddialog.viewholder.RecyclerViewHolder
  * @function
  * @Description
  */
-abstract class BottomMenuAdapter<T : Any>() : RecyclerView.Adapter<RecyclerViewHolder>(),
+abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerViewHolder>(),
     Parcelable {
 
     private lateinit var mContext: Context
@@ -47,13 +47,13 @@ abstract class BottomMenuAdapter<T : Any>() : RecyclerView.Adapter<RecyclerViewH
 
     override fun describeContents() = 0
 
-    companion object CREATOR : Parcelable.Creator<BottomMenuAdapter<*>> {
-        override fun createFromParcel(parcel: Parcel): BottomMenuAdapter<*> =
-            object : BottomMenuAdapter<Any>() {
+    companion object CREATOR : Parcelable.Creator<MDRecyclerViewAdapter<*>> {
+        override fun createFromParcel(parcel: Parcel): MDRecyclerViewAdapter<*> =
+            object : MDRecyclerViewAdapter<Any>() {
                 override fun onConvert(holder: RecyclerViewHolder, position: Int, item: Any) {}
             }
 
-        override fun newArray(size: Int): Array<BottomMenuAdapter<*>?> {
+        override fun newArray(size: Int): Array<MDRecyclerViewAdapter<*>?> {
             return arrayOfNulls(size)
         }
     }

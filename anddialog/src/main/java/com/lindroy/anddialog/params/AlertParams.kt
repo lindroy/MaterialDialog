@@ -435,14 +435,25 @@ class AlertParams private constructor(
     fun setMultiChoiceItems(
         items: Array<String>,
         checkedArray: IntArray? = null,
-        listener: (dialog: DialogInterface, position: Int, isChecked: Boolean) -> Unit
+        listener: (
+            position: Int,
+            isChecked: Boolean,
+            checkedArray: IntArray?,
+            dialog: DialogInterface
+        ) -> Unit
     ) = setMultiChoiceItems(items, checkedArray, object : OnMultiChoiceListener() {
         /**
          * @param position:当前点击的item位置
          * @param isChecked:点击后是否选中
+         * @param checkedArray:选中的item下标数组，为null时没有选中项
          */
-        override fun onChecked(dialog: DialogInterface, position: Int, isChecked: Boolean) {
-            listener.invoke(dialog, position, isChecked)
+        override fun onChecked(
+            position: Int,
+            isChecked: Boolean,
+            checkedArray: IntArray?,
+            dialog: DialogInterface
+        ) {
+            listener.invoke(position, isChecked, checkedArray, dialog)
         }
 
     })

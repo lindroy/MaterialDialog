@@ -3,7 +3,7 @@ package com.lindroy.anddialog.params
 import android.content.DialogInterface
 import android.support.v4.app.FragmentManager
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.adapter.BottomMenuAdapter
+import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
 import com.lindroy.anddialog.dialog.BottomMenuDialog
 import com.lindroy.anddialog.listener.OnItemClickListener
@@ -20,7 +20,7 @@ class BottomMenuParams(
     internal var items: MutableList<ItemBean> = mutableListOf(),
     internal var itemClickListener: OnItemClickListener? = null,
 //    internal var adapter: MDListAdapter<*>? = null,
-    internal var adapter: BottomMenuAdapter<*>? = null
+    internal var adapter: MDRecyclerViewAdapter<*>? = null
 ) : BaseBottomParams<BottomMenuParams>(
     type = MD_BOTTOM_LIST,
     layoutId = R.layout.dialog_md_bottom_menu
@@ -37,7 +37,7 @@ class BottomMenuParams(
 //    fun <T : Any> setListAdapter(adapter: MDListAdapter<T>) = this.also { it.adapter = adapter }
 
 
-    fun <T : Any> setAdapter(adapter: BottomMenuAdapter<T>) =
+    fun <T : Any> setAdapter(adapter: MDRecyclerViewAdapter<T>) =
         this.apply { this.adapter = adapter }
 
     fun setOnItemClickListener(listener: OnItemClickListener) =

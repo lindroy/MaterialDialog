@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.lindroid.androidutilskt.app.AndUtil
 import com.lindroid.androidutilskt.extension.dp2px
+import com.lindroid.androidutilskt.extension.logcat.d
 import com.lindroid.androidutilskt.extension.shortToast
 import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AndUtil.init(this.application)
+        AndUtil.init(this.application).setLogGlobalConfig {  }
         mContext = this
         cities = resources.getStringArray(R.array.cities)
         MaterialDialog.init(this.application)
@@ -81,12 +82,14 @@ class MainActivity : AppCompatActivity() {
         btnMultiple.setOnClickListener {
             MaterialDialog.alert(this)
                 .setTitle("请选择你喜欢的城市")
-                .setMultiChoiceItems(cities, null) { dialog, position, isChecked ->
+                .setMultiChoiceItems(cities, null) { position, isChecked, checkedArray, dialog ->
                     Toast.makeText(
                         mContext,
                         "你点击了${cities[position]}，选中：$isChecked",
                         Toast.LENGTH_LONG
                     ).show()
+//                    "当前选中：${Arrays.toString(checkedArray)}".d()
+                    checkedArray.d()
                 }
                 .setPositiveText(R.string.ok)
                 .setNegativeText(R.string.cancel)

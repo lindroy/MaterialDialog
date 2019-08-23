@@ -1,6 +1,7 @@
 package com.lindroy.anddialog.dialog
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
@@ -11,14 +12,17 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
+import android.support.v7.widget.AppCompatCheckBox
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.AbsListView
+import android.widget.RadioButton
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.MaterialDialog
-import com.lindroy.anddialog.adapter.MultipleChoiceAdapter
-import com.lindroy.anddialog.adapter.SingleChoiceAdapter
-import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
+import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
 import com.lindroy.anddialog.params.AlertParams
+import com.lindroy.anddialog.params.CheckItemParams
+import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.synthetic.main.dialog_material.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
@@ -189,55 +193,142 @@ class MaterialController : DialogFragment() {
         if (mdParams.itemList.isNotEmpty()) {
             spaceButton.setGone()
             viewStubList.setVisible()
-
-
-            val adapter1 = when (mdParams.type) {
-                MD_MULTI_CHOICE -> MultipleChoiceAdapter(
-                    mContext,
-                    mdParams.itemList
-                ).apply {
-                    setOnCheckedListener { which, isChecked ->
-                        mdParams.multiChoiceListener?.onChecked(dialog, which, isChecked)
-                    }
+            rvChoices.apply {
+                layoutManager = LinearLayoutManager(mContext)
+                adapter = when (mdParams.isSingleChoice) {
+                    true -> setSingleChoiceAdapter()
+                    false -> setMultiChoiceAdapter()
                 }
-                else -> SingleChoiceAdapter(mContext, mdParams.itemList).apply {
-                    setOnCheckedListener { checked, oldChecked ->
-                        mdParams.singleChoiceListener?.onChecked(dialog, checked, oldChecked)
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        val layoutManager = recyclerView.layoutManager
+                        if (layoutManager is LinearLayoutManager) {
+                            val lastItemIndex =
+                                layoutManager.findLastCompletelyVisibleItemPosition()
+                            val firstItemIndex =
+                                layoutManager.findFirstCompletelyVisibleItemPosition()
+                            if (firstItemIndex == 0) {
+                                viewDividerTop.setGone()
+                            } else {
+                                viewDividerTop.setVisible()
+                            }
+
+                            if (lastItemIndex + 1 == layoutManager.itemCount) {
+                                viewDividerBottom.setGone()
+                            } else {
+                                viewDividerBottom.setVisible()
+                            }
+                        }
                     }
+                })
+            }
+        }
+    }
+
+    private fun setSingleChoiceAdapter() = object : MDRecyclerViewAdapter<CheckItemParams>(
+        mContext,
+        R.layout.item_md_single_choice_list,
+        mdParams.itemList
+    ) {
+        override fun onConvert(
+            holder: RecyclerViewHolder,
+            position: Int,
+            item: CheckItemParams
+        ) {
+            holder.getView<RadioButton>(R.id.rbSingle).apply {
+                isChecked = item.isChecked
+                //设置RadioButton颜色
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    val colorStateList = ColorStateList(
+                        arrayOf(
+                            intArrayOf(-android.R.attr.state_checked),
+                            intArrayOf(android.R.attr.state_checked)
+                        ),
+                        intArrayOf(
+                            Color.DKGRAY,
+                            getResColor(R.color.md_single_choice_radio_button_color)
+                        )
+                    )
+                    buttonTintList = colorStateList
                 }
             }
-            listView.adapter = adapter1
-            listView.setOnScrollListener(object : AbsListView.OnScrollListener {
-                override fun onScroll(
-                    view: AbsListView?,
-                    firstVisibleItem: Int,
-                    visibleItemCount: Int,
-                    totalItemCount: Int
-                ) {
-                    if (firstVisibleItem == 0) {
-                        if (listView.getChildAt(0) != null && listView.getChildAt(0).top == 0) {
-                            //最顶部
-                            viewDividerTop.setGone()
-                        } else {
-                            viewDividerTop.setVisible()
-                        }
-                    } else if (firstVisibleItem + visibleItemCount == totalItemCount) {
-                        val lastVisibleItem = listView.getChildAt(listView.childCount - 1)
-                        if (lastVisibleItem != null && lastVisibleItem.bottom == listView.height) {
-                            //最底部
-                            viewDividerBottom.setGone()
-                        } else {
-                            viewDividerBottom.setVisible()
-                        }
+            holder.getTextView(R.id.tvSingle).apply {
+                text = item.text
+                textSize = item.textSize
+                setTextColor(item.textColor)
+            }
+            holder.setOnClickListener(R.id.llItemSingle) {
+                if (item.isChecked) {
+                    return@setOnClickListener
+                }
+                var oldCheckedIndex = 0
+                for ((i, checkItem) in mdParams.itemList.withIndex()) {
+                    if (checkItem.isChecked) {
+                        oldCheckedIndex = i
+                        checkItem.isChecked = false
+                        break
                     }
                 }
-
-                override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
-                }
-
-            })
-
+                item.isChecked = true
+                notifyItemChanged(oldCheckedIndex)
+                notifyItemChanged(position)
+//                notifyDataSetChanged()
+                mdParams.singleChoiceListener?.onChecked(dialog, position, oldCheckedIndex)
+            }
         }
+    }
+
+    private fun setMultiChoiceAdapter() = object : MDRecyclerViewAdapter<CheckItemParams>(
+        mContext,
+        R.layout.item_md_multiple_choice_list,
+        mdParams.itemList
+    ) {
+        override fun onConvert(
+            holder: RecyclerViewHolder,
+            position: Int,
+            item: CheckItemParams
+        ) {
+            holder.getTextView(R.id.tvMultiple).apply {
+                text = item.text
+                textSize = item.textSize
+                setTextColor(item.textColor)
+            }
+            holder.getView<AppCompatCheckBox>(R.id.cbMultiple).apply {
+                isChecked = item.isChecked
+                //设置选中颜色
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    val colorStateList = ColorStateList(
+                        arrayOf(
+                            intArrayOf(-android.R.attr.state_checked),
+                            intArrayOf(android.R.attr.state_checked)
+                        ),
+                        intArrayOf(
+                            Color.DKGRAY,
+                            getResColor(R.color.md_single_choice_radio_button_color)
+                        )
+                    )
+                    buttonTintList = colorStateList
+                }
+            }
+            holder.setOnClickListener(R.id.llMultiple) {
+                item.isChecked = !item.isChecked
+                val checkedList = mutableListOf<Int>()
+                mdParams.itemList.forEachIndexed { index, item ->
+                    if (item.isChecked) {
+                        checkedList.add(index)
+                    }
+                }
+                mdParams.multiChoiceListener?.onChecked(
+                    position,
+                    item.isChecked,
+                    if (checkedList.isEmpty()) null else checkedList.toIntArray(),
+                    dialog
+                )
+                notifyItemChanged(position)
+            }
+        }
+
     }
 
     override fun onAttach(context: Context?) {

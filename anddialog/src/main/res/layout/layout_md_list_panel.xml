@@ -11,11 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <ListView
+   <!-- <ListView
         android:layout_weight="1"
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_weight="1"
+        android:id="@+id/rvChoices"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
     <View
         android:id="@+id/viewDividerBottom"
