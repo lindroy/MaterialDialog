@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
         btnBottomList.setOnClickListener {
             MaterialDialog.bottomList(this)
                 .addItems(cities.toList())
-                .setOnItemClickListener { position, dialog ->
-                    shortToast("你选择了${cities[position]}")
+                .setOnItemClickListener { position, item, dialog ->
+                    shortToast("你选择了${item.text}")
                 }
                 .show()
         }

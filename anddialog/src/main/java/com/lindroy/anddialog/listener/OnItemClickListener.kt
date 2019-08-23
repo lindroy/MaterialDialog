@@ -3,7 +3,7 @@ package com.lindroy.anddialog.listener
 import android.content.DialogInterface
 import android.os.Parcel
 import android.os.Parcelable
-import android.widget.TextView
+import com.lindroy.anddialog.params.ItemBean
 
 /**
  * @author Lin
@@ -16,7 +16,7 @@ abstract class OnItemClickListener : Parcelable {
 
     private constructor(source: Parcel)
 
-    abstract fun onClick(position: Int,  dialog: DialogInterface)
+    abstract fun onClick(position: Int, item: ItemBean, dialog: DialogInterface)
 
     override fun describeContents() = 0
 
@@ -30,6 +30,7 @@ abstract class OnItemClickListener : Parcelable {
                     object : OnItemClickListener(source) {
                         override fun onClick(
                             position: Int,
+                            item:ItemBean,
                             dialog: DialogInterface
                         ) {
                         }

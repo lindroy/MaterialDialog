@@ -16,6 +16,7 @@ import kotlinx.android.parcel.Parcelize
  * @function 底部对话框基本参数
  * @Description
  */
+@Suppress("UNCHECKED_CAST")
 @Parcelize
 open class BaseBottomParams<T : BaseBottomParams<T>>(
     @DialogType internal var type: Int = MD_BOTTOM,
@@ -29,6 +30,11 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
 
     @IgnoredOnParcel
     protected lateinit var fm: FragmentManager
+
+    /**
+     * 是否完全展开，默认false
+     */
+    fun setFullExpanded(fullExpanded: Boolean) = this.also { it.fullExpanded = fullExpanded } as T
 
 
     val isBottom

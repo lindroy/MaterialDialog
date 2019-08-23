@@ -3,15 +3,19 @@ package com.lindroy.anddialog.dialog
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.LinearLayout
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.adapter.BottomMenuAdapter
 import com.lindroy.anddialog.base.BaseBottomDialog
 import com.lindroy.anddialog.params.BaseBottomParams
 import com.lindroy.anddialog.params.BottomMenuParams
-import com.lindroy.anddialog.params.ListItemBean
+import com.lindroy.anddialog.params.ItemBean
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 import com.lindroy.iosdialog.util.dp2px
+import com.lindroy.iosdialog.util.setGone
+import com.lindroy.iosdialog.util.setVisible
 import kotlinx.android.synthetic.main.dialog_md_bottom_menu.*
 import kotlin.properties.Delegates
 
@@ -62,7 +66,7 @@ class BottomMenuDialog : BaseBottomDialog() {
         }*/
         rvMenu.apply {
             layoutManager = LinearLayoutManager(mContext)
-            adapter = object : BottomMenuAdapter<ListItemBean>(
+            adapter = object : BottomMenuAdapter<ItemBean>(
                 mContext,
                 R.layout.item_md_bottom_list,
                 mParams.items
@@ -70,10 +74,9 @@ class BottomMenuDialog : BaseBottomDialog() {
                 override fun onConvert(
                     holder: RecyclerViewHolder,
                     position: Int,
-                    item: ListItemBean
+                    item: ItemBean
                 ) {
                     holder.getTextView(R.id.tvItem).also {
-                        it.minHeight = dp2px(50F).toInt()
                         it.text = item.text
                         it.textSize = item.textSize
                         it.gravity = item.gravity
@@ -86,11 +89,39 @@ class BottomMenuDialog : BaseBottomDialog() {
                         it.setTextColor(item.textColor)
 
                     }
-                    holder.setOnClickListener(R.id.llItem){
-                        mParams.itemClickListener?.onClick(position,dialog)
+                    holder.getView<LinearLayout>(R.id.llItem).also {
+                        it.minimumHeight = dp2px(50F).toInt()
+                        setOnClickListener {
+                            mParams.itemClickListener?.onClick(position, item, dialog)
+                        }
                     }
                 }
             }
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    val layoutManager = recyclerView.layoutManager
+                    if (layoutManager is LinearLayoutManager) {
+                        val lastItemIndex = layoutManager.findLastCompletelyVisibleItemPosition()
+                        val firstItemIndex = layoutManager.findFirstCompletelyVisibleItemPosition()
+                        if (firstItemIndex == 0) {
+                            lineTop.setGone()
+                        } else {
+                            lineTop.setVisible()
+                        }
+
+                        if (lastItemIndex + 1 == layoutManager.itemCount){
+                            lineBottom.setGone()
+                        }else{
+                            lineBottom.setVisible()
+                        }
+                    }
+                }
+            })
+
+
         }
 
     }

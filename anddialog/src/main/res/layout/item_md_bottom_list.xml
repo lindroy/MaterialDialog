@@ -6,7 +6,14 @@
     android:layout_width="match_parent"
     android:background="@color/md_dialog_bg_color"
     android:id="@+id/llItem"
+    android:gravity="center_vertical"
     android:layout_height="wrap_content">
+
+   <!-- <ImageView
+        android:scaleType="centerCrop"
+        android:layout_marginStart="16dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />-->
 
     <TextView
         android:id="@+id/tvItem"

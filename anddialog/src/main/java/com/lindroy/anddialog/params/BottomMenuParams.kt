@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.support.v4.app.FragmentManager
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.adapter.BottomMenuAdapter
-import com.lindroy.anddialog.adapter.MDListAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
 import com.lindroy.anddialog.dialog.BottomMenuDialog
 import com.lindroy.anddialog.listener.OnItemClickListener
@@ -18,16 +17,16 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 class BottomMenuParams(
-    internal var items: MutableList<ListItemBean> = mutableListOf(),
+    internal var items: MutableList<ItemBean> = mutableListOf(),
     internal var itemClickListener: OnItemClickListener? = null,
-    internal var adapter: MDListAdapter<*>? = null,
-    internal var recyclerAdapter: BottomMenuAdapter<*>? = null
+//    internal var adapter: MDListAdapter<*>? = null,
+    internal var adapter: BottomMenuAdapter<*>? = null
 ) : BaseBottomParams<BottomMenuParams>(
     type = MD_BOTTOM_LIST,
     layoutId = R.layout.dialog_md_bottom_menu
 ) {
 
-    fun addItem(text: String) = this.apply { items.add(ListItemBean(text)) }
+    fun addItem(text: String) = this.apply { items.add(ItemBean(text)) }
 
     fun addItems(items: List<String>) = this.also {
         items.forEach {
@@ -35,22 +34,23 @@ class BottomMenuParams(
         }
     }
 
-    fun <T : Any> setListAdapter(adapter: MDListAdapter<T>) = this.also { it.adapter = adapter }
+//    fun <T : Any> setListAdapter(adapter: MDListAdapter<T>) = this.also { it.adapter = adapter }
 
 
     fun <T : Any> setAdapter(adapter: BottomMenuAdapter<T>) =
-        this.apply { recyclerAdapter = adapter }
+        this.apply { this.adapter = adapter }
 
     fun setOnItemClickListener(listener: OnItemClickListener) =
         this.apply { itemClickListener = listener }
 
-    fun setOnItemClickListener(listener: (position: Int, dialog: DialogInterface) -> Unit) =
+    fun setOnItemClickListener(listener: (position: Int, item:ItemBean, dialog: DialogInterface) -> Unit) =
         setOnItemClickListener(object : OnItemClickListener() {
             override fun onClick(
                 position: Int,
+                item:ItemBean,
                 dialog: DialogInterface
             ) {
-                listener.invoke(position, dialog)
+                listener.invoke(position,item, dialog)
             }
         })
 

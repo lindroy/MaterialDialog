@@ -24,18 +24,11 @@ data class BottomParams(
 ) : BaseBottomParams<BottomParams>(type = MD_BOTTOM) {
 
 
-
     /**
      * 设置对话框布局
      * @param layoutId:对话框布局Id
      */
     fun setView(@LayoutRes layoutId: Int) = this.also { it.layoutId = layoutId }
-
-    /**
-     * 是否完全展开，默认false
-     */
-    fun setFullExpanded(fullExpanded: Boolean) = this.also { it.fullExpanded = fullExpanded }
-
 
 
     fun setOnViewHandler(viewHandler: OnViewHandlerListener) =
@@ -47,9 +40,6 @@ data class BottomParams(
                 viewHandler.invoke(holder, dialog)
             }
         })
-
-
-
 
 
     /**

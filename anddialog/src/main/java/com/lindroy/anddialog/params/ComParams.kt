@@ -9,6 +9,7 @@ import android.view.Gravity
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.constants.DialogType
 import com.lindroy.anddialog.constants.MD_ALERT
+import com.lindroy.anddialog.constants.MD_SINGLE_CHOICE
 import com.lindroy.iosdialog.util.*
 import kotlinx.android.parcel.Parcelize
 
@@ -52,6 +53,9 @@ open class ComParams<T : ComParams<T>>(
     var isKeepPortraitWidth: Boolean = gravity == Gravity.CENTER
 ) : Parcelable {
 
+    val isSingleChoice
+        get() = type == MD_SINGLE_CHOICE
+
     /**
      * 最终计算得到的宽度
      */
@@ -59,10 +63,10 @@ open class ComParams<T : ComParams<T>>(
         get() = when (widthPx) {
             in 1..screenWidth -> widthPx
             else -> {
-                if (isKeepPortraitWidth){
-                    widthPx =  (widthScale * screenWidthOnPortrait).toInt()
+                if (isKeepPortraitWidth) {
+                    widthPx = (widthScale * screenWidthOnPortrait).toInt()
                     widthPx
-                }else (widthScale * screenWidth).toInt()
+                } else (widthScale * screenWidth).toInt()
             }
         }
 

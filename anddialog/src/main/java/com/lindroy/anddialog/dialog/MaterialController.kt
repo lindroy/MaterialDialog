@@ -189,7 +189,9 @@ class MaterialController : DialogFragment() {
         if (mdParams.itemList.isNotEmpty()) {
             spaceButton.setGone()
             viewStubList.setVisible()
-            val adapter = when (mdParams.type) {
+
+
+            val adapter1 = when (mdParams.type) {
                 MD_MULTI_CHOICE -> MultipleChoiceAdapter(
                     mContext,
                     mdParams.itemList
@@ -204,7 +206,7 @@ class MaterialController : DialogFragment() {
                     }
                 }
             }
-            listView.adapter = adapter
+            listView.adapter = adapter1
             listView.setOnScrollListener(object : AbsListView.OnScrollListener {
                 override fun onScroll(
                     view: AbsListView?,
@@ -231,7 +233,6 @@ class MaterialController : DialogFragment() {
                 }
 
                 override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
-
                 }
 
             })
