@@ -4,7 +4,7 @@ import android.content.DialogInterface
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
 import com.lindroy.anddialog.constants.MD_BOTTOM
-import com.lindroy.anddialog.dialog.BottomController
+import com.lindroy.anddialog.dialog.BottomDialog
 import com.lindroy.anddialog.listener.OnDismissListener
 import com.lindroy.anddialog.listener.OnViewHandlerListener
 import com.lindroy.anddialog.viewholder.ViewHolder
@@ -68,7 +68,7 @@ data class BottomParams(
 
     @JvmOverloads
     fun show(tag: String = this.tag) {
-        BottomController.showDialog(this, fm, tag)
+        BottomDialog.showDialog(this, fm, tag)
     }
 }
 

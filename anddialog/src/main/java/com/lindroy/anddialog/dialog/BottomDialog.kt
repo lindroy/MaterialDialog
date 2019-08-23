@@ -17,7 +17,7 @@ import kotlin.properties.Delegates
  * @function 底部对话框
  * @Description
  */
-class BottomController : BaseBottomDialog() {
+class BottomDialog : BaseBottomDialog() {
 
     private  var mParams: BottomParams by Delegates.observable(BottomParams()){property, oldValue, newValue ->
         bottomParams = mParams
@@ -41,7 +41,7 @@ class BottomController : BaseBottomDialog() {
 
     companion object {
         internal fun showDialog(params: BottomParams, fm: FragmentManager, tag: String) =
-            BottomController().apply {
+            BottomDialog().apply {
                 mParams = params
                 show(fm, tag)
             }
