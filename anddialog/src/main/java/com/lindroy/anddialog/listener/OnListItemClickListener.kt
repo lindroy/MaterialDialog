@@ -3,7 +3,7 @@ package com.lindroy.anddialog.listener
 import android.content.DialogInterface
 import android.os.Parcel
 import android.os.Parcelable
-import com.lindroy.anddialog.params.ItemBean
+import com.lindroy.anddialog.params.MDListItem
 
 /**
  * @author Lin
@@ -11,12 +11,12 @@ import com.lindroy.anddialog.params.ItemBean
  * @function 列表item点击事件
  * @Description
  */
-abstract class OnItemClickListener : Parcelable {
+abstract class OnListItemClickListener : Parcelable {
     constructor()
 
     private constructor(source: Parcel)
 
-    abstract fun onClick(position: Int, item: ItemBean, dialog: DialogInterface)
+    abstract fun onClick(position: Int, item: MDListItem, dialog: DialogInterface)
 
     override fun describeContents() = 0
 
@@ -24,19 +24,19 @@ abstract class OnItemClickListener : Parcelable {
 
     companion object {
         @JvmField
-        val CREATOR: Parcelable.Creator<OnItemClickListener> =
-            object : Parcelable.Creator<OnItemClickListener> {
-                override fun createFromParcel(source: Parcel): OnItemClickListener =
-                    object : OnItemClickListener(source) {
+        val CREATOR: Parcelable.Creator<OnListItemClickListener> =
+            object : Parcelable.Creator<OnListItemClickListener> {
+                override fun createFromParcel(source: Parcel): OnListItemClickListener =
+                    object : OnListItemClickListener(source) {
                         override fun onClick(
                             position: Int,
-                            item:ItemBean,
+                            item:MDListItem,
                             dialog: DialogInterface
                         ) {
                         }
                     }
 
-                override fun newArray(size: Int): Array<OnItemClickListener?> = arrayOfNulls(size)
+                override fun newArray(size: Int): Array<OnListItemClickListener?> = arrayOfNulls(size)
             }
     }
 }

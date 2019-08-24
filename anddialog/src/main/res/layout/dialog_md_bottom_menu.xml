@@ -6,11 +6,6 @@
 
     <!--<include layout="@layout/layout_md_title_message_panel" />-->
 
-    <View
-        android:background="@android:color/darker_gray"
-        android:id="@+id/lineTop"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMenu"
@@ -20,10 +15,5 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <View
-        android:background="@android:color/darker_gray"
-        android:id="@+id/lineBottom"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"/>
 
 </LinearLayout>

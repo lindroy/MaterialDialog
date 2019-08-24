@@ -13,6 +13,7 @@ const val MD_SINGLE_CHOICE = 0x002
 const val MD_MULTI_CHOICE = 0x003
 const val MD_BOTTOM = 0x004
 const val MD_BOTTOM_LIST = 0x005
+const val MD_BOTTOM_Grid = 0x006
 @Target(
         AnnotationTarget.CLASS, AnnotationTarget.FUNCTION,
         AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.EXPRESSION
@@ -21,6 +22,8 @@ const val MD_BOTTOM_LIST = 0x005
 @IntDef(MD_ALERT,
         MD_SINGLE_CHOICE,
         MD_MULTI_CHOICE,
-        MD_BOTTOM
+        MD_BOTTOM,
+        MD_BOTTOM_LIST,
+        MD_BOTTOM_Grid
 )
 annotation class DialogType

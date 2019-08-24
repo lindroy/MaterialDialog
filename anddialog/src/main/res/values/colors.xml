@@ -9,5 +9,6 @@
     <color name="md_single_choice_item_text_color">#de000000</color>
     <color name="md_list_divider_color">#e0e0e0</color>
     <color name="md_list_item_text_color">#de000000</color>
+    <color name="md_grid_item_text_color">#de000000</color>
     <color name="md_bottom_list_item_text_color">#e0e0e0</color>
 </resources>

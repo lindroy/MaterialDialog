@@ -3,9 +3,9 @@ package com.lindroy.anddialog.params
 import android.os.Parcelable
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
+import com.lindroid.anddialog.R
 import com.lindroy.anddialog.constants.DialogType
 import com.lindroy.anddialog.constants.MD_BOTTOM
-import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
 import com.lindroy.anddialog.listener.OnDismissListener
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
@@ -20,7 +20,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 open class BaseBottomParams<T : BaseBottomParams<T>>(
     @DialogType internal var type: Int = MD_BOTTOM,
-    @LayoutRes internal var layoutId: Int = 0,
+    @LayoutRes internal var layoutId: Int = R.layout.dialog_md_bottom_menu,
     internal var tag: String = "BottomDialog",
     internal var cancelableOutside: Boolean = true,
     internal var fullExpanded: Boolean = false, //是否完全展开
@@ -40,6 +40,4 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
     val isBottom
         get() = type == MD_BOTTOM
 
-    val isBottomList
-        get() = type == MD_BOTTOM_LIST
 }

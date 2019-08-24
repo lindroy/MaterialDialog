@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AndUtil.init(this.application).setLogGlobalConfig {  }
+        AndUtil.init(this.application).setLogGlobalConfig { }
         mContext = this
         cities = resources.getStringArray(R.array.cities)
         MaterialDialog.init(this.application)
@@ -125,6 +125,21 @@ class MainActivity : AppCompatActivity() {
                 .addItems(cities.toList())
                 .setOnItemClickListener { position, item, dialog ->
                     shortToast("你选择了${item.text}")
+                }
+                .show()
+        }
+        btnBottomGrid.setOnClickListener {
+            MaterialDialog.bottomGrid(this)
+                .setSpanCount(3)
+                .addItem("item1", R.mipmap.ic_launcher_round)
+                .addItem("item2", R.mipmap.ic_launcher_round)
+                .addItem("item3", R.mipmap.ic_launcher_round)
+                .addItem("item4", R.mipmap.ic_launcher_round)
+                .addItem("item5", R.mipmap.ic_launcher_round)
+                .addItem("item6", R.mipmap.ic_launcher_round)
+                .addItem("item7", R.mipmap.ic_launcher_round)
+                .setOnItemClickListener { position, item, dialog ->
+                    shortToast("你点击了${item.text}")
                 }
                 .show()
         }

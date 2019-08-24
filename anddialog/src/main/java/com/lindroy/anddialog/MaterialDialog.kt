@@ -4,10 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
-import com.lindroy.anddialog.params.AlertParams
-import com.lindroy.anddialog.params.BottomMenuParams
-import com.lindroy.anddialog.params.BottomParams
-import com.lindroy.anddialog.params.ComParams
+import com.lindroy.anddialog.params.*
 
 /**
  * @author Lin
@@ -58,11 +55,19 @@ class MaterialDialog private constructor() {
 
         @JvmStatic
         fun bottomList(activity: FragmentActivity) =
-            BottomMenuParams.build(activity.supportFragmentManager)
+            BottomListParams.build(activity.supportFragmentManager)
 
         @JvmStatic
         fun bottomList(fragment: Fragment) =
-            BottomMenuParams.build(fragment.childFragmentManager)
+            BottomListParams.build(fragment.childFragmentManager)
+
+        @JvmStatic
+        fun bottomGrid(activity: FragmentActivity) =
+            BottomGridParams.build(activity.supportFragmentManager)
+
+        @JvmStatic
+        fun bottomGrid(fragment: Fragment) =
+            BottomGridParams.build(fragment.childFragmentManager)
     }
 
     /**
@@ -78,7 +83,6 @@ class MaterialDialog private constructor() {
             fun config() = Configs()
         }
     }
-
 
 
 }
