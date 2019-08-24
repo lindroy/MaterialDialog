@@ -3,7 +3,6 @@ package com.lindroy.anddialog.dialog
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import com.lindroid.anddialog.R
@@ -14,8 +13,6 @@ import com.lindroy.anddialog.params.BottomMenuParams
 import com.lindroy.anddialog.params.ItemBean
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 import com.lindroy.iosdialog.util.dp2px
-import com.lindroy.iosdialog.util.setGone
-import com.lindroy.iosdialog.util.setVisible
 import kotlinx.android.synthetic.main.dialog_md_bottom_menu.*
 import kotlin.properties.Delegates
 
@@ -36,34 +33,6 @@ class BottomMenuDialog : BaseBottomDialog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*listView.apply {
-            adapter = object :
-                MDListAdapter<ListItemBean>(mContext, R.layout.item_md_bottom_list, mParams.items) {
-                override fun onConvert(holder: ViewHolder, position: Int, item: ListItemBean) {
-                    holder.getTextView(R.id.tvItem).also {
-                        it.minHeight = dp2px(50F).toInt()
-                        it.text = item.text
-                        it.textSize = item.textSize
-                        it.gravity = item.gravity
-                        it.setPadding(
-                            item.paddingLeft,
-                            item.paddingTop,
-                            item.paddingRight,
-                            item.paddingBottom
-                        )
-                        it.setTextColor(item.textColor)
-                    }
-                }
-            }
-            setOnItemClickListener { parent, view, position, id ->
-                mParams.itemClickListener?.onClick(
-                    position,
-                    mParams.items[position].text,
-                    view as TextView,
-                    dialog
-                )
-            }
-        }*/
         rvMenu.apply {
             layoutManager = LinearLayoutManager(mContext)
             adapter = object : MDRecyclerViewAdapter<ItemBean>(
@@ -97,31 +66,6 @@ class BottomMenuDialog : BaseBottomDialog() {
                     }
                 }
             }
-
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    val layoutManager = recyclerView.layoutManager
-                    if (layoutManager is LinearLayoutManager) {
-                        val lastItemIndex = layoutManager.findLastCompletelyVisibleItemPosition()
-                        val firstItemIndex = layoutManager.findFirstCompletelyVisibleItemPosition()
-                        if (firstItemIndex == 0) {
-                            lineTop.setGone()
-                        } else {
-                            lineTop.setVisible()
-                        }
-
-                        if (lastItemIndex + 1 == layoutManager.itemCount){
-                            lineBottom.setGone()
-                        }else{
-                            lineBottom.setVisible()
-                        }
-                    }
-                }
-            })
-
-
         }
 
     }
