@@ -49,7 +49,8 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment() {
             setDimAmount(bottomParams.dimAmount)
         }
         val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
-        bottomSheet.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        bottomSheet.layoutParams.height =
+            if (bottomParams.maxHeight > 0) bottomParams.maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
         view?.let { v ->
             v.post {
                 val parent = v.parent as View
@@ -57,7 +58,8 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment() {
                 val behavior = params.behavior
                 val bottomSheetBehavior = behavior as BottomSheetBehavior<*>?
                 bottomSheetBehavior?.let {
-                    it.peekHeight = if (bottomParams.fullExpanded) v.measuredHeight else screenHeight / 2
+                    it.peekHeight =
+                        if (bottomParams.fullExpanded) v.measuredHeight else screenHeight / 2
                     it.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                         override fun onSlide(bottomSheet: View, slideOffset: Float) {
                         }

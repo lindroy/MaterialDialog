@@ -24,7 +24,7 @@ import com.lindroy.anddialog.params.AlertParams
 import com.lindroy.anddialog.params.CheckItemParams
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 import com.lindroy.iosdialog.util.*
-import kotlinx.android.synthetic.main.dialog_material.*
+import kotlinx.android.synthetic.main.dialog_md_alert.*
 import kotlinx.android.synthetic.main.layout_md_button_panel.*
 import kotlinx.android.synthetic.main.layout_md_list_panel.*
 import kotlinx.android.synthetic.main.layout_md_title_message_panel.*
@@ -54,7 +54,7 @@ class MaterialController : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? =
-        inflater.inflate(R.layout.dialog_material, container, false)
+        inflater.inflate(R.layout.dialog_md_alert, container, false)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -346,7 +346,7 @@ class MaterialController : DialogFragment() {
             //设置窗体动画
             setWindowAnimations(android.R.style.Animation_Dialog)
             params.width = mdParams.finalWidth
-            params.dimAmount = 0.32F
+            params.dimAmount = mdParams.dimAmount
             val maxHeight = 0.65 * screenHeight
             decorView.viewTreeObserver.addOnGlobalLayoutListener(object :
                 ViewTreeObserver.OnGlobalLayoutListener {
@@ -358,7 +358,6 @@ class MaterialController : DialogFragment() {
                     decorView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             })
-//            attributes = params
         }
     }
 

@@ -1,12 +1,14 @@
 package com.lindroy.anddialog.params
 
 import android.os.Parcelable
+import android.support.annotation.IntRange
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.constants.DialogType
 import com.lindroy.anddialog.constants.MD_BOTTOM
 import com.lindroy.anddialog.listener.OnDismissListener
+import com.lindroy.iosdialog.util.screenHeight
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -23,13 +25,22 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
     @LayoutRes internal var layoutId: Int = R.layout.dialog_md_bottom_menu,
     internal var tag: String = "BottomDialog",
     internal var cancelableOutside: Boolean = true,
+    internal var maxHeight: Int = 0,    //最大高度
     internal var fullExpanded: Boolean = false, //是否完全展开
-    internal var dimAmount:Float = 0.32F,
+    internal var dimAmount: Float = 0.32F,
     internal var dismissListener: OnDismissListener? = null
-) : Parcelable{
+) : Parcelable {
 
     @IgnoredOnParcel
     protected lateinit var fm: FragmentManager
+
+    /**
+     * 设置最大高度
+     */
+    fun setMaxHeight(@IntRange(from = 0) maxHeight: Int) =
+        this.also {
+            it.maxHeight = if (maxHeight > screenHeight) screenHeight else maxHeight
+        } as T
 
     /**
      * 是否完全展开，默认false
