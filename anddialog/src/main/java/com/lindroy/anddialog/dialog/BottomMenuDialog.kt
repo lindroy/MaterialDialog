@@ -43,6 +43,16 @@ class BottomMenuDialog : BaseBottomDialog() {
         listParams?.let { p ->
             rvMenu.apply {
                 layoutManager = LinearLayoutManager(mContext)
+                if (p.adapter != null) {
+                    adapter = p.adapter
+                   /* if (p.childIds?.isNotEmpty() == true) {
+                        p.adapter?.setOnChildClickListener(p.childIds!!) { position, item ->
+                            p.itemClickListener?.onClick(position, item, dialog)
+                        }
+                    }*/
+
+                    return
+                }
                 adapter = object : MDRecyclerViewAdapter<MDListItem>(
                     mContext,
                     R.layout.item_md_bottom_list,
@@ -67,7 +77,7 @@ class BottomMenuDialog : BaseBottomDialog() {
                         }
                         holder.getView<LinearLayout>(R.id.llItem).also {
                             it.minimumHeight = dp2px(50F).toInt()
-                            setOnClickListener {
+                            it.setOnClickListener {
                                 p.itemClickListener?.onClick(position, item, dialog)
                             }
                         }
@@ -79,6 +89,13 @@ class BottomMenuDialog : BaseBottomDialog() {
         gridParams?.let { p ->
             rvMenu.apply {
                 layoutManager = GridLayoutManager(mContext, p.spanCount)
+               /* if (p.adapter != null) {
+                    adapter = p.adapter
+                    p.adapter?.setOnChildClickListener() { position, item ->
+                        p.itemClickListener?.onClick(position, item as MDGridItem, dialog)
+                    }
+                    return
+                }*/
                 adapter = object : MDRecyclerViewAdapter<MDGridItem>(
                     mContext,
                     R.layout.item_md_bottom_grid,
@@ -106,7 +123,7 @@ class BottomMenuDialog : BaseBottomDialog() {
                             val layoutParams = it.layoutParams
                             layoutParams.width = screenWidth / p.spanCount
                             it.setPadding(0, item.paddingTopBottom, 0, item.paddingTopBottom)
-                            setOnClickListener {
+                            it.setOnClickListener {
 
                             }
                         }
@@ -115,7 +132,6 @@ class BottomMenuDialog : BaseBottomDialog() {
                 }
             }
         }
-
 
     }
 

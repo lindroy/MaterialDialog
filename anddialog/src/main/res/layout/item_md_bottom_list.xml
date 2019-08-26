@@ -9,12 +9,12 @@
     android:gravity="center_vertical"
     android:layout_height="wrap_content">
 
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/ivIcon"
         android:scaleType="centerCrop"
         android:layout_marginStart="16dp"
         android:layout_width="@dimen/md_list_item_icon_size"
-        android:layout_height="@dimen/md_list_item_icon_size" />
+        android:layout_height="@dimen/md_list_item_icon_size" />-->
 
     <TextView
         android:id="@+id/tvItem"

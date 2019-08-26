@@ -460,7 +460,7 @@ class AlertParams private constructor(
 
     /**
      * 显示对话框
-     * @param tag:DialogFragment的Tag，默认为“iOSDialog”
+     * @param tag:DialogFragment的Tag，默认为“MaterialDialog”
      */
     fun show(tag: String = MaterialDialog.globalParams.tag) {
         this.tag = tag

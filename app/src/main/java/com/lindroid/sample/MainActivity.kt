@@ -6,13 +6,17 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.lindroid.androidutilskt.app.AndUtil
 import com.lindroid.androidutilskt.extension.dp2px
 import com.lindroid.androidutilskt.extension.logcat.d
 import com.lindroid.androidutilskt.extension.shortToast
+import com.lindroid.sample.bean.ListItemBean
 import com.lindroy.anddialog.MaterialDialog
+import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
+import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -108,7 +112,6 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeText(R.string.cancel)
                 .show()
         }
-
         btnBottom.setOnClickListener {
             MaterialDialog.bottom(this)
                 .setView(R.layout.layout_custon_bottom)
@@ -124,8 +127,32 @@ class MainActivity : AppCompatActivity() {
             MaterialDialog.bottomList(this)
                 .addItems(cities.toList())
                 .setOnItemClickListener { position, item, dialog ->
+                    Log.e("Tag", "点击")
                     shortToast("你选择了${item.text}")
                 }
+                .show()
+        }
+        btnCusListItem.setOnClickListener {
+            val list = cities.map { ListItemBean(it, false) }
+            MaterialDialog.bottomList(this)
+                .setAdapter(object :
+                    MDRecyclerViewAdapter<ListItemBean>(mContext, R.layout.item_list, list) {
+                    override fun onConvert(
+                        holder: RecyclerViewHolder,
+                        position: Int,
+                        item: ListItemBean
+                    ) {
+                        holder.setText(R.id.tvItem, item.text)
+                            .setBackgroundRes(
+                                R.id.ivItem,
+                                if (item.isSelected) R.drawable.ic_selected else R.drawable.ic_unselected
+                            )
+                        holder.setOnClickListener(R.id.llRoot) {
+                            item.isSelected = !item.isSelected
+                            notifyItemChanged(position)
+                        }
+                    }
+                })
                 .show()
         }
         btnBottomGrid.setOnClickListener {

@@ -21,6 +21,8 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
     @LayoutRes
     private var layoutId: Int = 0
     private lateinit var items: List<T>
+    private var clickListener: ((position: Int, item: T) -> Unit)? = null
+    private var childIds: IntArray? = null
 
     private constructor(source: Parcel) : this()
 
@@ -30,13 +32,18 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
         this.items = items
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int)
-            =RecyclerViewHolder.getInstance(mContext,layoutId,viewGroup)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int) =
+        RecyclerViewHolder.getInstance(mContext, layoutId, viewGroup)
 
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        onConvert(holder,position,items[position])
+        onConvert(holder, position, items[position])
+        /*childIds?.forEach {
+            holder.itemView.findViewById<View>(it).setOnClickListener {
+                clickListener?.invoke(position, items[position])
+            }
+        }*/
     }
 
     abstract fun onConvert(holder: RecyclerViewHolder, position: Int, item: T)
@@ -49,12 +56,20 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
 
     companion object CREATOR : Parcelable.Creator<MDRecyclerViewAdapter<*>> {
         override fun createFromParcel(parcel: Parcel): MDRecyclerViewAdapter<*> =
-            object : MDRecyclerViewAdapter<Any>() {
+            object : MDRecyclerViewAdapter<Any>(parcel) {
                 override fun onConvert(holder: RecyclerViewHolder, position: Int, item: Any) {}
             }
 
         override fun newArray(size: Int): Array<MDRecyclerViewAdapter<*>?> {
             return arrayOfNulls(size)
         }
+    }
+
+    internal fun setOnChildClickListener(
+        ids: IntArray,
+        listener: (position: Int, item: T) -> Unit
+    ) {
+        childIds = ids
+        clickListener = listener
     }
 }

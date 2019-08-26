@@ -66,10 +66,18 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/btnCusListItem"
+            android:text="自定义子布局的底部列表对话框"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:id="@+id/btnBottomGrid"
             android:text="底部表格对话框"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
     </LinearLayout>
 
 

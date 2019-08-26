@@ -49,8 +49,8 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment() {
             setDimAmount(bottomParams.dimAmount)
         }
         val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
-        bottomSheet.layoutParams.height =
-            if (bottomParams.maxHeight > 0) bottomParams.maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+        bottomSheet.layoutParams.height =ViewGroup.LayoutParams.WRAP_CONTENT
+//            if (bottomParams.maxHeight > 0) bottomParams.maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
         view?.let { v ->
             v.post {
                 val parent = v.parent as View
