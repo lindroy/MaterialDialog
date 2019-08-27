@@ -45,12 +45,11 @@ class BottomMenuDialog : BaseBottomDialog() {
                 layoutManager = LinearLayoutManager(mContext)
                 if (p.adapter != null) {
                     adapter = p.adapter
-                   /* if (p.childIds?.isNotEmpty() == true) {
-                        p.adapter?.setOnChildClickListener(p.childIds!!) { position, item ->
-                            p.itemClickListener?.onClick(position, item, dialog)
+                    if (p.viewIds?.isNotEmpty() == true) {
+                        p.adapter?.setOnChildClickListener(p.viewIds!!) { position, view, any ->
+                            p.childClickListener?.onClick(p.adapter!!,position, any, view, dialog)
                         }
-                    }*/
-
+                    }
                     return
                 }
                 adapter = object : MDRecyclerViewAdapter<MDListItem>(
@@ -89,13 +88,13 @@ class BottomMenuDialog : BaseBottomDialog() {
         gridParams?.let { p ->
             rvMenu.apply {
                 layoutManager = GridLayoutManager(mContext, p.spanCount)
-               /* if (p.adapter != null) {
-                    adapter = p.adapter
-                    p.adapter?.setOnChildClickListener() { position, item ->
-                        p.itemClickListener?.onClick(position, item as MDGridItem, dialog)
-                    }
-                    return
-                }*/
+                /* if (p.adapter != null) {
+                     adapter = p.adapter
+                     p.adapter?.setOnChildClickListener() { position, item ->
+                         p.itemClickListener?.onClick(position, item as MDGridItem, dialog)
+                     }
+                     return
+                 }*/
                 adapter = object : MDRecyclerViewAdapter<MDGridItem>(
                     mContext,
                     R.layout.item_md_bottom_grid,
@@ -134,7 +133,6 @@ class BottomMenuDialog : BaseBottomDialog() {
         }
 
     }
-
 
     companion object {
         internal fun showListDialog(params: BottomListParams, fm: FragmentManager, tag: String) =

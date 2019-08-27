@@ -5,6 +5,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 
@@ -21,7 +22,7 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
     @LayoutRes
     private var layoutId: Int = 0
     private lateinit var items: List<T>
-    private var clickListener: ((position: Int, item: T) -> Unit)? = null
+    private var clickListener: ((position: Int, view: View, item: T) -> Unit)? = null
     private var childIds: IntArray? = null
 
     private constructor(source: Parcel) : this()
@@ -39,14 +40,14 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         onConvert(holder, position, items[position])
-        /*childIds?.forEach {
-            holder.itemView.findViewById<View>(it).setOnClickListener {
-                clickListener?.invoke(position, items[position])
+        childIds?.forEach {
+            holder.itemView.findViewById<View>(it).setOnClickListener { view ->
+                clickListener?.invoke(position, view, items[position])
             }
-        }*/
+        }
     }
 
-    abstract fun onConvert(holder: RecyclerViewHolder, position: Int, item: T)
+    protected abstract fun onConvert(holder: RecyclerViewHolder, position: Int, item: T)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(layoutId)
@@ -67,7 +68,7 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
 
     internal fun setOnChildClickListener(
         ids: IntArray,
-        listener: (position: Int, item: T) -> Unit
+        listener: (position: Int, view: View, item: T) -> Unit
     ) {
         childIds = ids
         clickListener = listener

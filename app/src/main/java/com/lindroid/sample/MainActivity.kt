@@ -153,6 +153,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 })
+                .setOnItemChildClickListener<ListItemBean>(R.id.llRoot,R.id.tvItem){adapter, position, item, view, dialog ->
+                    when(view.id){
+                        R.id.llRoot-> shortToast("你选择了${item.text}")
+                        R.id.tvItem-> shortToast("${item.text}")
+                    }
+                }
                 .show()
         }
         btnBottomGrid.setOnClickListener {
