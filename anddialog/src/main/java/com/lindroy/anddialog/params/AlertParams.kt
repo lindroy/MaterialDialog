@@ -41,7 +41,7 @@ class AlertParams private constructor(
      * 点击对话框外部关闭对话框
      */
     fun setCancelableOutside(isCancelable: Boolean) = this.apply {
-        cancelableOutSide = isCancelable
+        cancelableOutside = isCancelable
     }
 
     /**

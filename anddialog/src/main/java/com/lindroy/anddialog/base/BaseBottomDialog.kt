@@ -25,6 +25,11 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment() {
     abstract var bottomParams: BaseBottomParams<*>
     protected lateinit var mContext: Context
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCancelable = bottomParams.cancelableOutside
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -47,6 +47,12 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
      */
     fun setFullExpanded(fullExpanded: Boolean) = this.also { it.fullExpanded = fullExpanded } as T
 
+    /**
+     * 点击对话框外部关闭对话框
+     */
+    fun setCancelableOutside(isCancelable: Boolean) = this.apply {
+        cancelableOutside = isCancelable
+    } as T
 
     val isBottom
         get() = type == MD_BOTTOM

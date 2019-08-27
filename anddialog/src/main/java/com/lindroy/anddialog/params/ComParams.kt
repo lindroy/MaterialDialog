@@ -44,7 +44,7 @@ open class ComParams<T : ComParams<T>>(
     internal var negButtonParams: ButtonParams = ButtonParams(),
     internal var neuButtonParams: ButtonParams = ButtonParams(),
     internal var dismissible: Boolean = true,
-    internal var cancelableOutSide: Boolean = true,
+    internal var cancelableOutside: Boolean = true,
     @FloatRange(from = 0.0, to = 1.0) internal var backgroundAlpha: Float = 1.0F,
     @ColorInt internal var backgroundColor: Int = getResColor(R.color.md_dialog_bg_color),
     var radius: Float = getResPx(R.dimen.md_dialog_bg_corner_radius).toFloat(),
