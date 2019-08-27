@@ -11,6 +11,7 @@ import com.lindroy.anddialog.params.MDGridItem
  * @function 列表item点击事件
  * @Description
  */
+@Deprecated("由OnSheetItemClickListener替代")
 abstract class OnGridItemClickListener : Parcelable {
     constructor()
 

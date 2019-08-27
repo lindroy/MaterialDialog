@@ -4,8 +4,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.lindroy.anddialog.MaterialDialog;
+import com.lindroy.anddialog.adapter.MDAdapter;
+import com.lindroy.anddialog.listener.OnItemChildClickListener;
 import com.lindroy.anddialog.listener.OnSheetItemClickListener;
 import com.lindroy.anddialog.params.MDListItem;
 
@@ -29,6 +32,14 @@ public class JavaActivity extends AppCompatActivity {
                     public void onClick(int position, MDListItem item, @NotNull DialogInterface dialog) {
 
                     }
+                })
+                .show();
+        MaterialDialog.bottomGrid(this)
+                .setOnItemChildClickListener(new OnItemChildClickListener<ListItemBean>() {
+                    @Override
+                    public void onClick(@NotNull MDAdapter<?> adapter, int position, ListItemBean item, @NotNull View view, @NotNull DialogInterface dialog) {
+                    }
+
                 })
                 .show();
 

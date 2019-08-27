@@ -57,18 +57,30 @@ class BottomListParams(
             }
         })
 
+    /**
+     * 自定义Item布局的点击事件
+     */
     fun <T : Any> setOnItemChildClickListener(
         vararg viewIds: Int,
-        listener: (adapter:MDAdapter<*>, position: Int, item: T, view: View, dialog: DialogInterface) -> Unit
-    ) = setOnItemChildClickListener(*viewIds, listener = object : OnItemChildClickListener<T>() {
-        override fun onClick(adapter:MDAdapter<*>, position: Int, item: T, view: View, dialog: DialogInterface) {
-            listener.invoke(adapter,position, item, view, dialog)
+        listener: (adapter: MDAdapter<*>, position: Int, item: T, view: View, dialog: DialogInterface) -> Unit
+    ) = setOnItemChildClickListener(object : OnItemChildClickListener<T>() {
+        override fun onClick(
+            adapter: MDAdapter<*>,
+            position: Int,
+            item: T,
+            view: View,
+            dialog: DialogInterface
+        ) {
+            listener.invoke(adapter, position, item, view, dialog)
         }
-    })
+    }, *viewIds)
 
+    /**
+     * 自定义Item布局的点击事件
+     */
     fun <T : Any> setOnItemChildClickListener(
-        vararg viewIds: Int,
-        listener: OnItemChildClickListener<T>
+        listener: OnItemChildClickListener<T>,
+        vararg viewIds: Int
     ) = this.apply {
         this.viewIds = viewIds
         childClickListener = listener

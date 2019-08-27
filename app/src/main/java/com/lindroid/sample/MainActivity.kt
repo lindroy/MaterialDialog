@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity() {
         btnInfo.setOnClickListener {
             MaterialDialog.alert(this)
                 .setMessage(R.string.location_services_msg)
-                .setPositiveText("这是一个文字很长的按钮")
-                .setNegativeText("这是一个文字很长的按钮")
                 .show()
         }
 

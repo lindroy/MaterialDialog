@@ -12,7 +12,6 @@ import com.lindroy.anddialog.adapter.MDAdapter
  * @function 自定义Item布局上的控件点击事件
  * @Description
  */
-@Deprecated("由OnSheetItemClickListener替代")
 abstract class OnItemChildClickListener<out T>:Parcelable {
     constructor()
 
