@@ -4,7 +4,7 @@ import android.content.DialogInterface
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
-import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
+import com.lindroy.anddialog.adapter.MDAdapter
 
 /**
  * @author Lin
@@ -12,12 +12,13 @@ import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
  * @function 自定义Item布局上的控件点击事件
  * @Description
  */
+@Deprecated("由OnSheetItemClickListener替代")
 abstract class OnItemChildClickListener<out T>:Parcelable {
     constructor()
 
     private constructor(source: Parcel)
 
-    abstract fun onClick(adapter:MDRecyclerViewAdapter<*>,position: Int, item:@UnsafeVariance T, view: View, dialog: DialogInterface)
+    abstract fun onClick(adapter:MDAdapter<*>, position: Int, item:@UnsafeVariance T, view: View, dialog: DialogInterface)
 
     override fun describeContents() = 0
 
@@ -29,7 +30,7 @@ abstract class OnItemChildClickListener<out T>:Parcelable {
                 override fun createFromParcel(source: Parcel): OnItemChildClickListener<*> =
                     object : OnItemChildClickListener<Any>(source) {
                         override fun onClick(
-                            adapter:MDRecyclerViewAdapter<*>,
+                            adapter:MDAdapter<*>,
                             position: Int,
                             item:Any,
                             view: View,

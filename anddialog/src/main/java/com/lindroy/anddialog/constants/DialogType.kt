@@ -5,7 +5,7 @@ import android.support.annotation.IntDef
 /**
  * @author Lin
  * @date 2019/8/15
- * @function
+ * @function 对话框类型
  * @Description
  */
 const val MD_ALERT = 0x001

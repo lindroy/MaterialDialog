@@ -15,7 +15,7 @@ import com.lindroy.anddialog.viewholder.RecyclerViewHolder
  * @function
  * @Description
  */
-abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerViewHolder>(),
+abstract class MDAdapter<T : Any>() : RecyclerView.Adapter<RecyclerViewHolder>(),
     Parcelable {
 
     private lateinit var mContext: Context
@@ -55,13 +55,13 @@ abstract class MDRecyclerViewAdapter<T : Any>() : RecyclerView.Adapter<RecyclerV
 
     override fun describeContents() = 0
 
-    companion object CREATOR : Parcelable.Creator<MDRecyclerViewAdapter<*>> {
-        override fun createFromParcel(parcel: Parcel): MDRecyclerViewAdapter<*> =
-            object : MDRecyclerViewAdapter<Any>(parcel) {
+    companion object CREATOR : Parcelable.Creator<MDAdapter<*>> {
+        override fun createFromParcel(parcel: Parcel): MDAdapter<*> =
+            object : MDAdapter<Any>(parcel) {
                 override fun onConvert(holder: RecyclerViewHolder, position: Int, item: Any) {}
             }
 
-        override fun newArray(size: Int): Array<MDRecyclerViewAdapter<*>?> {
+        override fun newArray(size: Int): Array<MDAdapter<*>?> {
             return arrayOfNulls(size)
         }
     }

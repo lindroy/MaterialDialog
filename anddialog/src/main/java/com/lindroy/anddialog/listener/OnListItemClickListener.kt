@@ -10,6 +10,7 @@ import android.os.Parcelable
  * @function 列表item点击事件
  * @Description
  */
+@Deprecated("由OnSheetItemClickListener替代")
 abstract class OnListItemClickListener <out T>: Parcelable {
     constructor()
 

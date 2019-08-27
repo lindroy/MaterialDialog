@@ -19,7 +19,7 @@ import android.view.*
 import android.widget.RadioButton
 import com.lindroid.anddialog.R
 import com.lindroy.anddialog.MaterialDialog
-import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
+import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.params.AlertParams
 import com.lindroy.anddialog.params.CheckItemParams
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
@@ -226,7 +226,7 @@ class MaterialController : DialogFragment() {
         }
     }
 
-    private fun setSingleChoiceAdapter() = object : MDRecyclerViewAdapter<CheckItemParams>(
+    private fun setSingleChoiceAdapter() = object : MDAdapter<CheckItemParams>(
         mContext,
         R.layout.item_md_single_choice_list,
         mdParams.itemList
@@ -279,7 +279,7 @@ class MaterialController : DialogFragment() {
         }
     }
 
-    private fun setMultiChoiceAdapter() = object : MDRecyclerViewAdapter<CheckItemParams>(
+    private fun setMultiChoiceAdapter() = object : MDAdapter<CheckItemParams>(
         mContext,
         R.layout.item_md_multiple_choice_list,
         mdParams.itemList

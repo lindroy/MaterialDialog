@@ -14,7 +14,7 @@ import com.lindroid.androidutilskt.extension.logcat.d
 import com.lindroid.androidutilskt.extension.shortToast
 import com.lindroid.sample.bean.ListItemBean
 import com.lindroy.anddialog.MaterialDialog
-import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
+import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             val list = cities.map { ListItemBean(it, false) }
             MaterialDialog.bottomList(this)
                 .setAdapter(object :
-                    MDRecyclerViewAdapter<ListItemBean>(mContext, R.layout.item_list, list) {
+                    MDAdapter<ListItemBean>(mContext, R.layout.item_list, list) {
                     override fun onConvert(
                         holder: RecyclerViewHolder,
                         position: Int,

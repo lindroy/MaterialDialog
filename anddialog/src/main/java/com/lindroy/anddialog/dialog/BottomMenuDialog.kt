@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.LinearLayout
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
+import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.base.BaseBottomDialog
 import com.lindroy.anddialog.params.*
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
@@ -19,7 +19,7 @@ import kotlin.properties.Delegates
 /**
  * @author Lin
  * @date 2019/8/22
- * @function 底部选项对话框
+ * @function 底部选项（分列表和表格两种）对话框
  * @Description
  */
 class BottomMenuDialog : BaseBottomDialog() {
@@ -52,7 +52,7 @@ class BottomMenuDialog : BaseBottomDialog() {
                     }
                     return
                 }
-                adapter = object : MDRecyclerViewAdapter<MDListItem>(
+                adapter = object : MDAdapter<MDListItem>(
                     mContext,
                     R.layout.item_md_bottom_list,
                     p.items
@@ -95,7 +95,7 @@ class BottomMenuDialog : BaseBottomDialog() {
                      }
                      return
                  }*/
-                adapter = object : MDRecyclerViewAdapter<MDGridItem>(
+                adapter = object : MDAdapter<MDGridItem>(
                     mContext,
                     R.layout.item_md_bottom_grid,
                     p.items

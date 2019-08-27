@@ -4,10 +4,10 @@ import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.v4.app.FragmentManager
-import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
+import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_Grid
 import com.lindroy.anddialog.dialog.BottomMenuDialog
-import com.lindroy.anddialog.listener.OnGridItemClickListener
+import com.lindroy.anddialog.listener.OnSheetItemClickListener
 
 /**
  * @author Lin
@@ -19,8 +19,8 @@ import com.lindroy.anddialog.listener.OnGridItemClickListener
 data class BottomGridParams(
     internal var spanCount: Int = 3,
     internal var items: MutableList<MDGridItem> = mutableListOf(),
-    internal var itemClickListener: OnGridItemClickListener? = null,
-    internal var adapter: MDRecyclerViewAdapter<*>? = null
+    internal var itemClickListener: OnSheetItemClickListener<*>? = null,
+    internal var adapter: MDAdapter<*>? = null
 ) : BaseBottomParams<BottomGridParams>(
     type = MD_BOTTOM_Grid
 ) {
@@ -35,14 +35,14 @@ data class BottomGridParams(
     fun addItem(text: String, icon: Drawable) =
         this.apply { items.add(MDGridItem(text, icon = icon)) }
 
-    fun <T : Any> setAdapter(adapter: MDRecyclerViewAdapter<T>) =
+    fun <T : Any> setAdapter(adapter: MDAdapter<T>) =
         this.apply { this.adapter = adapter }
 
-    fun setOnItemClickListener(listener: OnGridItemClickListener) =
+    fun setOnItemClickListener(listener: OnSheetItemClickListener<MDGridItem>) =
         this.apply { itemClickListener = listener }
 
     fun setOnItemClickListener(listener: (position: Int, item: MDGridItem, dialog: DialogInterface) -> Unit) =
-        setOnItemClickListener(object : OnGridItemClickListener() {
+        setOnItemClickListener(object : OnSheetItemClickListener<MDGridItem>() {
             override fun onClick(position: Int, item: MDGridItem, dialog: DialogInterface) {
                 listener.invoke(position, item, dialog)
             }

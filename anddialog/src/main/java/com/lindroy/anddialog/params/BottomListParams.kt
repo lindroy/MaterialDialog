@@ -3,11 +3,11 @@ package com.lindroy.anddialog.params
 import android.content.DialogInterface
 import android.support.v4.app.FragmentManager
 import android.view.View
-import com.lindroy.anddialog.adapter.MDRecyclerViewAdapter
+import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
 import com.lindroy.anddialog.dialog.BottomMenuDialog
 import com.lindroy.anddialog.listener.OnItemChildClickListener
-import com.lindroy.anddialog.listener.OnListItemClickListener
+import com.lindroy.anddialog.listener.OnSheetItemClickListener
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -20,9 +20,9 @@ import kotlinx.android.parcel.Parcelize
 class BottomListParams(
     internal var items: MutableList<MDListItem> = mutableListOf(),
     internal var viewIds: IntArray? = null,
-    internal var itemClickListener: OnListItemClickListener<*>? = null,
+    internal var itemClickListener: OnSheetItemClickListener<*>? = null,
     internal var childClickListener: OnItemChildClickListener<*>? = null,
-    internal var adapter: MDRecyclerViewAdapter<*>? = null
+    internal var adapter: MDAdapter<*>? = null
 ) : BaseBottomParams<BottomListParams>(
     type = MD_BOTTOM_LIST
 ) {
@@ -40,14 +40,14 @@ class BottomListParams(
         }
     }
 
-    fun <T : Any> setAdapter(adapter: MDRecyclerViewAdapter<T>) =
+    fun <T : Any> setAdapter(adapter: MDAdapter<T>) =
         this.apply { this.adapter = adapter }
 
-    fun setOnItemClickListener(listener: OnListItemClickListener<MDListItem>) =
+    fun setOnItemClickListener(listener: OnSheetItemClickListener<MDListItem>) =
         this.apply { itemClickListener = listener }
 
     fun setOnItemClickListener(listener: (position: Int, item: MDListItem, dialog: DialogInterface) -> Unit) =
-        setOnItemClickListener(object : OnListItemClickListener<MDListItem>() {
+        setOnItemClickListener(object : OnSheetItemClickListener<MDListItem>() {
             override fun onClick(
                 position: Int,
                 item: MDListItem,
@@ -59,9 +59,9 @@ class BottomListParams(
 
     fun <T : Any> setOnItemChildClickListener(
         vararg viewIds: Int,
-        listener: (adapter:MDRecyclerViewAdapter<*>,position: Int, item: T, view: View, dialog: DialogInterface) -> Unit
+        listener: (adapter:MDAdapter<*>, position: Int, item: T, view: View, dialog: DialogInterface) -> Unit
     ) = setOnItemChildClickListener(*viewIds, listener = object : OnItemChildClickListener<T>() {
-        override fun onClick(adapter:MDRecyclerViewAdapter<*>,position: Int, item: T, view: View, dialog: DialogInterface) {
+        override fun onClick(adapter:MDAdapter<*>, position: Int, item: T, view: View, dialog: DialogInterface) {
             listener.invoke(adapter,position, item, view, dialog)
         }
     })
