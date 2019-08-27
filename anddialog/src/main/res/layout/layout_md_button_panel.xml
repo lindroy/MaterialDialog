@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="?android:buttonBarStyle"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/md_dialog_button_panel_height"
+    android:minHeight="@dimen/md_dialog_button_panel_height"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:measureWithLargestChild="true"
     android:id="@+id/buttonPanel"
     android:paddingBottom="8dp"
     android:paddingTop="8dp"
+    android:background="@android:color/holo_blue_bright"
     android:orientation="horizontal">
 
     <Button
@@ -19,8 +21,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1" />
-    <!--android:background="@null"-->
-    <!--android:foreground="?android:attr/selectableItemBackground"-->
 
     <Button
         android:id="@+id/btnNeg"

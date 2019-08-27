@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         btnInfo.setOnClickListener {
             MaterialDialog.alert(this)
                 .setMessage(R.string.location_services_msg)
+                .setPositiveText("这是一个文字很长的按钮")
+                .setNegativeText("这是一个文字很长的按钮")
                 .show()
         }
 
@@ -147,15 +149,15 @@ class MainActivity : AppCompatActivity() {
                                 R.id.ivItem,
                                 if (item.isSelected) R.drawable.ic_selected else R.drawable.ic_unselected
                             )
-                        holder.setOnClickListener(R.id.llRoot) {
-                            item.isSelected = !item.isSelected
-                            notifyItemChanged(position)
-                        }
                     }
                 })
                 .setOnItemChildClickListener<ListItemBean>(R.id.llRoot,R.id.tvItem){adapter, position, item, view, dialog ->
                     when(view.id){
-                        R.id.llRoot-> shortToast("你选择了${item.text}")
+                        R.id.llRoot-> {
+                            shortToast("你选择了${item.text}")
+                            item.isSelected = !item.isSelected
+                            adapter.notifyItemChanged(position)
+                        }
                         R.id.tvItem-> shortToast("${item.text}")
                     }
                 }
