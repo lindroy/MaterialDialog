@@ -3,11 +3,13 @@ package com.lindroy.anddialog.params
 import android.content.DialogInterface
 import android.support.annotation.*
 import android.support.v4.app.FragmentManager
+import android.view.KeyEvent
 import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
 import com.lindroy.anddialog.constants.MD_SINGLE_CHOICE
-import com.lindroy.anddialog.dialog.MaterialController
+import com.lindroy.anddialog.dialog.AlertDialog
 import com.lindroy.anddialog.listener.OnDialogClickListener
+import com.lindroy.anddialog.listener.OnKeyListener
 import com.lindroy.anddialog.listener.OnMultiChoiceListener
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
 import com.lindroy.iosdialog.util.getResColor
@@ -23,12 +25,13 @@ import com.lindroy.iosdialog.util.px2sp
  */
 class AlertParams private constructor(
     internal val itemList: MutableList<CheckItemParams> = mutableListOf(),
+    internal var keyListener: OnKeyListener? = null,
     internal var singleChoiceListener: OnSingleChoiceListener? = null,
     internal var multiChoiceListener: OnMultiChoiceListener? = null
-) : ComParams<AlertParams>() {
+) : ComAlertParams<AlertParams>() {
 
     init {
-        MaterialDialog.globalParams.also {
+        MaterialDialog.alertP.also {
             tag = it.tag
             animStyle = it.animStyle
             dimAmount = it.dimAmount
@@ -49,24 +52,24 @@ class AlertParams private constructor(
      */
     fun setDismissible(dismissible: Boolean) = this.apply { this.dismissible = dismissible }
 
-    /**
-     * 设置对话框背景色
-     */
-    fun setBackgroundColor(@ColorInt color: Int) =
-        this.apply { backgroundColor = color }
-
-    /**
-     * 设置对话框背景色
-     * @param colorId:颜色资源Id
-     */
-    fun setBackgroundColorRes(@ColorRes colorId: Int) = setBackgroundColor(getResColor(colorId))
-
-    /**
-     * 设置背景透明度
-     * 范围为0.0~1.0，0为全透明，1为不透明
-     */
-    fun setBackgroundAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) =
-        this.apply { backgroundAlpha = alpha }
+//    /**
+//     * 设置对话框背景色
+//     */
+//    fun setBackgroundColor(@ColorInt color: Int) =
+//        this.apply { backgroundColor = color }
+//
+//    /**
+//     * 设置对话框背景色
+//     * @param colorId:颜色资源Id
+//     */
+//    fun setBackgroundColorRes(@ColorRes colorId: Int) = setBackgroundColor(getResColor(colorId))
+//
+//    /**
+//     * 设置背景透明度
+//     * 范围为0.0~1.0，0为全透明，1为不透明
+//     */
+//    fun setBackgroundAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) =
+//        this.apply { backgroundAlpha = alpha }
 
     /**
      * 设置对话框标题
@@ -80,28 +83,28 @@ class AlertParams private constructor(
      */
     fun setTitle(@StringRes stringId: Int) = this.apply { setTitle(getResString(stringId)) }
 
-    /**
-     * 设置标题文字颜色
-     */
-    fun setTitleColor(color: Int) = this.apply { titleParams.textColor = color }
-
-    /**
-     * 设置标题文字颜色
-     * @param colorId：颜色资源Id
-     */
-    fun setTitleColorRes(@ColorRes colorId: Int) = setTitleColor(getResColor(colorId))
-
-    /**
-     * 设置标题文字大小
-     * 单位为sp
-     */
-    fun setTitleSize(titleSize: Float) = this.apply { titleParams.textSize = titleSize }
-
-    /**
-     * 设置信息文字大小
-     * @param dimenId:单位为sp的资源文件Id
-     */
-    fun setTitleSize(@DimenRes dimenId: Int) = setTitleSize(getResPx(dimenId).toFloat())
+//    /**
+//     * 设置标题文字颜色
+//     */
+//    fun setTitleColor(color: Int) = this.apply { titleParams.textColor = color }
+//
+//    /**
+//     * 设置标题文字颜色
+//     * @param colorId：颜色资源Id
+//     */
+//    fun setTitleColorRes(@ColorRes colorId: Int) = setTitleColor(getResColor(colorId))
+//
+//    /**
+//     * 设置标题文字大小
+//     * 单位为sp
+//     */
+//    fun setTitleSize(titleSize: Float) = this.apply { titleParams.textSize = titleSize }
+//
+//    /**
+//     * 设置信息文字大小
+//     * @param dimenId:单位为sp的资源文件Id
+//     */
+//    fun setTitleSize(@DimenRes dimenId: Int) = setTitleSize(getResPx(dimenId).toFloat())
 
     /**
      * 设置对话框上的信息文字
@@ -115,50 +118,50 @@ class AlertParams private constructor(
      */
     fun setMessage(@StringRes stringId: Int) = setMessage(getResString(stringId))
 
-    /**
-     * 设置信息文字颜色
-     */
-    fun setMessageColor(@ColorInt color: Int) = this.apply { msgParams.textColor = color }
+//    /**
+//     * 设置信息文字颜色
+//     */
+//    fun setMessageColor(@ColorInt color: Int) = this.apply { msgParams.textColor = color }
+//
+//    /**
+//     * 设置信息文字颜色
+//     * @param colorId:颜色资源Id
+//     */
+//    fun setMessageColorRes(@ColorRes colorId: Int) =
+//        this.apply { setMessageColor(getResColor(colorId)) }
+//
+//    /**
+//     * 设置信息文字大小
+//     * @param messageSize:单位为sp
+//     */
+//    fun setMessageSize(messageSize: Float) =
+//        this.apply { msgParams.textSize = px2sp(messageSize) }
+//
+//    /**
+//     * 设置信息文字大小
+//     * @param dimenId:单位为sp的资源文件Id
+//     */
+//    fun setMessageSize(@DimenRes dimenId: Int) = setMessageSize(getResPx(dimenId).toFloat())
 
-    /**
-     * 设置信息文字颜色
-     * @param colorId:颜色资源Id
-     */
-    fun setMessageColorRes(@ColorRes colorId: Int) =
-        this.apply { setMessageColor(getResColor(colorId)) }
-
-    /**
-     * 设置信息文字大小
-     * @param messageSize:单位为sp
-     */
-    fun setMessageSize(messageSize: Float) =
-        this.apply { msgParams.textSize = px2sp(messageSize) }
-
-    /**
-     * 设置信息文字大小
-     * @param dimenId:单位为sp的资源文件Id
-     */
-    fun setMessageSize(@DimenRes dimenId: Int) = setMessageSize(getResPx(dimenId).toFloat())
-
-    /**
-     * 设置Positive按钮（即右侧的“确认”）文字
-     */
-    fun setPositiveText(text: String) = this.apply { this.posButtonParams.text = text }
-
-    /**
-     * @see setPositiveText(String)
-     */
-    fun setPositiveText(@StringRes stringId: Int) = setPositiveText(getResString(stringId))
-
-    /**
-     * 设置Negative按钮（即中间的“取消”）文字
-     */
-    fun setNegativeText(text: String) = this.apply { this.negButtonParams.text = text }
-
-    /**
-     * 设置Positive按钮（即右侧的“确认”）文字
-     */
-    fun setNegativeText(@StringRes stringId: Int) = setNegativeText(getResString(stringId))
+//    /**
+//     * 设置Positive按钮（即右侧的“确认”）文字
+//     */
+//    fun setPositiveText(text: String) = this.apply { this.posButtonParams.text = text }
+//
+//    /**
+//     * @see setPositiveText(String)
+//     */
+//    fun setPositiveText(@StringRes stringId: Int) = setPositiveText(getResString(stringId))
+//
+//    /**
+//     * 设置Negative按钮（即中间的“取消”）文字
+//     */
+//    fun setNegativeText(text: String) = this.apply { this.negButtonParams.text = text }
+//
+//    /**
+//     * 设置Positive按钮（即右侧的“确认”）文字
+//     */
+//    fun setNegativeText(@StringRes stringId: Int) = setNegativeText(getResString(stringId))
 
     /**
      * 设置Neutral按钮（即最左侧的按钮）文字
@@ -170,36 +173,36 @@ class AlertParams private constructor(
      */
     fun setNeutralText(@StringRes stringId: Int) = setNeutralText(getResString(stringId))
 
-    /**
-     * 设置Positive按钮的文字颜色
-     * @param color:颜色值
-     */
-    fun setPosTextColor(@ColorInt color: Int) =
-        this.apply { this.posButtonParams.textColor = color }
-
-    /**
-     * 设置Positive按钮的文字颜色
-     * @param colorId: 颜色资源Id
-     * @see setPosTextColor(Int)
-     */
-    fun setPosTextColorRes(@ColorRes colorId: Int) =
-        this.apply { setPosTextColor(getResColor(colorId)) }
-
-    /**
-     * 设置Negative按钮的文字颜色
-     * @param color:颜色值
-     */
-    fun setNegTextColor(@ColorInt color: Int) =
-        this.apply { this.negButtonParams.textColor = color }
-
-    /**
-     *
-     * 设置Negative按钮的文字颜色
-     * @param colorId:颜色资源Id
-     * @see setNegTextColor
-     */
-    fun setNegTextColorRes(@ColorRes colorId: Int) =
-        this.apply { setNegTextColor(getResColor(colorId)) }
+//    /**
+//     * 设置Positive按钮的文字颜色
+//     * @param color:颜色值
+//     */
+//    fun setPosTextColor(@ColorInt color: Int) =
+//        this.apply { this.posButtonParams.textColor = color }
+//
+//    /**
+//     * 设置Positive按钮的文字颜色
+//     * @param colorId: 颜色资源Id
+//     * @see setPosTextColor(Int)
+//     */
+//    fun setPosTextColorRes(@ColorRes colorId: Int) =
+//        this.apply { setPosTextColor(getResColor(colorId)) }
+//
+//    /**
+//     * 设置Negative按钮的文字颜色
+//     * @param color:颜色值
+//     */
+//    fun setNegTextColor(@ColorInt color: Int) =
+//        this.apply { this.negButtonParams.textColor = color }
+//
+//    /**
+//     *
+//     * 设置Negative按钮的文字颜色
+//     * @param colorId:颜色资源Id
+//     * @see setNegTextColor
+//     */
+//    fun setNegTextColorRes(@ColorRes colorId: Int) =
+//        this.apply { setNegTextColor(getResColor(colorId)) }
 
     /**
      * 是否显示Negative按钮，默认为true，显示
@@ -458,13 +461,24 @@ class AlertParams private constructor(
 
     })
 
+    fun setOnKeyListener(listener: OnKeyListener) = this.apply {
+        keyListener = listener
+    }
+
+    fun setOnKeyListener(listener: (dialog: DialogInterface, keyCode: Int, event: KeyEvent) -> Boolean) =
+        setOnKeyListener(object : OnKeyListener() {
+            override fun onKey(dialog: DialogInterface, keyCode: Int, event: KeyEvent): Boolean {
+                return listener.invoke(dialog, keyCode, event)
+            }
+        })
+
     /**
      * 显示对话框
      * @param tag:DialogFragment的Tag，默认为“MaterialDialog”
      */
-    fun show(tag: String = MaterialDialog.globalParams.tag) {
+    fun show(tag: String = MaterialDialog.alertP.tag) {
         this.tag = tag
-        MaterialController.showDialog(
+        AlertDialog.showDialog(
             fm,
             tag,
             MaterialDialog.buildParams
@@ -479,4 +493,148 @@ class AlertParams private constructor(
             return AlertParams()
         }
     }
+}
+
+/**
+ * 公共配置方法
+ */
+@Suppress("UNCHECKED_CAST")
+open class ComAlertParams<T : ComAlertParams<T>> : BaseAlertParams<T>() {
+    /**
+     * 设置对话框的动画样式
+     */
+    fun setAnimStyle(@StyleRes styleId: Int) = this.apply { animStyle = styleId } as T
+
+    /**
+     * 窗口明暗程度，0~1.0，1全不透明，系统默认值为0.32F
+     */
+    fun setDimAmount(@FloatRange(from = 0.0, to = 1.0) dimAmount: Float) =
+        this.apply { this.dimAmount = dimAmount } as T
+
+    /**
+     * 设置背景圆角半径
+     */
+    fun setCornerRadius(radius: Float) = this.apply { this.radius = radius } as T
+
+    /**
+     * @see setCornerRadius
+     */
+    fun setCornerRadius(@DimenRes dimenId: Int) = setCornerRadius(getResPx(dimenId).toFloat())
+
+    /**
+     * 设置对话框背景色
+     */
+    fun setBackgroundColor(@ColorInt color: Int) =
+        this.apply { backgroundColor = color } as T
+
+    /**
+     * 设置对话框背景色
+     * @param colorId:颜色资源Id
+     */
+    fun setBackgroundColorRes(@ColorRes colorId: Int) = setBackgroundColor(getResColor(colorId))
+
+    /**
+     * 设置背景透明度
+     * 范围为0.0~1.0，0为全透明，1为不透明
+     */
+    fun setBackgroundAlpha(@FloatRange(from = 0.0, to = 1.0) alpha: Float) =
+        this.apply { backgroundAlpha = alpha } as T
+
+    /**
+     * 设置标题文字颜色
+     */
+    fun setTitleColor(color: Int) = this.apply { titleParams.textColor = color } as T
+
+    /**
+     * 设置标题文字颜色
+     * @param colorId：颜色资源Id
+     */
+    fun setTitleColorRes(@ColorRes colorId: Int) = setTitleColor(getResColor(colorId))
+
+    /**
+     * 设置标题文字大小
+     * 单位为sp
+     */
+    fun setTitleSize(titleSize: Float) = this.apply { titleParams.textSize = titleSize } as T
+
+    /**
+     * 设置信息文字大小
+     * @param dimenId:单位为sp的资源文件Id
+     */
+    fun setTitleSize(@DimenRes dimenId: Int) = setTitleSize(getResPx(dimenId).toFloat())
+
+    /**
+     * 设置信息文字颜色
+     */
+    fun setMessageColor(@ColorInt color: Int) = this.apply { msgParams.textColor = color } as T
+
+    /**
+     * 设置信息文字颜色
+     * @param colorId:颜色资源Id
+     */
+    fun setMessageColorRes(@ColorRes colorId: Int) =
+        this.apply { setMessageColor(getResColor(colorId)) } as T
+
+    /**
+     * 设置信息文字大小
+     * @param messageSize:单位为sp
+     */
+    fun setMessageSize(messageSize: Float) =
+        this.apply { msgParams.textSize = px2sp(messageSize) } as T
+
+    /**
+     * 设置信息文字大小
+     * @param dimenId:单位为sp的资源文件Id
+     */
+    fun setMessageSize(@DimenRes dimenId: Int) = setMessageSize(getResPx(dimenId).toFloat())
+
+    /**
+     * 设置Positive按钮（即右侧的“确认”）文字
+     */
+    fun setPositiveText(text: String) = this.apply { this.posButtonParams.text = text } as T
+
+    /**
+     * @see setPositiveText(String)
+     */
+    fun setPositiveText(@StringRes stringId: Int) = setPositiveText(getResString(stringId))
+
+    /**
+     * 设置Negative按钮（即中间的“取消”）文字
+     */
+    fun setNegativeText(text: String) = this.apply { this.negButtonParams.text = text } as T
+
+    /**
+     * 设置Positive按钮（即右侧的“确认”）文字
+     */
+    fun setNegativeText(@StringRes stringId: Int) = setNegativeText(getResString(stringId))
+    /**
+     * 设置Positive按钮的文字颜色
+     * @param color:颜色值
+     */
+    fun setPosTextColor(@ColorInt color: Int) =
+        this.apply { this.posButtonParams.textColor = color } as T
+
+    /**
+     * 设置Positive按钮的文字颜色
+     * @param colorId: 颜色资源Id
+     * @see setPosTextColor(Int)
+     */
+    fun setPosTextColorRes(@ColorRes colorId: Int) =
+        this.apply { setPosTextColor(getResColor(colorId)) } as T
+
+    /**
+     * 设置Negative按钮的文字颜色
+     * @param color:颜色值
+     */
+    fun setNegTextColor(@ColorInt color: Int) =
+        this.apply { this.negButtonParams.textColor = color } as T
+
+    /**
+     *
+     * 设置Negative按钮的文字颜色
+     * @param colorId:颜色资源Id
+     * @see setNegTextColor
+     */
+    fun setNegTextColorRes(@ColorRes colorId: Int) =
+        this.apply { setNegTextColor(getResColor(colorId)) } as T
 }

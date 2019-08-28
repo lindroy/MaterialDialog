@@ -30,14 +30,12 @@ class BottomDialog : BaseBottomDialog() {
         if (mParams.isBottom) {
             mParams.viewHandler?.onConvert(ViewHolder(view), dialog)
         }
-
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         mContext = context!!
     }
-
 
     companion object {
         internal fun showDialog(params: BottomParams, fm: FragmentManager, tag: String) =

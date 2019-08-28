@@ -2,7 +2,6 @@ package com.lindroy.anddialog.params
 
 import android.os.Parcelable
 import android.support.annotation.ColorInt
-import android.support.annotation.DimenRes
 import android.support.annotation.FloatRange
 import android.support.annotation.StyleRes
 import android.view.Gravity
@@ -21,7 +20,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @Suppress("UNCHECKED_CAST")
 @Parcelize
-open class ComParams<T : ComParams<T>>(
+open class BaseAlertParams<T : BaseAlertParams<T>>(
     @DialogType internal var type: Int = MD_ALERT,
     internal var tag: String = "MaterialDialog",
     internal var dimAmount: Float = 0.32F,
@@ -53,13 +52,13 @@ open class ComParams<T : ComParams<T>>(
     var isKeepPortraitWidth: Boolean = gravity == Gravity.CENTER
 ) : Parcelable {
 
-    val isSingleChoice
+    internal val isSingleChoice
         get() = type == MD_SINGLE_CHOICE
 
     /**
      * 最终计算得到的宽度
      */
-    val finalWidth
+    internal val finalWidth
         get() = when (widthPx) {
             in 1..screenWidth -> widthPx
             else -> {
@@ -69,27 +68,5 @@ open class ComParams<T : ComParams<T>>(
                 } else (widthScale * screenWidth).toInt()
             }
         }
-
-    /**
-     * 设置对话框的动画样式
-     */
-    fun setAnimStyle(@StyleRes styleId: Int) = this.apply { animStyle = styleId } as T
-
-    /**
-     * 窗口明暗程度，0~1.0，1全不透明，系统默认值为0.32F
-     */
-    fun setDimAmount(@FloatRange(from = 0.0, to = 1.0) dimAmount: Float) =
-        this.apply { this.dimAmount = dimAmount } as T
-
-    /**
-     * 设置背景圆角半径
-     */
-    fun setCornerRadius(radius: Float) = this.apply { this.radius = radius } as T
-
-    /**
-     * @see setCornerRadius
-     */
-    fun setCornerRadius(@DimenRes dimenId: Int) = setCornerRadius(getResPx(dimenId).toFloat())
-
 
 }

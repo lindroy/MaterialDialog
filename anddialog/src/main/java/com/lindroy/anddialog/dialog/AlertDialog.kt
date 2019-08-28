@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.layout_md_title_message_panel.*
  */
 private const val KEY_MATERIAL_PARAMS = "material_params"
 
-class MaterialController : DialogFragment() {
+class AlertDialog : DialogFragment() {
 
     private lateinit var mContext: Context
     private lateinit var mdParams: AlertParams
@@ -338,6 +338,9 @@ class MaterialController : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        dialog.setOnKeyListener { dialog, keyCode, event ->
+            mdParams.keyListener?.onKey(dialog, keyCode, event) ?: false
+        }
         dialog.window?.apply {
             val params = attributes
             params.gravity = Gravity.CENTER
@@ -393,12 +396,11 @@ class MaterialController : DialogFragment() {
 
     companion object {
         fun showDialog(fm: FragmentManager, tag: String, params: AlertParams) =
-            MaterialController().apply {
+            AlertDialog().apply {
                 this.mdParams = params
                 show(fm, tag)
             }
     }
 
-    
 
 }

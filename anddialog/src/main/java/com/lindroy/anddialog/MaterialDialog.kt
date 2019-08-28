@@ -17,17 +17,20 @@ class MaterialDialog private constructor() {
     companion object {
 
         private lateinit var application: Application
-        internal lateinit var globalParams: Configs
+        private lateinit var globalParams: Configs
         internal lateinit var buildParams: AlertParams
+        lateinit var alertP: ComAlertParams<*>
 
         internal val appContext: Context
             get() = application.applicationContext
+
 
         @JvmStatic
         fun init(app: Application): Configs {
             application = app
             globalParams =
                 Configs.config()
+            alertP = ComAlertParams<AlertParams>()
             return globalParams
         }
 
@@ -73,15 +76,16 @@ class MaterialDialog private constructor() {
     /**
      * 全局配置
      */
-    class Configs private constructor() : ComParams<AlertParams>() {
-        /**
-         * 设置默认的tag
-         */
-        fun setTag(tag: String) = this.apply { this.tag = tag }
+    class Configs private constructor()  {
 
         companion object {
             fun config() = Configs()
         }
+
+        fun initAlert(block: ComAlertParams<*>.() -> Unit) =
+            this.apply { alertP.apply(block) }
+
+        fun initBottom(block: BottomParams.() -> Unit) = this.apply { BottomParams().apply(block) }
     }
 
 

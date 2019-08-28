@@ -23,13 +23,11 @@ data class BottomParams(
     internal var viewHandler: OnViewHandlerListener? = null
 ) : BaseBottomParams<BottomParams>(type = MD_BOTTOM) {
 
-
     /**
      * 设置对话框布局
      * @param layoutId:对话框布局Id
      */
     fun setView(@LayoutRes layoutId: Int) = this.also { it.layoutId = layoutId }
-
 
     fun setOnViewHandler(viewHandler: OnViewHandlerListener) =
         this.also { it.viewHandler = viewHandler }
@@ -40,7 +38,6 @@ data class BottomParams(
                 viewHandler.invoke(holder, dialog)
             }
         })
-
 
     /**
      * 对话框消失监听

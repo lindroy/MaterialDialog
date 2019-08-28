@@ -75,14 +75,13 @@ data class BottomGridParams(
         ) {
             listener.invoke(adapter, position, item, view, dialog)
         }
-
-
     }, *viewIds)
 
     @JvmOverloads
     fun show(tag: String = this.tag) {
         BottomMenuDialog.showGridDialog(this, fm, tag)
     }
+
 
     companion object {
         fun build(fm: FragmentManager) =

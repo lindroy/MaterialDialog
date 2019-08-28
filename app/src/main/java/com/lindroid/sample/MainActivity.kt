@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         mContext = this
         cities = resources.getStringArray(R.array.cities)
         MaterialDialog.init(this.application)
+            .initAlert {
+                setCornerRadius(50F)
+                setDimAmount(0.32F)
+            }
+
 
         btnAlert.setOnClickListener {
             AlertDialog.Builder(this)
@@ -149,14 +154,17 @@ class MainActivity : AppCompatActivity() {
                             )
                     }
                 })
-                .setOnItemChildClickListener<ListItemBean>(R.id.llRoot,R.id.tvItem){adapter, position, item, view, dialog ->
-                    when(view.id){
-                        R.id.llRoot-> {
+                .setOnItemChildClickListener<ListItemBean>(
+                    R.id.llRoot,
+                    R.id.tvItem
+                ) { adapter, position, item, view, dialog ->
+                    when (view.id) {
+                        R.id.llRoot -> {
                             shortToast("你选择了${item.text}")
                             item.isSelected = !item.isSelected
                             adapter.notifyItemChanged(position)
                         }
-                        R.id.tvItem-> shortToast("${item.text}")
+                        R.id.tvItem -> shortToast("${item.text}")
                     }
                 }
                 .show()
