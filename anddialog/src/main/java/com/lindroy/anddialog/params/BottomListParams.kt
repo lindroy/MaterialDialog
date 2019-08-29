@@ -23,9 +23,7 @@ class BottomListParams(
     internal var itemClickListener: OnSheetItemClickListener<*>? = null,
     internal var childClickListener: OnItemChildClickListener<*>? = null,
     internal var adapter: MDAdapter<*>? = null
-) : BaseBottomParams<BottomListParams>(
-    type = MD_BOTTOM_LIST
-) {
+) : ComBottomListParams<BottomListParams>() {
 
     fun addItem(text: String) =
         this.apply { items.add(MDListItem(text)) }
@@ -98,3 +96,6 @@ class BottomListParams(
             }
     }
 }
+
+open class ComBottomListParams<T : ComBottomListParams<T>> :
+    BaseBottomParams<T>(type = MD_BOTTOM_LIST)

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.v4.app.FragmentManager
 import android.view.View
+import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_Grid
 import com.lindroy.anddialog.dialog.BottomMenuDialog
@@ -19,19 +20,22 @@ import com.lindroy.anddialog.listener.OnSheetItemClickListener
  */
 
 data class BottomGridParams(
-    internal var spanCount: Int = 3,
+    internal var iconMaxSize: Int = 0,
     internal var viewIds: IntArray? = null,
     internal var items: MutableList<MDGridItem> = mutableListOf(),
     internal var itemClickListener: OnSheetItemClickListener<*>? = null,
     internal var childClickListener: OnItemChildClickListener<*>? = null,
     internal var adapter: MDAdapter<*>? = null
-) : BaseBottomParams<BottomGridParams>(
-    type = MD_BOTTOM_Grid
-) {
-    /**
-     * 设置列数
-     */
-    fun setSpanCount(count: Int) = this.apply { spanCount = count }
+) : ComBottomGridParams<BottomGridParams>() {
+
+    init {
+        MaterialDialog.bottomGridP.also {
+            spanCount = it.spanCount
+            maxHeight = it.maxHeight
+            fullExpanded = it.fullExpanded
+            dimAmount = it.dimAmount
+        }
+    }
 
     fun addItem(text: String, @DrawableRes iconId: Int) =
         this.apply { items.add(MDGridItem(text, iconId = iconId)) }
@@ -51,14 +55,19 @@ data class BottomGridParams(
                 listener.invoke(position, item, dialog)
             }
         })
+
     /**
      * 自定义Item布局的点击事件
      */
-    fun <T : Any> setOnItemChildClickListener(listener: OnItemChildClickListener<T>, vararg viewIds: Int) =
+    fun <T : Any> setOnItemChildClickListener(
+        listener: OnItemChildClickListener<T>,
+        vararg viewIds: Int
+    ) =
         this.apply {
             this.viewIds = viewIds
             childClickListener = listener
         }
+
     /**
      * 自定义Item布局的点击事件
      */
@@ -82,11 +91,20 @@ data class BottomGridParams(
         BottomMenuDialog.showGridDialog(this, fm, tag)
     }
 
-
     companion object {
         fun build(fm: FragmentManager) =
             BottomGridParams().apply {
                 this.fm = fm
             }
     }
+}
+
+open class ComBottomGridParams<T : ComBottomGridParams<T>>(
+    internal var spanCount: Int = 3
+) :
+    BaseBottomParams<T>(type = MD_BOTTOM_Grid) {
+    /**
+     * 设置列数
+     */
+    fun setSpanCount(count: Int) = this.apply { spanCount = count } as T
 }

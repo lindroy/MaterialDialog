@@ -18,8 +18,11 @@ class MaterialDialog private constructor() {
 
         private lateinit var application: Application
         private lateinit var globalParams: Configs
-        internal lateinit var buildParams: AlertParams
-        lateinit var alertP: ComAlertParams<*>
+
+        internal lateinit var alertP: ComAlertParams<*>
+        internal lateinit var bottomP: ComBottomParams<*>
+        internal lateinit var bottomListP: ComBottomListParams<*>
+        internal lateinit var bottomGridP: ComBottomGridParams<*>
 
         internal val appContext: Context
             get() = application.applicationContext
@@ -28,25 +31,19 @@ class MaterialDialog private constructor() {
         @JvmStatic
         fun init(app: Application): Configs {
             application = app
-            globalParams =
-                Configs.config()
+            globalParams = Configs.config()
             alertP = ComAlertParams<AlertParams>()
+            bottomP = ComBottomParams<BottomParams>()
+            bottomListP = ComBottomListParams<BottomListParams>()
+            bottomGridP = ComBottomGridParams<BottomGridParams>()
             return globalParams
         }
 
         @JvmStatic
-        fun alert(activity: FragmentActivity): AlertParams {
-            buildParams =
-                AlertParams.build(activity.supportFragmentManager)
-            return buildParams
-        }
+        fun alert(activity: FragmentActivity) = AlertParams.build(activity.supportFragmentManager)
 
         @JvmStatic
-        fun alert(fragment: Fragment): AlertParams {
-            buildParams =
-                AlertParams.build(fragment.childFragmentManager)
-            return buildParams
-        }
+        fun alert(fragment: Fragment) = AlertParams.build(fragment.childFragmentManager)
 
         @JvmStatic
         fun bottom(activity: FragmentActivity) =
@@ -76,7 +73,7 @@ class MaterialDialog private constructor() {
     /**
      * 全局配置
      */
-    class Configs private constructor()  {
+    class Configs private constructor() {
 
         companion object {
             fun config() = Configs()
@@ -85,7 +82,13 @@ class MaterialDialog private constructor() {
         fun initAlert(block: ComAlertParams<*>.() -> Unit) =
             this.apply { alertP.apply(block) }
 
-        fun initBottom(block: BottomParams.() -> Unit) = this.apply { BottomParams().apply(block) }
+        fun initBottom(block: ComBottomParams<*>.() -> Unit) = this.apply { bottomP.apply(block) }
+
+        fun initBottomList(block: ComBottomListParams<*>.() -> Unit) =
+            this.apply { bottomListP.apply(block) }
+
+        fun initBottomGrid(block: ComBottomGridParams<*>.() -> Unit) =
+            this.apply { bottomGridP.apply(block) }
     }
 
 

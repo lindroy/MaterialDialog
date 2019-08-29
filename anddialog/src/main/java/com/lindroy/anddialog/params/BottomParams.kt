@@ -3,6 +3,7 @@ package com.lindroy.anddialog.params
 import android.content.DialogInterface
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
+import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.constants.MD_BOTTOM
 import com.lindroy.anddialog.dialog.BottomDialog
 import com.lindroy.anddialog.listener.OnDismissListener
@@ -21,7 +22,15 @@ data class BottomParams(
 
 //        var peekHeight:Int = 0, //
     internal var viewHandler: OnViewHandlerListener? = null
-) : BaseBottomParams<BottomParams>(type = MD_BOTTOM) {
+) : ComBottomParams<BottomParams>() {
+
+    init {
+        MaterialDialog.bottomP.also {
+            maxHeight = it.maxHeight
+            fullExpanded = it.fullExpanded
+            dimAmount = it.dimAmount
+        }
+    }
 
     /**
      * 设置对话框布局
@@ -68,5 +77,7 @@ data class BottomParams(
         BottomDialog.showDialog(this, fm, tag)
     }
 }
+
+open class ComBottomParams<T : ComBottomParams<T>> : BaseBottomParams<T>(type = MD_BOTTOM)
 
 

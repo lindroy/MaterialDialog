@@ -1,6 +1,7 @@
 package com.lindroy.anddialog.params
 
 import android.os.Parcelable
+import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentManager
@@ -35,6 +36,12 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
     protected lateinit var fm: FragmentManager
 
     /**
+     * 窗口明暗程度，0~1.0，1全不透明，系统默认值为0.32F
+     */
+    fun setDimAmount(@FloatRange(from = 0.0, to = 1.0) dimAmount: Float) =
+        this.apply { this.dimAmount = dimAmount } as T
+
+    /**
      * 设置最大高度
      */
     fun setMaxHeight(@IntRange(from = 0) maxHeight: Int) =
@@ -54,7 +61,7 @@ open class BaseBottomParams<T : BaseBottomParams<T>>(
         cancelableOutside = isCancelable
     } as T
 
-    val isBottom
+    internal val isBottom
         get() = type == MD_BOTTOM
 
 }

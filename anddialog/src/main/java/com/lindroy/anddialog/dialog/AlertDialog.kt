@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.RadioButton
 import com.lindroid.anddialog.R
-import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.params.AlertParams
 import com.lindroy.anddialog.params.CheckItemParams
@@ -40,12 +39,12 @@ private const val KEY_MATERIAL_PARAMS = "material_params"
 class AlertDialog : DialogFragment() {
 
     private lateinit var mContext: Context
-    private lateinit var mdParams: AlertParams
+    private lateinit var mParams: AlertParams
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.apply {
-            mdParams = getParcelable(KEY_MATERIAL_PARAMS) ?: MaterialDialog.buildParams
+            mParams = getParcelable(KEY_MATERIAL_PARAMS) ?:AlertParams()
         }
     }
 
@@ -70,7 +69,7 @@ class AlertDialog : DialogFragment() {
      * 设置标题
      */
     private fun setupTitle() {
-        mdParams.titleParams.also {
+        mParams.titleParams.also {
             tvTitle.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -91,7 +90,7 @@ class AlertDialog : DialogFragment() {
      * 设置信息文字
      */
     private fun setupMessage() {
-        mdParams.msgParams.also {
+        mParams.msgParams.also {
             tvMessage.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -124,11 +123,11 @@ class AlertDialog : DialogFragment() {
         }*/
         //Positive Button
         fun dismissDialog() {
-            if (mdParams.dismissible) {
+            if (mParams.dismissible) {
                 dismiss()
             }
         }
-        mdParams.posButtonParams.also {
+        mParams.posButtonParams.also {
             btnPos.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -146,7 +145,7 @@ class AlertDialog : DialogFragment() {
             }
         }
         //Negative Button
-        mdParams.negButtonParams.also {
+        mParams.negButtonParams.also {
             btnNeg.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -164,7 +163,7 @@ class AlertDialog : DialogFragment() {
             }
         }
         //Neutral Button
-        mdParams.neuButtonParams.also {
+        mParams.neuButtonParams.also {
             btnNeu.apply {
                 visibility = when (it.text.isNotEmpty()) {
                     true -> {
@@ -190,12 +189,12 @@ class AlertDialog : DialogFragment() {
      * 设置列表
      */
     private fun setupList() {
-        if (mdParams.itemList.isNotEmpty()) {
+        if (mParams.itemList.isNotEmpty()) {
             spaceButton.setGone()
             viewStubList.setVisible()
             rvChoices.apply {
                 layoutManager = LinearLayoutManager(mContext)
-                adapter = when (mdParams.isSingleChoice) {
+                adapter = when (mParams.isSingleChoice) {
                     true -> setSingleChoiceAdapter()
                     false -> setMultiChoiceAdapter()
                 }
@@ -229,7 +228,7 @@ class AlertDialog : DialogFragment() {
     private fun setSingleChoiceAdapter() = object : MDAdapter<CheckItemParams>(
         mContext,
         R.layout.item_md_single_choice_list,
-        mdParams.itemList
+        mParams.itemList
     ) {
         override fun onConvert(
             holder: RecyclerViewHolder,
@@ -263,7 +262,7 @@ class AlertDialog : DialogFragment() {
                     return@setOnClickListener
                 }
                 var oldCheckedIndex = 0
-                for ((i, checkItem) in mdParams.itemList.withIndex()) {
+                for ((i, checkItem) in mParams.itemList.withIndex()) {
                     if (checkItem.isChecked) {
                         oldCheckedIndex = i
                         checkItem.isChecked = false
@@ -273,8 +272,7 @@ class AlertDialog : DialogFragment() {
                 item.isChecked = true
                 notifyItemChanged(oldCheckedIndex)
                 notifyItemChanged(position)
-//                notifyDataSetChanged()
-                mdParams.singleChoiceListener?.onChecked(dialog, position, oldCheckedIndex)
+                mParams.singleChoiceListener?.onChecked(dialog, position, oldCheckedIndex)
             }
         }
     }
@@ -282,7 +280,7 @@ class AlertDialog : DialogFragment() {
     private fun setMultiChoiceAdapter() = object : MDAdapter<CheckItemParams>(
         mContext,
         R.layout.item_md_multiple_choice_list,
-        mdParams.itemList
+        mParams.itemList
     ) {
         override fun onConvert(
             holder: RecyclerViewHolder,
@@ -304,7 +302,7 @@ class AlertDialog : DialogFragment() {
                             intArrayOf(android.R.attr.state_checked)
                         ),
                         intArrayOf(
-                            Color.DKGRAY,
+                            Color.DKGRAY, //未选中时的边框颜色
                             getResColor(R.color.md_single_choice_radio_button_color)
                         )
                     )
@@ -314,12 +312,12 @@ class AlertDialog : DialogFragment() {
             holder.setOnClickListener(R.id.llMultiple) {
                 item.isChecked = !item.isChecked
                 val checkedList = mutableListOf<Int>()
-                mdParams.itemList.forEachIndexed { index, item ->
+                mParams.itemList.forEachIndexed { index, item ->
                     if (item.isChecked) {
                         checkedList.add(index)
                     }
                 }
-                mdParams.multiChoiceListener?.onChecked(
+                mParams.multiChoiceListener?.onChecked(
                     position,
                     item.isChecked,
                     if (checkedList.isEmpty()) null else checkedList.toIntArray(),
@@ -339,7 +337,7 @@ class AlertDialog : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog.setOnKeyListener { dialog, keyCode, event ->
-            mdParams.keyListener?.onKey(dialog, keyCode, event) ?: false
+            mParams.keyListener?.onKey(dialog, keyCode, event) ?: false
         }
         dialog.window?.apply {
             val params = attributes
@@ -348,8 +346,8 @@ class AlertDialog : DialogFragment() {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             //设置窗体动画
             setWindowAnimations(android.R.style.Animation_Dialog)
-            params.width = mdParams.finalWidth
-            params.dimAmount = mdParams.dimAmount
+            params.width = mParams.finalWidth
+            params.dimAmount = mParams.dimAmount
             val maxHeight = 0.65 * screenHeight
             decorView.viewTreeObserver.addOnGlobalLayoutListener(object :
                 ViewTreeObserver.OnGlobalLayoutListener {
@@ -368,7 +366,7 @@ class AlertDialog : DialogFragment() {
      * 设置对话框背景
      */
     private fun initBackgroundDrawable(): ShapeDrawable {
-        val radius = mdParams.radius
+        val radius = mParams.radius
         val roundRectShape = RoundRectShape(
             floatArrayOf(
                 radius,
@@ -382,22 +380,22 @@ class AlertDialog : DialogFragment() {
             ), null, null
         )
         return with(ShapeDrawable(roundRectShape)) {
-            paint.color = mdParams.backgroundColor
+            paint.color = mParams.backgroundColor
             paint.style = Paint.Style.FILL
-            paint.alpha = (255 * mdParams.backgroundAlpha).toInt()
+            paint.alpha = (255 * mParams.backgroundAlpha).toInt()
             this
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(KEY_MATERIAL_PARAMS, mdParams)
+        outState.putParcelable(KEY_MATERIAL_PARAMS, mParams)
     }
 
     companion object {
         fun showDialog(fm: FragmentManager, tag: String, params: AlertParams) =
             AlertDialog().apply {
-                this.mdParams = params
+                this.mParams = params
                 show(fm, tag)
             }
     }

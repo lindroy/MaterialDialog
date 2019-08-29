@@ -32,8 +32,12 @@ class MainActivity : AppCompatActivity() {
         cities = resources.getStringArray(R.array.cities)
         MaterialDialog.init(this.application)
             .initAlert {
-                setCornerRadius(50F)
-                setDimAmount(0.32F)
+            }
+            .initBottom {
+            }
+            .initBottomList {
+            }
+            .initBottomGrid {
             }
 
 
@@ -111,8 +115,8 @@ class MainActivity : AppCompatActivity() {
                 .setMessage("if you leave the checkout your passenger information will not be saved.")
                 .setTitleColor(Color.parseColor("#DE000000"))
                 .setMessageColor(Color.parseColor("#99000000"))
-                .setPosTextColor(Color.parseColor("#5C1349"))
-                .setNegTextColor(Color.parseColor("#5C1349"))
+                .setPositiveTextColor(Color.parseColor("#5C1349"))
+                .setNegativeTextColor(Color.parseColor("#5C1349"))
                 .setPositiveText(R.string.ok)
                 .setNegativeText(R.string.cancel)
                 .show()
