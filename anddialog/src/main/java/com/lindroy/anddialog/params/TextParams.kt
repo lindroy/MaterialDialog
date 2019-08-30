@@ -19,6 +19,8 @@ data class TextParams(
     var text: String = "",
     var isBold: Boolean = false,
     var height: Int = 0,
+    var minHeight: Int = 0,
+    var maxLines: Int = 2,
     var paddingLeft: Int = 0,
     var paddingTop: Int = 0,
     var paddingRight: Int = 0,

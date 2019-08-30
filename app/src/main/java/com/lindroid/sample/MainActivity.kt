@@ -6,9 +6,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import com.lindroid.androidutilskt.app.AndUtil
 import com.lindroid.androidutilskt.extension.dp2px
+import com.lindroid.androidutilskt.extension.logcat.d
 import com.lindroid.androidutilskt.extension.shortToast
 import com.lindroid.sample.bean.ListItemBean
 import com.lindroy.anddialog.MaterialDialog

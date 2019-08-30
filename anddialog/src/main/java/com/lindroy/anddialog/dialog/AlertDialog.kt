@@ -44,7 +44,7 @@ class AlertDialog : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.apply {
-            mParams = getParcelable(KEY_MATERIAL_PARAMS) ?:AlertParams()
+            mParams = getParcelable(KEY_MATERIAL_PARAMS) ?: AlertParams()
         }
     }
 
@@ -245,7 +245,7 @@ class AlertDialog : DialogFragment() {
                             intArrayOf(android.R.attr.state_checked)
                         ),
                         intArrayOf(
-                            Color.DKGRAY,
+                            getResColor(R.color.md_multi_checkbox_unchecked),
                             getResColor(R.color.md_single_choice_radio_button_color)
                         )
                     )

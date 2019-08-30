@@ -10,7 +10,6 @@
     <dimen name="md_single_choice_text_size">16sp</dimen>
     <dimen name="md_list_item_height">56dp</dimen>
     <dimen name="md_list_item_text_size">16sp</dimen>
-    <dimen name="md_list_item_icon_size">30dp</dimen>
     <dimen name="md_grid_item_text_size">14sp</dimen>
     <dimen name="md_grid_item_icon_max_size">60dp</dimen>
     <dimen name="md_grid_item_padding_top_bottom">10dp</dimen>

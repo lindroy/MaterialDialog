@@ -11,7 +11,7 @@ import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.base.BaseBottomDialog
 import com.lindroy.anddialog.params.*
 import com.lindroy.anddialog.viewholder.RecyclerViewHolder
-import com.lindroy.iosdialog.util.dp2px
+import com.lindroy.iosdialog.util.getResPx
 import com.lindroy.iosdialog.util.screenWidth
 import kotlinx.android.synthetic.main.dialog_md_bottom_menu.*
 import kotlin.properties.Delegates
@@ -47,7 +47,7 @@ class BottomMenuDialog : BaseBottomDialog() {
                     adapter = p.adapter
                     if (p.viewIds?.isNotEmpty() == true) {
                         p.adapter?.setOnChildClickListener(p.viewIds!!) { position, view, any ->
-                            p.childClickListener?.onClick(p.adapter!!,position, any, view, dialog)
+                            p.childClickListener?.onClick(p.adapter!!, position, any, view, dialog)
                         }
                     }
                     return
@@ -63,19 +63,22 @@ class BottomMenuDialog : BaseBottomDialog() {
                         item: MDListItem
                     ) {
                         holder.getTextView(R.id.tvItem).also {
+                            it.minimumHeight =
+                                if (p.itemParams.minHeight > 0) p.itemParams.minHeight else getResPx(
+                                    R.dimen.md_list_item_height
+                                )
                             it.text = item.text
-                            it.textSize = item.textSize
-                            it.gravity = item.gravity
+                            it.textSize = p.itemParams.textSize
+                            it.gravity = p.itemParams.gravity
                             it.setPadding(
                                 item.paddingLeft,
                                 item.paddingTop,
                                 item.paddingRight,
                                 item.paddingBottom
                             )
-                            it.setTextColor(item.textColor)
+                            it.setTextColor(p.itemParams.textColor)
                         }
                         holder.getView<LinearLayout>(R.id.llItem).also {
-                            it.minimumHeight = dp2px(50F).toInt()
                             it.setOnClickListener {
                                 p.itemClickListener?.onClick(position, item, dialog)
                             }
@@ -107,11 +110,23 @@ class BottomMenuDialog : BaseBottomDialog() {
                     ) {
                         holder.getTextView(R.id.tvGrid).also {
                             it.text = item.text
-                            it.textSize = item.textSize
-                            it.gravity = item.gravity
-                            it.setTextColor(item.textColor)
+                            it.textSize = p.itemParams.textSize
+                            it.gravity = p.itemParams.gravity
+                            it.maxLines = p.itemParams.maxLines
+                            it.setTextColor(p.itemParams.textColor)
                         }
                         holder.getImageView(R.id.ivGrid).also {
+                            it.scaleType = p.iconParams.scaleType
+                            if (p.iconParams.iconMaxSize > 0) {
+                                it.maxHeight = p.iconParams.iconMaxSize
+                                it.maxWidth = p.iconParams.iconMaxSize
+                            }
+                            if (p.iconParams.iconSize > 0) {
+                                val lp = it.layoutParams
+                                lp.height = p.iconParams.iconSize
+                                lp.width = p.iconParams.iconSize
+                                it.layoutParams = lp
+                            }
                             if (item.iconId != 0) {
                                 it.setImageResource(item.iconId)
                             } else if (item.icon == null) {
@@ -123,7 +138,7 @@ class BottomMenuDialog : BaseBottomDialog() {
                             layoutParams.width = screenWidth / p.spanCount
                             it.setPadding(0, item.paddingTopBottom, 0, item.paddingTopBottom)
                             it.setOnClickListener {
-
+                                p.itemClickListener?.onClick(position, item, dialog)
                             }
                         }
                     }

@@ -20,10 +20,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class MDListItem(
     var text: String = "",
-//    internal @DrawableRes var iconId:Int = 0,
     var textSize: Float = getResSp(R.dimen.md_list_item_text_size), //单位为sp
     internal @ColorInt var textColor: Int = getResColor(R.color.md_list_item_text_color),
-//    var icon:@RawValue Drawable? = null,
     internal var gravity: Int = Gravity.START or Gravity.CENTER_VERTICAL,
     internal var isBold: Boolean = false,
     internal var height: Int = getResPx(R.dimen.md_list_item_height),

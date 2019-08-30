@@ -11,4 +11,6 @@
     <color name="md_list_item_text_color">#de000000</color>
     <color name="md_grid_item_text_color">#de000000</color>
     <color name="md_bottom_list_item_text_color">#e0e0e0</color>
+    <!--Checkbox方框颜色-->
+    <color name="md_multi_checkbox_unchecked">#de000000</color>
 </resources>

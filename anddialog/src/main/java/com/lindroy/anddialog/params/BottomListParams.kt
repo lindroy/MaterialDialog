@@ -2,12 +2,17 @@ package com.lindroy.anddialog.params
 
 import android.content.DialogInterface
 import android.support.v4.app.FragmentManager
+import android.view.Gravity
 import android.view.View
+import com.lindroid.anddialog.R
+import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
 import com.lindroy.anddialog.dialog.BottomMenuDialog
 import com.lindroy.anddialog.listener.OnItemChildClickListener
 import com.lindroy.anddialog.listener.OnListItemClickListener
+import com.lindroy.iosdialog.util.getResColor
+import com.lindroy.iosdialog.util.getResSp
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -24,6 +29,15 @@ class BottomListParams(
     internal var childClickListener: OnItemChildClickListener<*>? = null,
     internal var adapter: MDAdapter<*>? = null
 ) : ComBottomListParams<BottomListParams>() {
+
+    init {
+        MaterialDialog.bottomListP.also {
+            maxHeight = it.maxHeight
+            fullExpanded = it.fullExpanded
+            dimAmount = it.dimAmount
+            itemParams = it.itemParams.copy()
+        }
+    }
 
     fun addItem(text: String) =
         this.apply { items.add(MDListItem(text)) }
@@ -97,5 +111,28 @@ class BottomListParams(
     }
 }
 
-open class ComBottomListParams<T : ComBottomListParams<T>> :
-    BaseBottomParams<T>(type = MD_BOTTOM_LIST)
+@Suppress("UNCHECKED_CAST")
+open class ComBottomListParams<T : ComBottomListParams<T>>(
+    internal var itemParams: TextParams = TextParams(
+        textSize = getResSp(R.dimen.md_list_item_text_size),
+        textColor = getResColor(R.color.md_list_item_text_color),
+        gravity = Gravity.CENTER_VERTICAL
+    )
+) : BaseBottomParams<T>(type = MD_BOTTOM_LIST) {
+
+    /**
+     * item的最小高度
+     */
+    fun setItemMinHeight(minHeight: Int) = this.apply { itemParams.height = minHeight } as T
+
+    @JvmOverloads
+    fun setItemTextStyle(
+        textSize: Float = itemParams.textSize,
+        textColor: Int = itemParams.textColor
+    ) = this.apply {
+        itemParams.also {
+            it.textSize = textSize
+            it.textColor = textColor
+        }
+    } as T
+}

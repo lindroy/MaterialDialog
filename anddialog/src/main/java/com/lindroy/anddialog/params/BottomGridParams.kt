@@ -4,13 +4,18 @@ import android.content.DialogInterface
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.v4.app.FragmentManager
+import android.view.Gravity
 import android.view.View
+import android.widget.ImageView
+import com.lindroid.anddialog.R
 import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_Grid
 import com.lindroy.anddialog.dialog.BottomMenuDialog
 import com.lindroy.anddialog.listener.OnGridItemClickListener
 import com.lindroy.anddialog.listener.OnItemChildClickListener
+import com.lindroy.iosdialog.util.getResColor
+import com.lindroy.iosdialog.util.getResSp
 
 /**
  * @author Lin
@@ -20,7 +25,6 @@ import com.lindroy.anddialog.listener.OnItemChildClickListener
  */
 
 data class BottomGridParams(
-    internal var iconMaxSize: Int = 0,
     internal var viewIds: IntArray? = null,
     internal var items: MutableList<MDGridItem> = mutableListOf(),
     internal var itemClickListener: OnGridItemClickListener? = null,
@@ -32,6 +36,8 @@ data class BottomGridParams(
         MaterialDialog.bottomGridP.also {
             spanCount = it.spanCount
             maxHeight = it.maxHeight
+            itemParams = it.itemParams.copy()
+            iconParams = it.iconParams.copy()
             fullExpanded = it.fullExpanded
             dimAmount = it.dimAmount
         }
@@ -118,12 +124,49 @@ data class BottomGridParams(
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 open class ComBottomGridParams<T : ComBottomGridParams<T>>(
-    internal var spanCount: Int = 3
-) :
-    BaseBottomParams<T>(type = MD_BOTTOM_Grid) {
+    internal var spanCount: Int = 3,
+    internal var itemParams: TextParams = TextParams(
+        textSize = getResSp(R.dimen.md_grid_item_text_size),
+        textColor = getResColor(R.color.md_grid_item_text_color),
+        gravity = Gravity.CENTER,
+        maxLines = 2
+    ),
+    internal var iconParams: IconParams = IconParams(
+        iconSize = 0,
+        iconMaxSize = 0,
+        scaleType = ImageView.ScaleType.CENTER_CROP
+    )
+) : BaseBottomParams<T>(type = MD_BOTTOM_Grid) {
     /**
      * 设置列数
      */
     fun setSpanCount(count: Int) = this.apply { spanCount = count } as T
+
+    @JvmOverloads
+    fun setItemTextStyle(
+        textSize: Float = itemParams.textSize,
+        textColor: Int = itemParams.textColor,
+        maxLines: Int = itemParams.maxLines
+    ) = this.apply {
+        itemParams.also {
+            it.textSize = textSize
+            it.textColor = textColor
+            it.maxLines = maxLines
+        }
+    } as T
+
+    @JvmOverloads
+    fun setItemIconStyle(
+        iconSize: Int = iconParams.iconMaxSize,
+        iconMaxSize: Int = iconParams.iconSize,
+        scaleType: ImageView.ScaleType = iconParams.scaleType
+    ) = this.apply {
+        iconParams.also {
+            it.iconMaxSize = iconMaxSize
+            it.iconSize = iconSize
+            it.scaleType = scaleType
+        }
+    } as T
 }
