@@ -134,8 +134,8 @@ class AlertDialog : DialogFragment() {
                         text = it.text
                         setTextColor(it.textColor)
                         textSize = it.textSize
-                        setOnClickListener { _ ->
-                            it.clickListener?.onClick(dialog)
+                        setOnClickListener { view ->
+                            it.clickListener?.onClick(view,dialog)
                             dismissDialog()
                         }
                         View.VISIBLE
@@ -152,8 +152,8 @@ class AlertDialog : DialogFragment() {
                         text = it.text
                         setTextColor(it.textColor)
                         textSize = it.textSize
-                        setOnClickListener { _ ->
-                            it.clickListener?.onClick(dialog)
+                        setOnClickListener { view ->
+                            it.clickListener?.onClick(view,dialog)
                             dismissDialog()
                         }
                         View.VISIBLE
@@ -170,8 +170,8 @@ class AlertDialog : DialogFragment() {
                         text = it.text
                         setTextColor(it.textColor)
                         textSize = it.textSize
-                        setOnClickListener { _ ->
-                            it.clickListener?.onClick(dialog)
+                        setOnClickListener { view ->
+                            it.clickListener?.onClick(view,dialog)
                             dismissDialog()
                         }
                         View.VISIBLE

@@ -31,13 +31,15 @@ abstract class OnGridItemClickListener : Parcelable {
                     object : OnGridItemClickListener(source) {
                         override fun onClick(
                             position: Int,
-                            item:MDGridItem,
+                            item: MDGridItem,
                             dialog: DialogInterface
                         ) {
                         }
                     }
 
-                override fun newArray(size: Int): Array<OnGridItemClickListener?> = arrayOfNulls(size)
+                override fun newArray(size: Int): Array<OnGridItemClickListener?> =
+                    arrayOfNulls(size)
             }
     }
 }
+

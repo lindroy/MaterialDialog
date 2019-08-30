@@ -6,11 +6,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import com.lindroid.androidutilskt.app.AndUtil
 import com.lindroid.androidutilskt.extension.dp2px
-import com.lindroid.androidutilskt.extension.logcat.d
 import com.lindroid.androidutilskt.extension.shortToast
 import com.lindroid.sample.bean.ListItemBean
 import com.lindroy.anddialog.MaterialDialog
@@ -62,13 +60,14 @@ class MainActivity : AppCompatActivity() {
                 .setTitle(R.string.location_services_title)
                 .setMessage(R.string.location_services_msg)
                 .setPositiveText(R.string.agree)
-                .setOnPositiveClickListener {
+                .setOnPositiveClickListener { view, dialog ->
                     Toast.makeText(mContext, R.string.agree, Toast.LENGTH_LONG).show()
                 }
                 .setNegativeText(R.string.disagree)
-                .setOnNegativeClickListener {
+                .setOnNegativeClickListener { view, dialog ->
                     Toast.makeText(mContext, R.string.disagree, Toast.LENGTH_LONG).show()
                 }
+
                 .show()
         }
         btnAllButton.setOnClickListener {
@@ -101,8 +100,6 @@ class MainActivity : AppCompatActivity() {
                         "你点击了${cities[position]}，选中：$isChecked",
                         Toast.LENGTH_LONG
                     ).show()
-//                    "当前选中：${Arrays.toString(checkedArray)}".d()
-                    checkedArray.d()
                 }
                 .setPositiveText(R.string.ok)
                 .setNegativeText(R.string.cancel)
@@ -136,7 +133,6 @@ class MainActivity : AppCompatActivity() {
             MaterialDialog.bottomList(this)
                 .addItems(cities.toList())
                 .setOnItemClickListener { position, item, dialog ->
-                    Log.e("Tag", "点击")
                     shortToast("你选择了${item.text}")
                 }
                 .show()

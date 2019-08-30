@@ -22,7 +22,7 @@ import com.lindroy.iosdialog.util.screenHeight
  */
 abstract class BaseBottomDialog : BottomSheetDialogFragment() {
 
-    abstract var bottomParams: BaseBottomParams<*>
+    internal abstract var bottomParams: BaseBottomParams<*>
     protected lateinit var mContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +54,8 @@ abstract class BaseBottomDialog : BottomSheetDialogFragment() {
             setDimAmount(bottomParams.dimAmount)
         }
         val bottomSheet = dialog.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
-        bottomSheet.layoutParams.height =ViewGroup.LayoutParams.WRAP_CONTENT
-//            if (bottomParams.maxHeight > 0) bottomParams.maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
+        bottomSheet.layoutParams.height =
+            if (bottomParams.maxHeight > 0) bottomParams.maxHeight else ViewGroup.LayoutParams.WRAP_CONTENT
         view?.let { v ->
             v.post {
                 val parent = v.parent as View

@@ -20,13 +20,12 @@ data class ButtonParams(
     @ColorInt var textColor: Int = getResColor(R.color.md_dialog_button_text_color),
     var text: String = "",
     var isVisible: Boolean = true,
-//    var clickListener: ((DialogInterface) -> Unit)? = null
     var clickListener: OnDialogClickListener? = null
 ):UnParcelableParams() {
-    val isVisibleWithText
-        get() = isVisible && text.isNotEmpty()
 
-//    override fun clone() = super.clone()
+    /*val isVisibleWithText
+        get() = isVisible && text.isNotEmpty()*/
+
 
 }
 

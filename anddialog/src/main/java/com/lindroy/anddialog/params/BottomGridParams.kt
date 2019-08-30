@@ -91,6 +91,25 @@ data class BottomGridParams(
         BottomMenuDialog.showGridDialog(this, fm, tag)
     }
 
+   /* override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as BottomGridParams
+
+        if (viewIds != null) {
+            if (other.viewIds == null) return false
+            if (!viewIds!!.contentEquals(other.viewIds!!)) return false
+        } else if (other.viewIds != null) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return viewIds?.contentHashCode() ?: 0
+    }*/
+
+
     companion object {
         fun build(fm: FragmentManager) =
             BottomGridParams().apply {

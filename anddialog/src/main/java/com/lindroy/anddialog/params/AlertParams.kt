@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.support.annotation.*
 import android.support.v4.app.FragmentManager
 import android.view.KeyEvent
+import android.view.View
 import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
 import com.lindroy.anddialog.constants.MD_SINGLE_CHOICE
@@ -23,7 +24,7 @@ import com.lindroy.iosdialog.util.px2sp
  * @function Alert类对话框参数
  * @Description
  */
-class AlertParams (
+data class AlertParams(
     internal val itemList: MutableList<CheckItemParams> = mutableListOf(),
     internal var keyListener: OnKeyListener? = null,
     internal var singleChoiceListener: OnSingleChoiceListener? = null,
@@ -124,10 +125,10 @@ class AlertParams (
     /**
      * Positive按钮的点击监听
      */
-    fun setOnPositiveClickListener(listener: (dialog: DialogInterface) -> Unit) =
+    fun setOnPositiveClickListener(listener: (view: View,dialog: DialogInterface) -> Unit) =
         setOnPositiveClickListener(object : OnDialogClickListener() {
-            override fun onClick(dialog: DialogInterface) {
-                listener.invoke(dialog)
+            override fun onClick(view: View, dialog: DialogInterface) {
+                listener.invoke(view,dialog)
             }
         })
 
@@ -141,10 +142,10 @@ class AlertParams (
     /**
      * Negative按钮的点击监听
      */
-    fun setOnNegativeClickListener(listener: (dialog: DialogInterface) -> Unit) =
+    fun setOnNegativeClickListener(listener: (view: View,dialog: DialogInterface) -> Unit) =
         setOnNegativeClickListener(object : OnDialogClickListener() {
-            override fun onClick(dialog: DialogInterface) {
-                listener.invoke(dialog)
+            override fun onClick(view: View,dialog: DialogInterface) {
+                listener.invoke(view,dialog)
             }
         })
 
@@ -158,10 +159,10 @@ class AlertParams (
     /**
      * Neutral按钮的点击监听
      */
-    fun setOnNeutralClickListener(listener: (dialog: DialogInterface) -> Unit) =
+    fun setOnNeutralClickListener(listener: (view: View,dialog: DialogInterface) -> Unit) =
         setOnNeutralClickListener(object : OnDialogClickListener() {
-            override fun onClick(dialog: DialogInterface) {
-                listener.invoke(dialog)
+            override fun onClick(view: View,dialog: DialogInterface) {
+                listener.invoke(view,dialog)
             }
         })
 
@@ -189,10 +190,10 @@ class AlertParams (
         text: String = posButtonParams.text,
         @ColorInt textColor: Int = posButtonParams.textColor,
         textSize: Float = posButtonParams.textSize,
-        listener: ((dialog: DialogInterface) -> Unit)? = null
+        listener: ((view: View,dialog: DialogInterface) -> Unit)? = null
     ) = setPositiveButton(text, textColor, textSize, object : OnDialogClickListener() {
-        override fun onClick(dialog: DialogInterface) {
-            listener?.invoke(dialog)
+        override fun onClick(view: View,dialog: DialogInterface) {
+            listener?.invoke(view,dialog)
         }
     })
 
@@ -220,10 +221,10 @@ class AlertParams (
         text: String = posButtonParams.text,
         @ColorInt textColor: Int = posButtonParams.textColor,
         textSize: Float = posButtonParams.textSize,
-        listener: ((dialog: DialogInterface) -> Unit)? = null
+        listener: ((view: View,dialog: DialogInterface) -> Unit)? = null
     ) = setNegativeButton(text, textColor, textSize, object : OnDialogClickListener() {
-        override fun onClick(dialog: DialogInterface) {
-            listener?.invoke(dialog)
+        override fun onClick(view: View,dialog: DialogInterface) {
+            listener?.invoke(view,dialog)
         }
     })
 
@@ -251,10 +252,10 @@ class AlertParams (
         text: String = neuButtonParams.text,
         @ColorInt textColor: Int = neuButtonParams.textColor,
         textSize: Float = neuButtonParams.textSize,
-        listener: ((dialog: DialogInterface) -> Unit)? = null
+        listener: ((view: View,dialog: DialogInterface) -> Unit)? = null
     ) = setNeutralButton(text, textColor, textSize, object : OnDialogClickListener() {
-        override fun onClick(dialog: DialogInterface) {
-            listener?.invoke(dialog)
+        override fun onClick(view: View,dialog: DialogInterface) {
+            listener?.invoke(view,dialog)
         }
     })
 
@@ -377,6 +378,7 @@ class AlertParams (
             return AlertParams()
         }
     }
+
 }
 
 /**
@@ -402,7 +404,7 @@ open class ComAlertParams<T : ComAlertParams<T>> : BaseAlertParams<T>() {
      * 设置对话框宽度
      * @param width：宽度值，单位为px
      */
-    fun setWidth(width: Int) = this.apply { widthPx = width }
+    fun setWidth(width: Int) = this.apply { widthPx = width } as T
 
     /**
      * 设置高度与屏幕高度比例
@@ -514,6 +516,7 @@ open class ComAlertParams<T : ComAlertParams<T>> : BaseAlertParams<T>() {
      * 设置Positive按钮（即右侧的“确认”）文字
      */
     fun setNegativeText(@StringRes stringId: Int) = setNegativeText(getResString(stringId))
+
     /**
      * 设置Positive按钮的文字颜色
      * @param color:颜色值
@@ -544,4 +547,6 @@ open class ComAlertParams<T : ComAlertParams<T>> : BaseAlertParams<T>() {
      */
     fun setNegativeTextColorRes(@ColorRes colorId: Int) =
         this.apply { setNegativeTextColor(getResColor(colorId)) } as T
+
+
 }
