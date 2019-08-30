@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.lindroy.anddialog.MaterialDialog;
 import com.lindroy.anddialog.adapter.MDAdapter;
+import com.lindroy.anddialog.listener.OnGridItemClickListener;
 import com.lindroy.anddialog.listener.OnItemChildClickListener;
 import com.lindroy.anddialog.listener.OnSheetItemClickListener;
 import com.lindroy.anddialog.params.ComAlertParams;
@@ -45,14 +46,7 @@ public class JavaActivity extends AppCompatActivity {
                         return null;
                     }
                 });
-        MaterialDialog.bottomList(this)
-                .setOnItemClickListener(new OnSheetItemClickListener<MDListItem>() {
-                    @Override
-                    public void onClick(int position, MDListItem item, @NotNull DialogInterface dialog) {
 
-                    }
-                })
-                .show();
         MaterialDialog.bottomGrid(this)
                 .setOnItemChildClickListener(new OnItemChildClickListener<MDGridItem>() {
                     @Override
@@ -61,6 +55,13 @@ public class JavaActivity extends AppCompatActivity {
 
                 })
                 .show();
+        MaterialDialog.bottomGrid(this)
+                .setOnItemClickListener(new OnGridItemClickListener() {
+                    @Override
+                    public void onClick(int position, MDGridItem item, @NotNull DialogInterface dialog) {
 
+                    }
+                })
+                .show();
     }
 }

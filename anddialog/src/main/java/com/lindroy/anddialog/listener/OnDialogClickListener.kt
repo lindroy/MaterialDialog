@@ -12,13 +12,13 @@ import android.widget.Button
  * @function 对话框控件点击监听
  * @Description
  */
-abstract class OnDialogClickListener<T:View> : Parcelable {
+abstract class OnDialogClickListener<T : View> : Parcelable {
 
     constructor()
 
     private constructor(source: Parcel)
 
-    abstract fun onClick(view: T,dialog: DialogInterface)
+    abstract fun onClick(view: T, dialog: DialogInterface)
 
     override fun describeContents() = 0
 
@@ -30,12 +30,16 @@ abstract class OnDialogClickListener<T:View> : Parcelable {
             object : Parcelable.Creator<OnDialogClickListener<*>> {
                 override fun createFromParcel(source: Parcel): OnDialogClickListener<*> =
                     object : OnDialogClickListener<View>(source) {
-                        override fun onClick(view: View,dialog: DialogInterface) {}
+                        override fun onClick(view: View, dialog: DialogInterface) {}
                     }
 
-                override fun newArray(size: Int): Array<OnDialogClickListener<*>?> = arrayOfNulls(size)
+                override fun newArray(size: Int): Array<OnDialogClickListener<*>?> =
+                    arrayOfNulls(size)
             }
     }
 }
 
-abstract class OnButtonClickListener:OnDialogClickListener<Button>()
+/**
+ * 对话框按钮点击监听
+ */
+abstract class OnButtonClickListener : OnDialogClickListener<Button>()

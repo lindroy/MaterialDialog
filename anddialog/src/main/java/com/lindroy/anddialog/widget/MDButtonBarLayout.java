@@ -15,11 +15,15 @@ import com.lindroy.iosdialog.util.UtilKt;
  * @function
  * @Description
  */
-public class MDButtonBarLayout extends LinearLayout {
-    /** Amount of the second button to "peek" above the fold when stacked. */
+class MDButtonBarLayout extends LinearLayout {
+    /**
+     * Amount of the second button to "peek" above the fold when stacked.
+     */
     private static final int PEEK_BUTTON_DP = 16;
 
-    /** Whether the current configuration allows stacking. */
+    /**
+     * Whether the current configuration allows stacking.
+     */
     private boolean mAllowStacking = true;
 
     private int mLastWidthSize = -1;

@@ -60,14 +60,13 @@ class MainActivity : AppCompatActivity() {
                 .setTitle(R.string.location_services_title)
                 .setMessage(R.string.location_services_msg)
                 .setPositiveText(R.string.agree)
-                .setOnPositiveClickListener { view, dialog ->
+                .setOnPositiveClickListener { button, dialog ->
                     Toast.makeText(mContext, R.string.agree, Toast.LENGTH_LONG).show()
                 }
                 .setNegativeText(R.string.disagree)
-                .setOnNegativeClickListener { view, dialog ->
+                .setOnNegativeClickListener { button, dialog ->
                     Toast.makeText(mContext, R.string.disagree, Toast.LENGTH_LONG).show()
                 }
-
                 .show()
         }
         btnAllButton.setOnClickListener {

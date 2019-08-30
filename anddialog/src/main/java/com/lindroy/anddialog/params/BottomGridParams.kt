@@ -9,8 +9,8 @@ import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_Grid
 import com.lindroy.anddialog.dialog.BottomMenuDialog
+import com.lindroy.anddialog.listener.OnGridItemClickListener
 import com.lindroy.anddialog.listener.OnItemChildClickListener
-import com.lindroy.anddialog.listener.OnSheetItemClickListener
 
 /**
  * @author Lin
@@ -23,7 +23,7 @@ data class BottomGridParams(
     internal var iconMaxSize: Int = 0,
     internal var viewIds: IntArray? = null,
     internal var items: MutableList<MDGridItem> = mutableListOf(),
-    internal var itemClickListener: OnSheetItemClickListener<*>? = null,
+    internal var itemClickListener: OnGridItemClickListener? = null,
     internal var childClickListener: OnItemChildClickListener<*>? = null,
     internal var adapter: MDAdapter<*>? = null
 ) : ComBottomGridParams<BottomGridParams>() {
@@ -46,11 +46,11 @@ data class BottomGridParams(
     fun <T : Any> setAdapter(adapter: MDAdapter<T>) =
         this.apply { this.adapter = adapter }
 
-    fun setOnItemClickListener(listener: OnSheetItemClickListener<MDGridItem>) =
+    fun setOnItemClickListener(listener: OnGridItemClickListener) =
         this.apply { itemClickListener = listener }
 
     fun setOnItemClickListener(listener: (position: Int, item: MDGridItem, dialog: DialogInterface) -> Unit) =
-        setOnItemClickListener(object : OnSheetItemClickListener<MDGridItem>() {
+        setOnItemClickListener(object : OnGridItemClickListener() {
             override fun onClick(position: Int, item: MDGridItem, dialog: DialogInterface) {
                 listener.invoke(position, item, dialog)
             }

@@ -3,11 +3,13 @@ package com.lindroy.anddialog.listener
 import android.content.DialogInterface
 import android.os.Parcel
 import android.os.Parcelable
+import com.lindroy.anddialog.params.MDGridItem
+import com.lindroy.anddialog.params.MDListItem
 
 /**
  * @author Lin
  * @date 2019/8/27
- * @function
+ * @function 选项点击事件
  * @Description
  */
 
@@ -42,3 +44,12 @@ abstract class OnSheetItemClickListener<out T> : Parcelable {
             }
     }
 }
+
+/**
+ * 列表选项点击事件
+ */
+abstract class OnListItemClickListener:OnSheetItemClickListener<MDListItem>()
+/**
+ * 表格选项点击事件
+ */
+abstract class OnGridItemClickListener:OnSheetItemClickListener<MDGridItem>()

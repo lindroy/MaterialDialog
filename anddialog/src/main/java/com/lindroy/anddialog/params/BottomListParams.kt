@@ -7,7 +7,7 @@ import com.lindroy.anddialog.adapter.MDAdapter
 import com.lindroy.anddialog.constants.MD_BOTTOM_LIST
 import com.lindroy.anddialog.dialog.BottomMenuDialog
 import com.lindroy.anddialog.listener.OnItemChildClickListener
-import com.lindroy.anddialog.listener.OnSheetItemClickListener
+import com.lindroy.anddialog.listener.OnListItemClickListener
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -20,7 +20,7 @@ import kotlinx.android.parcel.Parcelize
 class BottomListParams(
     internal var items: MutableList<MDListItem> = mutableListOf(),
     internal var viewIds: IntArray? = null,
-    internal var itemClickListener: OnSheetItemClickListener<*>? = null,
+    internal var itemClickListener: OnListItemClickListener? = null,
     internal var childClickListener: OnItemChildClickListener<*>? = null,
     internal var adapter: MDAdapter<*>? = null
 ) : ComBottomListParams<BottomListParams>() {
@@ -41,11 +41,11 @@ class BottomListParams(
     fun <T : Any> setAdapter(adapter: MDAdapter<T>) =
         this.apply { this.adapter = adapter }
 
-    fun setOnItemClickListener(listener: OnSheetItemClickListener<MDListItem>) =
+    fun setOnItemClickListener(listener: OnListItemClickListener) =
         this.apply { itemClickListener = listener }
 
     fun setOnItemClickListener(listener: (position: Int, item: MDListItem, dialog: DialogInterface) -> Unit) =
-        setOnItemClickListener(object : OnSheetItemClickListener<MDListItem>() {
+        setOnItemClickListener(object : OnListItemClickListener() {
             override fun onClick(
                 position: Int,
                 item: MDListItem,

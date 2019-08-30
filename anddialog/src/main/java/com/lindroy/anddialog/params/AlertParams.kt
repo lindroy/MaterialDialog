@@ -5,11 +5,12 @@ import android.support.annotation.*
 import android.support.v4.app.FragmentManager
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Button
 import com.lindroy.anddialog.MaterialDialog
 import com.lindroy.anddialog.constants.MD_MULTI_CHOICE
 import com.lindroy.anddialog.constants.MD_SINGLE_CHOICE
 import com.lindroy.anddialog.dialog.AlertDialog
-import com.lindroy.anddialog.listener.OnDialogClickListener
+import com.lindroy.anddialog.listener.OnButtonClickListener
 import com.lindroy.anddialog.listener.OnKeyListener
 import com.lindroy.anddialog.listener.OnMultiChoiceListener
 import com.lindroy.anddialog.listener.OnSingleChoiceListener
@@ -119,16 +120,16 @@ data class AlertParams(
      * Positive按钮的点击监听
      * 用于屏幕旋转保存状态和Java调用
      */
-    fun setOnPositiveClickListener(listener: OnDialogClickListener) =
+    fun setOnPositiveClickListener(listener: OnButtonClickListener) =
         this.apply { this.posButtonParams.clickListener = listener }
 
     /**
      * Positive按钮的点击监听
      */
-    fun setOnPositiveClickListener(listener: (view: View,dialog: DialogInterface) -> Unit) =
-        setOnPositiveClickListener(object : OnDialogClickListener() {
-            override fun onClick(view: View, dialog: DialogInterface) {
-                listener.invoke(view,dialog)
+    fun setOnPositiveClickListener(listener: (button: Button,dialog: DialogInterface) -> Unit) =
+        setOnPositiveClickListener(object : OnButtonClickListener() {
+            override fun onClick(button: Button, dialog: DialogInterface) {
+                listener.invoke(button,dialog)
             }
         })
 
@@ -136,16 +137,16 @@ data class AlertParams(
      * Negative按钮的点击监听
      * 用于屏幕旋转保存状态和Java调用
      */
-    fun setOnNegativeClickListener(listener: OnDialogClickListener) =
+    fun setOnNegativeClickListener(listener: OnButtonClickListener) =
         this.apply { negButtonParams.clickListener = listener }
 
     /**
      * Negative按钮的点击监听
      */
-    fun setOnNegativeClickListener(listener: (view: View,dialog: DialogInterface) -> Unit) =
-        setOnNegativeClickListener(object : OnDialogClickListener() {
-            override fun onClick(view: View,dialog: DialogInterface) {
-                listener.invoke(view,dialog)
+    fun setOnNegativeClickListener(listener: (button: Button,dialog: DialogInterface) -> Unit) =
+        setOnNegativeClickListener(object : OnButtonClickListener() {
+            override fun onClick(button: Button,dialog: DialogInterface) {
+                listener.invoke(button,dialog)
             }
         })
 
@@ -153,16 +154,16 @@ data class AlertParams(
      * Neutral按钮的点击监听
      * 用于屏幕旋转保存状态和Java调用
      */
-    fun setOnNeutralClickListener(listener: OnDialogClickListener) =
+    fun setOnNeutralClickListener(listener: OnButtonClickListener) =
         this.apply { neuButtonParams.clickListener = listener }
 
     /**
      * Neutral按钮的点击监听
      */
-    fun setOnNeutralClickListener(listener: (view: View,dialog: DialogInterface) -> Unit) =
-        setOnNeutralClickListener(object : OnDialogClickListener() {
-            override fun onClick(view: View,dialog: DialogInterface) {
-                listener.invoke(view,dialog)
+    fun setOnNeutralClickListener(listener: (button: Button,dialog: DialogInterface) -> Unit) =
+        setOnNeutralClickListener(object : OnButtonClickListener() {
+            override fun onClick(button: Button,dialog: DialogInterface) {
+                listener.invoke(button,dialog)
             }
         })
 
@@ -173,7 +174,7 @@ data class AlertParams(
         text: String = posButtonParams.text,
         @ColorInt textColor: Int = posButtonParams.textColor,
         textSize: Float = posButtonParams.textSize,
-        listener: OnDialogClickListener? = null
+        listener: OnButtonClickListener? = null
     ) = this.apply {
         posButtonParams.also {
             it.text = text
@@ -191,8 +192,8 @@ data class AlertParams(
         @ColorInt textColor: Int = posButtonParams.textColor,
         textSize: Float = posButtonParams.textSize,
         listener: ((view: View,dialog: DialogInterface) -> Unit)? = null
-    ) = setPositiveButton(text, textColor, textSize, object : OnDialogClickListener() {
-        override fun onClick(view: View,dialog: DialogInterface) {
+    ) = setPositiveButton(text, textColor, textSize, object : OnButtonClickListener() {
+        override fun onClick(view: Button,dialog: DialogInterface) {
             listener?.invoke(view,dialog)
         }
     })
@@ -204,7 +205,7 @@ data class AlertParams(
         text: String = negButtonParams.text,
         @ColorInt textColor: Int = negButtonParams.textColor,
         textSize: Float = negButtonParams.textSize,
-        listener: OnDialogClickListener? = null
+        listener: OnButtonClickListener? = null
     ) = this.apply {
         negButtonParams.also {
             it.text = text
@@ -221,9 +222,9 @@ data class AlertParams(
         text: String = posButtonParams.text,
         @ColorInt textColor: Int = posButtonParams.textColor,
         textSize: Float = posButtonParams.textSize,
-        listener: ((view: View,dialog: DialogInterface) -> Unit)? = null
-    ) = setNegativeButton(text, textColor, textSize, object : OnDialogClickListener() {
-        override fun onClick(view: View,dialog: DialogInterface) {
+        listener: ((view: Button,dialog: DialogInterface) -> Unit)? = null
+    ) = setNegativeButton(text, textColor, textSize, object : OnButtonClickListener() {
+        override fun onClick(view: Button,dialog: DialogInterface) {
             listener?.invoke(view,dialog)
         }
     })
@@ -235,7 +236,7 @@ data class AlertParams(
         text: String = neuButtonParams.text,
         @ColorInt textColor: Int = neuButtonParams.textColor,
         textSize: Float = neuButtonParams.textSize,
-        listener: OnDialogClickListener? = null
+        listener: OnButtonClickListener? = null
     ) = this.apply {
         neuButtonParams.also {
             it.text = text
@@ -252,9 +253,9 @@ data class AlertParams(
         text: String = neuButtonParams.text,
         @ColorInt textColor: Int = neuButtonParams.textColor,
         textSize: Float = neuButtonParams.textSize,
-        listener: ((view: View,dialog: DialogInterface) -> Unit)? = null
-    ) = setNeutralButton(text, textColor, textSize, object : OnDialogClickListener() {
-        override fun onClick(view: View,dialog: DialogInterface) {
+        listener: ((view: Button,dialog: DialogInterface) -> Unit)? = null
+    ) = setNeutralButton(text, textColor, textSize, object : OnButtonClickListener() {
+        override fun onClick(view: Button,dialog: DialogInterface) {
             listener?.invoke(view,dialog)
         }
     })
