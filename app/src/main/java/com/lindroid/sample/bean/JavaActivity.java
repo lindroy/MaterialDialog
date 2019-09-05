@@ -6,15 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.lindroy.anddialog.MaterialDialog;
-import com.lindroy.anddialog.adapter.MDAdapter;
-import com.lindroy.anddialog.listener.OnGridItemClickListener;
-import com.lindroy.anddialog.listener.OnItemChildClickListener;
-import com.lindroy.anddialog.listener.OnSheetItemClickListener;
-import com.lindroy.anddialog.params.ComAlertParams;
-import com.lindroy.anddialog.params.ComBottomParams;
-import com.lindroy.anddialog.params.MDGridItem;
-import com.lindroy.anddialog.params.MDListItem;
+import com.lindroy.materialdialog.MaterialDialog;
+import com.lindroy.materialdialog.adapter.MDAdapter;
+import com.lindroy.materialdialog.listener.OnGridItemClickListener;
+import com.lindroy.materialdialog.listener.OnItemChildClickListener;
+import com.lindroy.materialdialog.params.AlertBuilder;
+import com.lindroy.materialdialog.params.ComAlertParams;
+import com.lindroy.materialdialog.params.ComBottomParams;
+import com.lindroy.materialdialog.params.MDGridItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -63,5 +62,7 @@ public class JavaActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+
+        AlertBuilder builder = MaterialDialog.alert(this);
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndDialog</string>
+    <string name="app_name">MaterialDialog</string>
     <string name="location_services_title">Use Google\'s Location Services?</string>
     <string name="location_services_msg">Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</string>
     <string name="learn_more">Learn More</string>
