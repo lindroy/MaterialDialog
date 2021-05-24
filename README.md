@@ -1,6 +1,5 @@
 # MaterialDialog
 
-
 ![版本信息](https://img.shields.io/badge/MateriaDialog-0.0.1--beta-ff63b4)
 ------------
 以Material Design风格为主的对话框，基于Kotlin+DialogFragment编写。
@@ -31,7 +30,7 @@
 2.添加依赖：
 
 ```
-    implementation 'com.mit.dialoghub:MaterialDialog:latest-version'
+    implementation 'com.github.lindroy:MaterialDialog:0.0.1--beta'
 ```
 `latest-version`改为徽章中的版本号。
 
@@ -314,8 +313,5 @@
 </resources>
 ```
 ## 更新日志
-### 0.0.2-alpha（2019.09.11）
-- 提示对话框增加自定义布局功能
-
-### 0.0.1-alpha（2019.09.06）
+### 0.0.1-beta
 - 发表第一个测试版本
