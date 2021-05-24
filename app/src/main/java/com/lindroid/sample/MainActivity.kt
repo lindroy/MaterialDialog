@@ -3,8 +3,8 @@ package com.lindroid.sample
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.lindroid.androidutilskt.app.AndUtil
 import com.lindroid.androidutilskt.extension.dp2px
