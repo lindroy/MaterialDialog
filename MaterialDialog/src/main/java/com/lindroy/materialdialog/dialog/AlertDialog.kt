@@ -355,22 +355,10 @@ internal class AlertDialog : androidx.fragment.app.DialogFragment() {
             //设置窗体动画
             setWindowAnimations(builder.animStyle)
             params.dimAmount = builder.dimAmount
-            val maxHeight = 0.65 * screenHeight
+//            val maxHeight = 0.65 * screenHeight
             params.width = builder.finalWidth
-//            params.height = maxHeight.toInt()
-            /*val metrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(metrics)
-            Log.d("Tag","高度="+metrics.heightPixels)
-            if (metrics.heightPixels > maxHeight) {
-                setLayout(builder.finalWidth,maxHeight.toInt())
-            }else{
-                setLayout(
-                    builder.finalWidth,
-                    WindowManager.LayoutParams.WRAP_CONTENT
-                )
-            }*/
-
             attributes = params
+            //Todo(监听布局绘制完成后再改变对话框宽高会影响动画)
             /*decorView.viewTreeObserver.addOnGlobalLayoutListener(object :
                 ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
